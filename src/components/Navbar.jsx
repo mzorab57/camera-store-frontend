@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, ShoppingCart, Menu, X, Heart, ChevronDown } from 'lucide-react';
+import  { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Search, User, ShoppingCart, Menu, X, Heart, ChevronDown, ChevronsRight } from 'lucide-react';
 import { useCategoryStore } from '../store/categoryStore';
+
+import TopBar from './TopBar';
 
 
 const Navbar = () => {
@@ -70,87 +72,13 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center">
-              <div className="bg-gradient-to-r from-blue-600 to-orange-500 text-white px-3 py-2 rounded">
-                <span className="font-bold text-lg">CAMERA</span>
-                <span className="font-normal text-sm block leading-none">STORE</span>
-              </div>
-            </Link>
-          </div>
-
-          {/* Search Bar - Desktop */}
-          <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-            <form onSubmit={handleSearch} className="w-full">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search For STUDIO & PRODUCTION"
-                  className="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors"
-                >
-                  <Search className="h-4 w-4" />
-                </button>
-              </div>
-            </form>
-          </div>
-
-          {/* Right Icons */}
-          <div className="hidden md:flex items-center space-x-6">
-            <button className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
-              <Heart className="h-5 w-5" />
-              <span className="text-sm font-medium">WISHLIST</span>
-            </button>
-            <button className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors relative">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="text-sm font-medium">MY CART</span>
-            </button>
-            <button className="flex items-center space-x-1 text-gray-600 hover:text-blue-600 transition-colors">
-              <User className="h-5 w-5" />
-              <span className="text-sm font-medium">LOGIN</span>
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={toggleMenu}
-              className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
+     <TopBar Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
 
       {/* Navigation Menu */}
-      <div className="bg-blue-600">
+      <div className="bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hidden md:flex items-center justify-between py-3">
-            {/* Main Navigation Links */}
-            {/* <div className="flex items-center space-x-6">
-              <Link to="/" className="text-white hover:text-blue-200 font-medium text-sm transition-colors px-3 py-2 rounded">
-                Home
-              </Link>
-              <Link to="/products" className="text-white hover:text-blue-200 font-medium text-sm transition-colors px-3 py-2 rounded">
-                Products
-              </Link>
-              <Link to="/about" className="text-white hover:text-blue-200 font-medium text-sm transition-colors px-3 py-2 rounded">
-                About
-              </Link>
-              <Link to="/contact" className="text-white hover:text-blue-200 font-medium text-sm transition-colors px-3 py-2 rounded">
-                Contact
-              </Link>
-            </div> */}
-            
+          
             {/* Categories */}
             <div className="flex items-center space-x-4 relative">
              {loading ? (
@@ -175,7 +103,7 @@ const Navbar = () => {
                   {/* Dropdown Menu */}
                   {hoveredCategory === category.id && category.subcategories && (
                     <div 
-                      className="absolute top-full left-0 mt-1 bg-white shadow-xl rounded-lg border whitespace-nowrap z-50 animate-in fade-in-0 zoom-in-95 duration-200"
+                      className="absolute top-full left-0 mt-1 bg-white shadow-xl rounded-lg border whitespace-nowrap z-40 animate-in fade-in-0 zoom-in-95 duration-200"
                       onMouseEnter={handleDropdownEnter}
                       onMouseLeave={handleDropdownLeave}
                     >
@@ -194,7 +122,7 @@ const Navbar = () => {
                                       key={`photo-${subcategory.id}`}
                                       to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
                                       state={{ subCategories: category.subcategories }}
-                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (
                                         <img 
@@ -227,7 +155,7 @@ const Navbar = () => {
                                       key={`video-${subcategory.id}`}
                                       to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
                                        state={{ subCategories: category.subcategories }}
-                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (
                                         <img 
@@ -260,7 +188,7 @@ const Navbar = () => {
                                       key={`both-${subcategory.id}`}
                                       to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
                                       state={{ subCategories: category.subcategories }}
-                                      className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                                      className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (
                                         <img 
@@ -325,39 +253,13 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t">
           <div className="px-4 py-2">
             {/* Mobile Search */}
-            <form onSubmit={handleSearch} className="mb-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search For STUDIO & PRODUCTION"
-                  className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600"
-                >
-                  <Search className="h-5 w-5" />
-                </button>
-              </div>
-            </form>
+           
+              {/* <SearchBar Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch} /> */}
+            
             
             {/* Mobile Navigation */}
             <div className="space-y-2">
-              {/* Main Navigation Links */}
-              <Link to="/" className="block py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm border-b border-gray-100">
-                Home
-              </Link>
-              <Link to="/products" className="block py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm border-b border-gray-100">
-                Products
-              </Link>
-              <Link to="/about" className="block py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm border-b border-gray-100">
-                About
-              </Link>
-              <Link to="/contact" className="block py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm border-b border-gray-100">
-                Contact
-              </Link>
+             
               
               {/* Categories */}
               {loading ? (
@@ -367,146 +269,146 @@ const Navbar = () => {
                   <div key={category.id} className="border-b border-gray-100 last:border-b-0">
                     <Link
                       to={`/category/${category.name.toLowerCase()}`}
-                      className=" py-3 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm uppercase flex items-center justify-between"
+                      className=" py-3 text-gray-700 hover:text-primary font-medium transition-colors text-sm uppercase flex items-center justify-between"
                       onClick={(e) => {
                         e.preventDefault();
                         // Toggle category visibility in mobile
                       }}
                     >
                       {category.name}
-                      <ChevronDown className="h-4 w-4" />
+                      <ChevronsRight className="h-4 w-4" />
                     </Link>
                     
                     {/* Mobile Subcategories */}
-                    {category.subcategories && (
-                      <div className="pl-4 pb-2 space-y-1">
-                        {category.subcategories.length > 0 ? (
-                          <>
-                            {/* Photography Section */}
-                            {category.subcategories.filter(sub => sub.type === 'photography').length > 0 && (
-                              <div className="mb-3">
-                                <h5 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Photography</h5>
-                                {category.subcategories
-                                  .filter(sub => sub.type === 'photography')
-                                  .map((subcategory) => (
-                                    <a
-                                      key={`both-${subcategory.id}`}
-                                      href={`#subcategory-${subcategory.id}`}
-                                      className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                                    >
-                                      {subcategory.image_url && (
-                                        <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
-                                          alt={subcategory.name}
-                                          className="w-8 h-8 rounded-full mr-2"
-                                          onError={(e) => {
-                                            e.target.style.display = 'none';
-                                          }}
-                                        />
-                                      )}
-                                      <span>
-                                        {subcategory.name}
-                                        {subcategory.product_count > 0 && (
-                                          <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
-                                        )}
-                                      </span>
-                                    </a>
-                                  ))
-                                }
-                              </div>
-                            )}
+                    {category.subcategories && (<></>
+                      // <div className="pl-4 pb-2 space-y-1">
+                      //   {category.subcategories.length > 0 ? (
+                      //     <>
+                          
+                      //       {category.subcategories.filter(sub => sub.type === 'photography').length > 0 && (
+                      //         <div className="mb-3">
+                      //           <h5 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Photography</h5>
+                      //           {category.subcategories
+                      //             .filter(sub => sub.type === 'photography')
+                      //             .map((subcategory) => (
+                      //               <a
+                      //                 key={`both-${subcategory.id}`}
+                      //                 href={`#subcategory-${subcategory.id}`}
+                      //                 className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
+                      //               >
+                      //                 {subcategory.image_url && (
+                      //                   <img 
+                      //                     src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
+                      //                     alt={subcategory.name}
+                      //                     className="w-8 h-8 rounded-full mr-2"
+                      //                     onError={(e) => {
+                      //                       e.target.style.display = 'none';
+                      //                     }}
+                      //                   />
+                      //                 )}
+                      //                 <span>
+                      //                   {subcategory.name}
+                      //                   {subcategory.product_count > 0 && (
+                      //                     <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
+                      //                   )}
+                      //                 </span>
+                      //               </a>
+                      //             ))
+                      //           }
+                      //         </div>
+                      //       )}
                             
-                            {/* Videography Section */}
-                            {category.subcategories.filter(sub => sub.type === 'videography').length > 0 && (
-                              <div className="mb-3">
-                                <h5 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Videography</h5>
-                                {category.subcategories
-                                  .filter(sub => sub.type === 'videography')
-                                  .map((subcategory) => (
-                                    <a
-                                      key={`both-${subcategory.id}`}
-                                      href={`#subcategory-${subcategory.id}`}
-                                      className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                                    >
-                                      {subcategory.image_url && (
-                                        <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
-                                          alt={subcategory.name}
-                                          className="w-8 h-8 rounded-full mr-2"
-                                          onError={(e) => {
-                                            e.target.style.display = 'none';
-                                          }}
-                                        />
-                                      )}
-                                      <span>
-                                        {subcategory.name}
-                                        {subcategory.product_count > 0 && (
-                                          <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
-                                        )}
-                                      </span>
-                                    </a>
-                                  ))
-                                }
-                              </div>
-                            )}
+                      //       {/* Videography Section */}
+                      //       {category.subcategories.filter(sub => sub.type === 'videography').length > 0 && (
+                      //         <div className="mb-3">
+                      //           <h5 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Videography</h5>
+                      //           {category.subcategories
+                      //             .filter(sub => sub.type === 'videography')
+                      //             .map((subcategory) => (
+                      //               <a
+                      //                 key={`both-${subcategory.id}`}
+                      //                 href={`#subcategory-${subcategory.id}`}
+                      //                 className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
+                      //               >
+                      //                 {subcategory.image_url && (
+                      //                   <img 
+                      //                     src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
+                      //                     alt={subcategory.name}
+                      //                     className="w-8 h-8 rounded-full mr-2"
+                      //                     onError={(e) => {
+                      //                       e.target.style.display = 'none';
+                      //                     }}
+                      //                   />
+                      //                 )}
+                      //                 <span>
+                      //                   {subcategory.name}
+                      //                   {subcategory.product_count > 0 && (
+                      //                     <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
+                      //                   )}
+                      //                 </span>
+                      //               </a>
+                      //             ))
+                      //           }
+                      //         </div>
+                      //       )}
                             
-                            {/* Both Section */}
-                            {category.subcategories.filter(sub => sub.type === 'both').length > 0 && (
-                              <div>
-                                <h5 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Both</h5>
-                                {category.subcategories
-                                  .filter(sub => sub.type === 'both')
-                                  .map((subcategory) => (
-                                    <a
-                                      key={`both-${subcategory.id}`}
-                                      href={`#subcategory-${subcategory.id}`}
-                                      className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                                    >
-                                      {subcategory.image_url && (
-                                        <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
-                                          alt={subcategory.name}
-                                          className="w-8 h-8 rounded-full mr-2"
-                                          onError={(e) => {
-                                            e.target.style.display = 'none';
-                                          }}
-                                        />
-                                      )}
-                                      <span>
-                                        {subcategory.name}
-                                        {subcategory.product_count > 0 && (
-                                          <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
-                                        )}
-                                      </span>
-                                    </a>
-                                  ))
-                                }
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <div className="text-xs text-gray-500 py-1">No subcategories available</div>
-                        )}
-                      </div>
+                      //       {/* Both Section */}
+                      //       {category.subcategories.filter(sub => sub.type === 'both').length > 0 && (
+                      //         <div>
+                      //           <h5 className="text-xs font-semibold text-gray-500 mb-1 uppercase">Both</h5>
+                      //           {category.subcategories
+                      //             .filter(sub => sub.type === 'both')
+                      //             .map((subcategory) => (
+                      //               <a
+                      //                 key={`both-${subcategory.id}`}
+                      //                 href={`#subcategory-${subcategory.id}`}
+                      //                 className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
+                      //               >
+                      //                 {subcategory.image_url && (
+                      //                   <img 
+                      //                     src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
+                      //                     alt={subcategory.name}
+                      //                     className="w-8 h-8 rounded-full mr-2"
+                      //                     onError={(e) => {
+                      //                       e.target.style.display = 'none';
+                      //                     }}
+                      //                   />
+                      //                 )}
+                      //                 <span>
+                      //                   {subcategory.name}
+                      //                   {subcategory.product_count > 0 && (
+                      //                     <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
+                      //                   )}
+                      //                 </span>
+                      //               </a>
+                      //             ))
+                      //           }
+                      //         </div>
+                      //       )}
+                      //     </>
+                      //   ) : (
+                      //     <div className="text-xs text-gray-500 py-1">No subcategories available</div>
+                      //   )}
+                      // </div>
                     )}
                   </div>
                 ))
               )}
               <a
                 href="#top-brands"
-                className="block py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm"
+                className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors text-sm"
               >
                 TOP BRANDS
               </a>
               <a
                 href="#best-sellers"
-                className="block py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm"
+                className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors text-sm"
               >
                 BEST SELLERS
               </a>
               <a
                 href="#offers"
-                className="block py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors text-sm"
+                className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors text-sm"
               >
                 OFFERS
               </a>
@@ -514,15 +416,15 @@ const Navbar = () => {
             
             {/* Mobile Icons */}
             <div className="flex items-center space-x-4 mt-4 pt-4 border-t">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
                 <Heart className="h-5 w-5" />
                 <span>Wishlist</span>
               </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
                 <ShoppingCart className="h-5 w-5" />
                 <span>Cart</span>
               </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
                 <User className="h-5 w-5" />
                 <span>Login</span>
               </button>

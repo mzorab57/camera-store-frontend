@@ -58,92 +58,7 @@ export const useProductStore = create((set, get) => ({
         stats.products_active = products.filter(p => p.status === 'active').length;
       }
       
-      // If no products from API, use mock data
-      if (products.length === 0) {
-        const mockLatestProducts = [
-          {
-            id: 1,
-            name: "Canon EOS R6 Mark II",
-            price: "2499.00",
-            discount_value: "100.00",
-            brand: "Canon",
-            type: "both",
-            category: "photography",
-            subcategory: "dslr-cameras",
-            status: "active",
-            primary_image_url: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400",
-            created_at: "2024-01-15T10:30:00Z"
-          },
-          {
-            id: 2,
-            name: "Sony A7 IV Hybrid Camera",
-            price: "2498.00",
-            discount_value: "150.00",
-            brand: "Sony",
-            type: "both",
-            category: "photography",
-            subcategory: "dslr-cameras",
-            status: "active",
-            primary_image_url: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400",
-            created_at: "2024-01-14T09:15:00Z"
-          },
-          {
-            id: 3,
-            name: "Panasonic GH6 Cinema Camera",
-            price: "2197.99",
-            discount_value: "0",
-            brand: "Panasonic",
-            type: "videography",
-            category: "videography",
-            subcategory: "cinema-cameras",
-            status: "active",
-            primary_image_url: "https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=400",
-            created_at: "2024-01-13T14:20:00Z"
-          },
-          {
-            id: 4,
-            name: "Nikon D850 DSLR",
-            price: "2996.95",
-            discount_value: "200.00",
-            brand: "Nikon",
-            type: "photography",
-            category: "photography",
-            subcategory: "dslr-cameras",
-            status: "active",
-            primary_image_url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400",
-            created_at: "2024-01-12T11:45:00Z"
-          },
-          {
-            id: 5,
-            name: "Canon EOS 90D DSLR",
-            price: "1199.00",
-            discount_value: "50.00",
-            brand: "Canon",
-            type: "photography",
-            category: "photography",
-            subcategory: "dslr-cameras",
-            status: "active",
-            primary_image_url: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400",
-            created_at: "2024-01-11T08:30:00Z"
-          },
-          {
-            id: 6,
-            name: "Nikon D780 DSLR",
-            price: "2296.95",
-            discount_value: "100.00",
-            brand: "Nikon",
-            type: "photography",
-            category: "photography",
-            subcategory: "dslr-cameras",
-            status: "active",
-            primary_image_url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400",
-            created_at: "2024-01-10T16:45:00Z"
-          }
-        ];
-        products = mockLatestProducts;
-        stats.products_total = products.length;
-        stats.products_active = products.filter(p => p.status === 'active').length;
-      }
+   
       
       set({
         latestProducts: products,
@@ -186,48 +101,7 @@ export const useProductStore = create((set, get) => ({
     } catch (error) {
       console.error('Error fetching video products:', error);
       
-      // Set mock video data when API fails
-      const mockVideoProducts = [
-        {
-          id: 101,
-          name: "Canon EOS R5 Mirrorless Camera",
-          price: "3899.00",
-          discount_value: "100.00",
-          brand: "Canon",
-          type: "photography",
-          category: "photography",
-          subcategory: "dslr-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400",
-          created_at: "2024-01-15T10:30:00Z"
-        },
-        {
-          id: 102,
-          name: "Sony FX3 Full-Frame Cinema Camera",
-          price: "3898.00",
-          discount_value: "0",
-          brand: "Sony",
-          type: "videography",
-          category: "videography",
-          subcategory: "cinema-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400",
-          created_at: "2024-01-14T09:15:00Z"
-        },
-        {
-          id: 103,
-          name: "Blackmagic Pocket Cinema Camera 6K Pro",
-          price: "2535.00",
-          discount_value: "200.00",
-          brand: "Blackmagic Design",
-          type: "videography",
-          category: "videography",
-          subcategory: "cinema-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=400",
-          created_at: "2024-01-13T14:20:00Z"
-        }
-      ];
+     
       
       set({
         videoProducts: mockVideoProducts,
@@ -263,61 +137,7 @@ export const useProductStore = create((set, get) => ({
     } catch (error) {
       console.error('Error fetching photo products:', error);
       
-      // Set mock photo data when API fails
-      const mockPhotoProducts = [
-        {
-          id: 201,
-          name: "Canon EOS R5 Mirrorless Camera",
-          price: "3899.00",
-          discount_value: "100.00",
-          brand: "Canon",
-          type: "photography",
-          category: "photography",
-          subcategory: "mirrorless-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400",
-          created_at: "2024-01-15T10:30:00Z"
-        },
-        {
-          id: 202,
-          name: "Sony Alpha A7R V",
-          price: "3898.00",
-          discount_value: "200.00",
-          brand: "Sony",
-          type: "photography",
-          category: "photography",
-          subcategory: "mirrorless-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400",
-          created_at: "2024-01-14T09:15:00Z"
-        },
-        {
-          id: 203,
-          name: "Nikon Z9 Mirrorless Camera",
-          price: "5496.95",
-          discount_value: "0",
-          brand: "Nikon",
-          type: "photography",
-          category: "photography",
-          subcategory: "mirrorless-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=400",
-          created_at: "2024-01-13T14:20:00Z"
-        },
-        {
-          id: 204,
-          name: "Fujifilm X-T5 Mirrorless Camera",
-          price: "1699.00",
-          discount_value: "50.00",
-          brand: "Fujifilm",
-          type: "photography",
-          category: "photography",
-          subcategory: "mirrorless-cameras",
-          status: "active",
-          primary_image_url: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400",
-          created_at: "2024-01-12T11:45:00Z"
-        }
-      ];
+     
       
       set({
         photoProducts: mockPhotoProducts,

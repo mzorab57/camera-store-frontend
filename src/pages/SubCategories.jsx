@@ -11,19 +11,12 @@ const SubCategories = () => {
     
   
   const { 
-    latestProducts, 
-    videoProducts, 
-    photoProducts, 
     loading, 
     videoLoading, 
     photoLoading, 
     error, 
     videoError, 
     photoError, 
-    fetchLatestProducts, 
-    fetchVideoProducts, 
-    fetchPhotoProducts, 
-    getAllProducts 
   } = useProductStore();
   
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -31,12 +24,6 @@ const SubCategories = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('name');
-
-  useEffect(() => {
-    fetchLatestProducts();
-    fetchVideoProducts();
-    fetchPhotoProducts();
-  }, [fetchLatestProducts, fetchVideoProducts, fetchPhotoProducts]);
 
   const isLoading = loading || videoLoading || photoLoading;
   const hasError = error || videoError || photoError;
@@ -86,15 +73,14 @@ const SubCategories = () => {
     });
 
     setFilteredProducts(filtered);
-  }, [latestProducts, videoProducts, photoProducts, subcategoryName, selectedType, searchQuery, sortBy, getAllProducts]);
+  }, [ subcategoryName, selectedType, searchQuery, sortBy]);
 
-  const products = getAllProducts();
 
   const typeFilters = [
-    { id: 'all', label: 'All Products', count: products?.length || 0, icon: Image },
-    { id: 'photography', label: 'Photography', count: products?.filter(p => p.type === 'photography').length || 0, icon: Camera },
-    { id: 'videography', label: 'Videography', count: products?.filter(p => p.type === 'videography').length || 0, icon: Video },
-    { id: 'both', label: 'Both', count: products?.filter(p => p.type === 'both').length || 0, icon: Star }
+    { id: 'all', label: 'All Products', count: productList?.length || 0, icon: Image },
+    { id: 'photography', label: 'Photography', count: productList?.filter(p => p.type === 'photography').length || 0, icon: Camera },
+    { id: 'videography', label: 'Videography', count: productList?.filter(p => p.type === 'videography').length || 0, icon: Video },
+    { id: 'both', label: 'Both', count: productList?.filter(p => p.type === 'both').length || 0, icon: Star }
   ];
 
   if (isLoading) {
@@ -218,7 +204,7 @@ const SubCategories = () => {
           {/* Search and Controls */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div className="text-sm text-gray-600">
-              Showing {filteredProducts?.length || 0} of {products?.length || 0} products
+              Showing {filteredProducts?.length || 0} of {productList?.length || 0} products
             </div>
             <div className="flex items-center gap-2">
               {/* Search */}
