@@ -2,9 +2,11 @@ import React from 'react'
 import { Instagram, Facebook, Tablet } from 'lucide-react'
 import { PiTiktokLogo } from "react-icons/pi";
 
-const IconsNav = ({ Link }) => {
+const IconsNav = ({ Link, device }) => {
   return (
-    <div className=" items-center space-x-4 hidden md:flex">
+    <div className={`flex items-center space-x-4 ${
+      device === 'mobile' ? 'flex md:hidden' : 'hidden md:flex'
+    }`}>
       <Link 
         to="https://instagram.com" 
         target="_blank" 

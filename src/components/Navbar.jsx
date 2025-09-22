@@ -4,6 +4,8 @@ import { Search, User, ShoppingCart, Menu, X, Heart, ChevronDown, ChevronsRight 
 import { useCategoryStore } from '../store/categoryStore';
 
 import TopBar from './TopBar';
+import NavigationMenu from './NavigationMenu';
+import IconsNav from './IconsNav';
 
 
 const Navbar = () => {
@@ -67,200 +69,26 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    // Update device type
+   
   };
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className=" container mx-auto max-w-[76rem]  sticky top-0 z-50">
       {/* Top Bar */}
-     <TopBar Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
+     <TopBar  Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
 
-      {/* Navigation Menu */}
-      <div className="bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="hidden md:flex items-center justify-between py-3">
-          
-            {/* Categories */}
-            <div className="flex items-center space-x-4 relative">
-             {loading ? (
-               <div className="text-white text-sm">Loading categories...</div>
-            ) : (
-              categories.map((category) => (
-                <div
-                  key={category.id}
-                  className="relative group"
-                  onMouseEnter={() => handleCategoryHover(category)}
-                  onMouseLeave={handleCategoryLeave}
-                >
-                  <Link
-                    to={`/${category.slug.toLowerCase()}`}
-                    state={{ category: category, categoryName: category.name}}
-                    className="text-white hover:text-blue-200 w-32 font-medium text-xs transition-colors px-2 py-1 rounded uppercase flex items-center gap-1"
-                  >
-                    {category.name}
-                    <ChevronDown className="h-3 w-8" />
-                  </Link>
-                  
-                  {/* Dropdown Menu */}
-                  {hoveredCategory === category.id && category.subcategories && (
-                    <div 
-                      className="absolute top-full left-0 mt-1 bg-white shadow-xl rounded-lg border whitespace-nowrap z-40 animate-in fade-in-0 zoom-in-95 duration-200"
-                      onMouseEnter={handleDropdownEnter}
-                      onMouseLeave={handleDropdownLeave}
-                    >
-                      <div className="py-2">
-                        {category.subcategories.length > 0 ? (
-                          <div className='flex w-full justify-between'>
-
-                            {/* Photography Section */}
-                            {category.subcategories.filter(sub => sub.type === 'photography').length > 0 && (
-                              <div className="px-4 py-2">
-                                <h4 className="text-sm font-semibold text-gray-800 mb-2 uppercase">Photography</h4>
-                                {category.subcategories
-                                  .filter(sub => sub.type === 'photography')
-                                  .map((subcategory) => (
-                                    <Link
-                                      key={`photo-${subcategory.id}`}
-                                      to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
-                                      state={{ subCategories: category.subcategories }}
-                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
-                                    >
-                                      {subcategory.image_url && (
-                                        <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
-                                          alt={subcategory.name} 
-                                          className="w-8 h-8 rounded-full mr-2" 
-                                          onError={(e) => {
-                                            e.target.style.display = 'none';
-                                          }}
-                                        />
-                                      )}
-                                      {subcategory.name}
-                                      {subcategory.product_count > 0 && (
-                                        <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
-                                      )}
-                                    </Link>
-                                  ))
-                                }
-                              </div>
-                            )}
-                            
-                            {/* Videography Section */}
-                            {category.subcategories.filter(sub => sub.type === 'videography').length > 0 && (
-                              <div className="px-4 py-2 border-t border-gray-100">
-                                <h4 className="text-sm font-semibold text-gray-800 mb-2 uppercase">Videography</h4>
-                                {category.subcategories
-                                  .filter(sub => sub.type === 'videography')
-                                  .map((subcategory) => (
-                                    <Link
-                                      key={`video-${subcategory.id}`}
-                                      to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
-                                       state={{ subCategories: category.subcategories }}
-                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
-                                    >
-                                      {subcategory.image_url && (
-                                        <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
-                                          alt={subcategory.name} 
-                                          className="w-8 h-8 rounded-full mr-2" 
-                                          onError={(e) => {
-                                            e.target.style.display = 'none';
-                                          }}
-                                        />
-                                      )}
-                                      {subcategory.name}
-                                      {subcategory.product_count > 0 && (
-                                        <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
-                                      )}
-                                    </Link>
-                                  ))
-                                }
-                              </div>
-                            )}
-
-                            {/* Both Section */}
-                            {category.subcategories.filter(sub => sub.type === 'both').length > 0 && (
-                              <div className="px-4 py-2 border-t border-gray-100">
-                                <h4 className="text-sm font-semibold text-gray-800 mb-2 uppercase">Both</h4>
-                                {category.subcategories
-                                  .filter(sub => sub.type === 'both')
-                                  .map((subcategory) => (
-                                    <Link
-                                      key={`both-${subcategory.id}`}
-                                      to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
-                                      state={{ subCategories: category.subcategories }}
-                                      className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
-                                    >
-                                      {subcategory.image_url && (
-                                        <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
-                                          alt={subcategory.name}
-                                          className="w-8 h-8 rounded-full mr-2"
-                                          onError={(e) => {
-                                            e.target.style.display = 'none';
-                                          }}
-                                        />
-                                      )}
-                                      <span>
-                                        {subcategory.name}
-                                        {subcategory.product_count > 0 && (
-                                          <span className="text-xs text-gray-400 ml-1">({subcategory.product_count})</span>
-                                        )}
-                                      </span>
-                                    </Link>
-                                  ))
-                                }
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <div className="px-4 py-2 text-sm text-gray-500">No subcategories available</div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))
-            )}
-            </div>
-            
-            {/* Additional static menu items */}
-            <div className="flex items-center space-x-4">
-            <a
-              href="#top-brands"
-              className="text-white hover:text-blue-200 font-medium text-xs transition-colors px-2 py-1 rounded"
-            >
-              TOP BRANDS
-            </a>
-            <a
-              href="#best-sellers"
-              className="text-white hover:text-blue-200 font-medium text-xs transition-colors px-2 py-1 rounded"
-            >
-              BEST SELLERS
-            </a>
-            <a
-              href="#offers"
-              className="text-white hover:text-blue-200 font-medium text-xs transition-colors px-2 py-1 rounded"
-            >
-              OFFERS
-            </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* NavigationMenu */}
+     <NavigationMenu API_BASE_URL={API_BASE_URL} Link={Link} categories={categories} loading={loading} hoveredCategory={hoveredCategory} handleCategoryHover={handleCategoryHover} handleCategoryLeave={handleCategoryLeave} handleDropdownEnter={handleDropdownEnter} handleDropdownLeave={handleDropdownLeave} />
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="md:hidden border-t">
           <div className="px-4 py-2">
-            {/* Mobile Search */}
-           
-              {/* <SearchBar Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch} /> */}
             
             
             {/* Mobile Navigation */}
             <div className="space-y-2">
-             
-              
               {/* Categories */}
               {loading ? (
                 <div className="text-gray-600 text-sm py-2">Loading categories...</div>
@@ -394,40 +222,12 @@ const Navbar = () => {
                   </div>
                 ))
               )}
-              <a
-                href="#top-brands"
-                className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors text-sm"
-              >
-                TOP BRANDS
-              </a>
-              <a
-                href="#best-sellers"
-                className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors text-sm"
-              >
-                BEST SELLERS
-              </a>
-              <a
-                href="#offers"
-                className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors text-sm"
-              >
-                OFFERS
-              </a>
+             
             </div>
             
             {/* Mobile Icons */}
             <div className="flex items-center space-x-4 mt-4 pt-4 border-t">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
-                <Heart className="h-5 w-5" />
-                <span>Wishlist</span>
-              </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
-                <ShoppingCart className="h-5 w-5" />
-                <span>Cart</span>
-              </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
-                <User className="h-5 w-5" />
-                <span>Login</span>
-              </button>
+             <IconsNav Link={Link} device="mobile" />
             </div>
           </div>
         </div>

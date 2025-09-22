@@ -46,12 +46,12 @@ const Hero = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative bg-gradient-to-r from-blue-50 to-blue-100 py-12 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative bg-white py-12 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg">
           <div className="relative h-96 md:h-[500px]">
             {/* Background Image */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-600">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary/60">
               <div className="absolute inset-0 bg-black bg-opacity-20"></div>
               
               {/* Photographer silhouette */}
