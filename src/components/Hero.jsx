@@ -11,7 +11,8 @@ const Hero = () => {
       title: 'One Tripod, Endless Possibilities.',
       subtitle: 'Capture stunning photos and video with one unique tripod.',
       cta: 'FIND OUT MORE',
-      brandLogo: 'M'
+      brandLogo: 'M',
+      image: './bg1.jpg'
     },
     {
       id: 2,
@@ -19,7 +20,8 @@ const Hero = () => {
       title: 'Professional Photography Made Simple.',
       subtitle: 'Discover our latest range of professional cameras and lenses.',
       cta: 'EXPLORE NOW',
-      brandLogo: 'C'
+      brandLogo: 'C',
+      image: './bg2.jpg'
     },
     {
       id: 3,
@@ -27,8 +29,27 @@ const Hero = () => {
       title: 'Innovation in Every Shot.',
       subtitle: 'Experience the future of photography with cutting-edge technology.',
       cta: 'LEARN MORE',
-      brandLogo: 'S'
-    }
+      brandLogo: 'S',
+      image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80'
+    },
+    {
+      id: 4,
+      brand: 'Sony',
+      title: 'Innovation in Every Shot.',
+      subtitle: 'Experience the future of photography with cutting-edge technology.',
+      cta: 'LEARN MORE',
+      brandLogo: 'S',
+      image: './bg3.jpg'
+    },
+     {
+      id: 2,
+      brand: 'Canon',
+      title: 'Professional Photography Made Simple.',
+      subtitle: 'Discover our latest range of professional cameras and lenses.',
+      cta: 'EXPLORE NOW',
+      brandLogo: 'C',
+      image: './bg4.jpg'
+    },
   ];
 
   const nextSlide = () => {
@@ -46,84 +67,61 @@ const Hero = () => {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <section className="relative bg-white py-12 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
-        <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg">
-          <div className="relative h-96 md:h-[500px]">
+    <section className="relative bg-gray-50   overflow-hidden">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-6 ">
+        <div className="relative bg-white overflow-hidden ">
+          <div className="relative  ">
             {/* Background Image */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/80 to-primary/60">
-              <div className="absolute inset-0 bg-black bg-opacity-20"></div>
-              
-              {/* Photographer silhouette */}
-              <div className="absolute left-8 bottom-8 w-64 h-64 opacity-30">
-                <svg viewBox="0 0 200 200" className="w-full h-full text-white fill-current">
-                  {/* Photographer figure */}
-                  <circle cx="100" cy="60" r="12" />
-                  <rect x="90" y="72" width="20" height="40" rx="3" />
-                  <rect x="85" y="85" width="30" height="15" rx="5" />
-                  <rect x="75" y="112" width="50" height="8" rx="4" />
-                  <rect x="80" y="120" width="15" height="30" rx="3" />
-                  <rect x="105" y="120" width="15" height="30" rx="3" />
-                  
-                  {/* Tripod */}
-                  <line x1="130" y1="120" x2="130" y2="160" stroke="currentColor" strokeWidth="2" />
-                  <line x1="130" y1="160" x2="115" y2="175" stroke="currentColor" strokeWidth="2" />
-                  <line x1="130" y1="160" x2="145" y2="175" stroke="currentColor" strokeWidth="2" />
-                  <line x1="130" y1="160" x2="130" y2="175" stroke="currentColor" strokeWidth="2" />
-                  
-                  {/* Camera */}
-                  <rect x="125" y="115" width="15" height="10" rx="2" />
-                  <circle cx="132" cy="120" r="3" />
-                </svg>
-              </div>
-            </div>
+          
+             <img src={currentSlideData.image} alt={currentSlideData.brand} className='lg:rounded-bl-2xl lg:rounded-br-2xl rounded-2xl lg:rounded-t-none size-full bg-cover bg-center bg-no-repeat object-cover px-2 w-full h-[10rem] sm:h-[15] md:h-[15rem] lg:h-[20rem] overflow-hidden cursor-pointer"' />
+            
             
             {/* Content Overlay */}
             <div className="absolute inset-0 flex items-center justify-end pr-8 md:pr-16">
               <div className="text-right text-white max-w-md">
                 {/* Brand Logo */}
-                <div className="mb-4">
+                {/* <div className="mb-4">
                   <div className="inline-flex items-center space-x-2 bg-white bg-opacity-20 px-4 py-2 rounded-lg backdrop-blur-sm">
                     <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
                       <span className="text-white font-bold text-sm">{currentSlideData.brandLogo}</span>
                     </div>
                     <span className="text-white font-bold text-lg">{currentSlideData.brand}</span>
                   </div>
-                </div>
+                </div> */}
                 
                 {/* Main Content */}
-                <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+                {/* <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
                   {currentSlideData.title.split(',').map((part, index) => (
                     <span key={index}>
                       {part.trim()}
                       {index < currentSlideData.title.split(',').length - 1 && <br />}
                     </span>
                   ))}
-                </h1>
-                <p className="text-lg md:text-xl mb-6 text-blue-100">
+                </h1> */}
+                {/* <p className="text-lg md:text-xl mb-6 text-blue-100">
                   {currentSlideData.subtitle.split(' and').map((part, index) => (
                     <span key={index}>
                       {part.trim()}
                       {index < currentSlideData.subtitle.split(' and').length - 1 && <br />}
                     </span>
                   ))}
-                </p>
-                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
+                </p> */}
+                {/* <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
                   {currentSlideData.cta}
-                </button>
+                </button> */}
               </div>
             </div>
             
             {/* Navigation Arrows */}
             <button 
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all backdrop-blur-sm"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white md:p-3 p-1 rounded-full transition-all backdrop-blur-sm"
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
             <button 
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all backdrop-blur-sm"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white md:p-3 p-1 rounded-full transition-all backdrop-blur-sm"
             >
               <ChevronRight className="h-6 w-6" />
             </button>

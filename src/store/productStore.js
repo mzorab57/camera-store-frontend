@@ -50,18 +50,21 @@ export const useProductStore = create((set, get) => ({
         console.log('Products from array response:', products);
         
         stats.products_total = products.length;
-        stats.products_active = products.filter(p => p.status === 'active').length;
+        stats.products_active = products.filter(p => p.status === 'active' || p.is_active === 1 || p.is_active === '1').length;
       } else if (response.data && Array.isArray(response.data)) {
         // If response has data field with array
         products = response.data;
         stats.products_total = products.length;
-        stats.products_active = products.filter(p => p.status === 'active').length;
+        stats.products_active = products.filter(p => p.status === 'active' || p.is_active === 1 || p.is_active === '1').length;
       }
       
-   
+      // Filter to only include active products
+      const activeProducts = products.filter(product => 
+        product.status === 'active' || product.is_active === 1 || product.is_active === '1'
+      );
       
       set({
-        latestProducts: products,
+        latestProducts: activeProducts,
         stats: stats,
         loading: false,
         error: null
@@ -93,8 +96,13 @@ export const useProductStore = create((set, get) => ({
         products = response.data;
       }
       
+      // Filter to only include active products
+      const activeVideoProducts = products.filter(product => 
+        product.status === 'active' || product.is_active === 1 || product.is_active === '1'
+      );
+      
       set({
-        videoProducts: products,
+        videoProducts: activeVideoProducts,
         videoLoading: false,
         videoError: null
       });
@@ -129,8 +137,13 @@ export const useProductStore = create((set, get) => ({
         products = response.data;
       }
       
+      // Filter to only include active products
+      const activePhotoProducts = products.filter(product => 
+        product.status === 'active' || product.is_active === 1 || product.is_active === '1'
+      );
+      
       set({
-        photoProducts: products,
+        photoProducts: activePhotoProducts,
         photoLoading: false,
         photoError: null
       });
@@ -147,15 +160,23 @@ export const useProductStore = create((set, get) => ({
     }
   },
 
-  // Get all products combined
+  // Get all products combined (only active products)
   getAllProducts: () => {
     const { latestProducts, videoProducts, photoProducts } = get();
     const allProducts = [...latestProducts, ...videoProducts, ...photoProducts];
-    // Remove duplicates based on id
+    // Remove duplicates based on id and filter only active products
     const uniqueProducts = allProducts.filter((product, index, self) => 
-      index === self.findIndex(p => p.id === product.id)
+      index === self.findIndex(p => p.id === product.id) && 
+      (product.status === 'active' || product.is_active === 1 || product.is_active === '1')
     );
     return uniqueProducts;
+  },
+
+  // Get only active products from any product array
+  getActiveProducts: (products) => {
+    return products.filter(product => 
+      product.status === 'active' || product.is_active === 1 || product.is_active === '1'
+    );
   },
 
   // Clear error

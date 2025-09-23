@@ -1,26 +1,24 @@
-import React from 'react'
-
 const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategory, handleCategoryHover, handleCategoryLeave, handleDropdownEnter, handleDropdownLeave }) => {
   return (
-        <div className=" bg-primary mx-auto px-4 sm:px-6 lg:px-8 rounded-tl-xl  rounded-tr-xl">
-          <div className="hidden md:flex items-center justify-between py-3">
+        <div className=" bg-primary mx-auto  rounded-tl-xl relative rounded-tr-xl">
+          <div className="hidden md:flex  items-center py-1">
           
             {/* Categories */}
-            <div className="flex items-center space-x-4 relative">
+            <div className={` grid grid-cols-8 py-2  items-center space-x-1 `} >
              {loading ? (
                <div className="text-white text-sm">Loading categories...</div>
             ) : (
               categories.map((category) => (
                 <div
                   key={category.id}
-                  className="relative group"
+                  className="relative group   "
                   onMouseEnter={() => handleCategoryHover(category)}
                   onMouseLeave={handleCategoryLeave}
                 >
                   <Link
                     to={`/${category.slug.toLowerCase()}`}
                     state={{ category: category, categoryName: category.name}}
-                    className="text-white hover:text-blue-200 w-32 font-medium text-xs transition-colors px-2 py-1 rounded uppercase flex items-center gap-1"
+                    className="text-white  hover:text-blue-200  w-fit  text-xs transition-colors px-1 py-1 rounded uppercase flex items-center "
                   >
                     {category.name}
                   </Link>
@@ -28,7 +26,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                   {/* Dropdown Menu */}
                   {hoveredCategory === category.id && category.subcategories && (
                     <div 
-                      className="absolute top-full left-0 mt-1 bg-white shadow-xl rounded-lg border whitespace-nowrap z-40 animate-in fade-in-0 zoom-in-95 duration-200"
+                      className="absolute  top-10 left-0  bg-white shadow-xl  rounded-lg border whitespace-nowrap z-40 animate-in fade-in-0 zoom-in-95 duration-700"
                       onMouseEnter={handleDropdownEnter}
                       onMouseLeave={handleDropdownLeave}
                     >
@@ -45,9 +43,9 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                   .map((subcategory) => (
                                     <Link
                                       key={`photo-${subcategory.id}`}
-                                      to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
-                                      state={{ subCategories: category.subcategories }}
-                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
+                                      to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
+                         state={{ products:subcategory.products }}
+                                      className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (
                                         <img 
@@ -78,9 +76,9 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                   .map((subcategory) => (
                                     <Link
                                       key={`video-${subcategory.id}`}
-                                      to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
-                                       state={{ subCategories: category.subcategories }}
-                                      className="block px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
+                                       to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
+                                      state={{ products:subcategory.products }}
+                                      className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (
                                         <img 
@@ -111,8 +109,8 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                   .map((subcategory) => (
                                     <Link
                                       key={`both-${subcategory.id}`}
-                                      to={`/${category.slug.toLowerCase()}/${subcategory.type.toLowerCase()}/${subcategory.slug.toLowerCase()}`}
-                                      state={{ subCategories: category.subcategories }}
+                                       to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
+                                       state={{ products:subcategory.products }}
                                       className="flex items-center gap-2 px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (

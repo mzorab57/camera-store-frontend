@@ -8,6 +8,9 @@ const SubCategories = () => {
   const location = useLocation();
   const { categoryName, subcategoryType, subcategoryName } = useParams();
   const productList = location.state?.products || [];
+ 
+  const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost/api";
     
   
   const { 
@@ -88,7 +91,7 @@ const SubCategories = () => {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
         </div>
       </div>
@@ -115,7 +118,7 @@ const SubCategories = () => {
         <nav className="flex mb-8" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
             <li className="inline-flex items-center">
-              <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+              <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary">
                 Home
               </Link>
             </li>
@@ -124,7 +127,7 @@ const SubCategories = () => {
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-                <Link to={`/${categoryName}`} className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">
+                <Link to={`/${categoryName}`} className="ml-1 text-sm font-medium text-gray-700 hover:text-primary md:ml-2">
                   {categoryName}
                 </Link>
               </div>
@@ -182,7 +185,7 @@ const SubCategories = () => {
                     onClick={() => setSelectedType(filter.id)}
                     className={`flex items-center px-4 py-2 rounded-lg border transition-all duration-200 ${
                       selectedType === filter.id
-                        ? 'bg-blue-600 text-white border-blue-600'
+                        ? 'bg-primary text-white border-primary'
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                     }`}
                   >
@@ -190,7 +193,7 @@ const SubCategories = () => {
                     {filter.label}
                     <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
                       selectedType === filter.id
-                        ? 'bg-blue-500 text-white'
+                        ? 'border border-red-300 text-white'
                         : 'bg-gray-200 text-gray-600'
                     }`}>
                       {filter.count}
@@ -235,13 +238,13 @@ const SubCategories = () => {
               <div className="flex border border-gray-300 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 ${viewMode === 'grid' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`p-2 ${viewMode === 'grid' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 ${viewMode === 'list' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`p-2 ${viewMode === 'list' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -265,7 +268,7 @@ const SubCategories = () => {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors"
                 >
                   Clear Search
                 </button>
@@ -285,15 +288,18 @@ const SubCategories = () => {
                     <>
                       <div className="relative">
                         <img
-                          src={product.primary_image_url || 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400'}
+                          src={
+                                product.primary_image_url &&
+                                product.primary_image_url.startsWith("http")
+                                  ? product.primary_image_url
+                                  : product.primary_image_url
+                                  ? `${API_BASE_URL}/${product.primary_image_url}`
+                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                              }
                           alt={product.name}
                           className="w-full h-48 object-cover"
                         />
-                        <div className="absolute top-2 right-2">
-                          <button className="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                            <Heart className="w-4 h-4 text-gray-600" />
-                          </button>
-                        </div>
+                       
                         {product.discount_price && parseFloat(product.discount_price) > 0 && (
                           <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
                             -{product.discount_price}$
@@ -333,23 +339,23 @@ const SubCategories = () => {
                             )}
                           </div>
                         </div>
-                        <div className="flex gap-2">
-                          <button className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                            Add to Cart
-                          </button>
-                          <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                            View Details
-                          </button>
-                        </div>
+                      
                       </div>
                     </>
                   ) : (
                     <>
                       <div className="flex-shrink-0">
                         <img
-                          src={product.primary_image_url || 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400'}
+                          src={
+                                product.primary_image_url &&
+                                product.primary_image_url.startsWith("http")
+                                  ? product.primary_image_url
+                                  : product.primary_image_url
+                                  ? `${API_BASE_URL}/${product.primary_image_url}`
+                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                              }
                           alt={product.name}
-                          className="w-24 h-24 object-cover rounded-lg"
+                          className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -385,19 +391,7 @@ const SubCategories = () => {
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center justify-between mt-4">
-                          <div className="flex gap-2">
-                            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
-                              Add to Cart
-                            </button>
-                            <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                              View Details
-                            </button>
-                          </div>
-                          <button className="p-2 text-gray-400 hover:text-red-500 transition-colors">
-                            <Heart className="w-5 h-5" />
-                          </button>
-                        </div>
+                       
                       </div>
                     </>
                   )}

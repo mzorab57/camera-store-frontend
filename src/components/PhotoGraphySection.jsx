@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Camera, Star, Calendar, DollarSign, ChevronLeft, ChevronRight, Aperture } from 'lucide-react';
 import { useProductStore } from '../store/productStore';
+import { useNavigate } from 'react-router-dom';
 
 const PhotoGraphySection = () => {
   const { photoProducts, fetchPhotoProducts, photoLoading, photoError } = useProductStore();
   const sliderRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+   const navigate = useNavigate();
 
   useEffect(() => {
     fetchPhotoProducts();
@@ -43,10 +45,23 @@ const PhotoGraphySection = () => {
 
   const PhotoProductCard = ({ product }) => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
+   
+    
+    const handleProductClick = () => {
+      navigate('/details', { state: { product } });
+    };
     
     return (
-      <div className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
+      <div onClick={handleProductClick} className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4 flex items-center justify-center relative">
+           {product.discount_price && parseFloat(product.discount_price) > 0 && (
+            <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
+              
+              <span className="text-xs text-red-600 bg-red-100 rounded-full px-1 font-light">
+                {Math.round((parseFloat(product.discount_price) / parseFloat(product.price)) * 100)}% OFF
+              </span>
+            </div>
+          )}
           {product.primary_image_url ? (
             <>
               <img 
@@ -96,24 +111,15 @@ const PhotoGraphySection = () => {
             </div>
           </div>
           
-          {product.discount_price && parseFloat(product.discount_price) > 0 && (
-            <div className="flex items-center justify-between">
-              <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium">
-                Save ${parseFloat(product.discount_price).toFixed(2)}
-              </span>
-              <span className="text-xs text-green-600 font-medium">
-                {Math.round((parseFloat(product.discount_price) / parseFloat(product.price)) * 100)}% OFF
-              </span>
-            </div>
-          )}
+        
           
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          {/* <div className="flex items-center justify-between text-xs text-gray-500">
             <span className="font-medium">{product.brand}</span>
             <div className="flex items-center space-x-1">
               <Calendar className="h-3 w-3" />
               <span>{new Date(product.created_at).toLocaleDateString()}</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -137,7 +143,7 @@ const PhotoGraphySection = () => {
 
   if (photoError) {
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-10 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
             PHOTOGRAPHY EQUIPMENT
@@ -161,7 +167,7 @@ const PhotoGraphySection = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="pb-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-wider">
@@ -180,7 +186,7 @@ const PhotoGraphySection = () => {
         </div>
         
         {photoProducts.length === 0 ? (
-          <div className="text-center py-12">
+          <div  className="text-center py-12">
             <Camera className="h-12 w-12 mx-auto mb-4 text-gray-400" />
             <p className="text-gray-600">No photography equipment available</p>
           </div>

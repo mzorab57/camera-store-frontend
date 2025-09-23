@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Video, Star, Calendar, DollarSign, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { useProductStore } from '../store/productStore';
+import { useNavigate } from 'react-router-dom';
 
 const VideoGraphySection = () => {
   const { videoProducts, fetchVideoProducts, videoLoading, videoError } = useProductStore();
   const sliderRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchVideoProducts();
@@ -43,9 +45,12 @@ const VideoGraphySection = () => {
 
   const VideoProductCard = ({ product }) => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
+     const handleProductClick = () => {
+      navigate('/details', { state: { product } });
+    };
     
     return (
-      <div className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
+      <div onClick={handleProductClick} className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4 flex items-center justify-center relative">
           {product.discount_price && parseFloat(product.discount_price) > 0 && (
             <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">

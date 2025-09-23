@@ -20,7 +20,8 @@ export const productApi = {
         params: {
           limit: limit,
           sort: 'created_at',
-          order: 'DESC'
+          order: 'DESC',
+          is_active: 1
         }
       });
       console.log('Latest products:', response.data);
@@ -35,7 +36,9 @@ export const productApi = {
   // Get all products
   getProducts: async (params = {}) => {
     try {
-      const response = await api.get('/products/get.php', { params });
+      // Add is_active filter by default unless explicitly set to false
+      const finalParams = { is_active: 1, ...params };
+      const response = await api.get('/products/get.php', { params: finalParams });
       return response.data;
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -51,7 +54,8 @@ export const productApi = {
           type: 'videography',
           limit: limit,
           sort: 'created_at',
-          order: 'DESC'
+          order: 'DESC',
+          is_active: 1
         }
       });
       console.log('Video products:', response.data);
@@ -71,7 +75,8 @@ export const productApi = {
           type: 'photography',
           limit: limit,
           sort: 'created_at',
-          order: 'DESC'
+          order: 'DESC',
+          is_active: 1
         }
       });
       console.log('Photo products:', response.data);
@@ -86,7 +91,7 @@ export const productApi = {
   // Get product by ID
   getProductById: async (id) => {
     try {
-      const response = await api.get(`/products/get.php?id=${id}`);
+      const response = await api.get(`/products/get.php?id=${id}&is_active=1`);
       return response.data;
     } catch (error) {
       console.error('Error fetching product:', error);
@@ -97,7 +102,7 @@ export const productApi = {
   // Search products
   searchProducts: async (query) => {
     try {
-      const response = await api.get(`/products/search.php?q=${encodeURIComponent(query)}`);
+      const response = await api.get(`/products/search.php?q=${encodeURIComponent(query)}&is_active=1`);
       return response.data;
     } catch (error) {
       console.error('Error searching products:', error);

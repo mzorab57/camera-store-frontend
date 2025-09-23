@@ -13,7 +13,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
-  const { categories, fetchCategories, searchCategories, loading } = useCategoryStore();
+  const { categories, fetchCategories, searchCategories, loading , co } = useCategoryStore();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
 
@@ -74,16 +74,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" container mx-auto max-w-[76rem]  sticky top-0 z-50">
+    <nav className=" container mx-auto px-8  max-w-7xl bg-gray-50  sticky top-0 z-50">
       {/* Top Bar */}
-     <TopBar  Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
+     <TopBar categories={categories}  Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
 
       {/* NavigationMenu */}
-     <NavigationMenu API_BASE_URL={API_BASE_URL} Link={Link} categories={categories} loading={loading} hoveredCategory={hoveredCategory} handleCategoryHover={handleCategoryHover} handleCategoryLeave={handleCategoryLeave} handleDropdownEnter={handleDropdownEnter} handleDropdownLeave={handleDropdownLeave} />
+     <NavigationMenu API_BASE_URL={API_BASE_URL} Link={Link} categories={categories}  loading={loading} hoveredCategory={hoveredCategory} handleCategoryHover={handleCategoryHover} handleCategoryLeave={handleCategoryLeave} handleDropdownEnter={handleDropdownEnter} handleDropdownLeave={handleDropdownLeave} />
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden border-t">
+        <div className="md:hidden  border-t">
           <div className="px-4 py-2">
             
             
@@ -96,12 +96,13 @@ const Navbar = () => {
                 categories.map((category) => (
                   <div key={category.id} className="border-b border-gray-100 last:border-b-0">
                     <Link
-                      to={`/category/${category.name.toLowerCase()}`}
-                      className=" py-3 text-gray-700 hover:text-primary font-medium transition-colors text-sm uppercase flex items-center justify-between"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // Toggle category visibility in mobile
+                      to={`/${category.slug.toLowerCase()}`}
+                      state={{ category: category }}
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        toggleMenu();
                       }}
+                      className=" py-3 text-gray-700 hover:text-primary font-medium transition-colors text-sm uppercase flex items-center justify-between"
                     >
                       {category.name}
                       <ChevronsRight className="h-4 w-4" />

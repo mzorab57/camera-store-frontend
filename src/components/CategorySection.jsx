@@ -1,13 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Camera, Mic, Video, Headphones, Lightbulb, Monitor, Smartphone, Plane, CreditCard } from 'lucide-react';
 import { useCategoryStore } from '../store/categoryStore';
 
 const CategorySection = () => {
   const { categories, fetchCategories, loading, error } = useCategoryStore();
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
   useEffect(() => {
     fetchCategories();
   }, [fetchCategories]);
+  
+  // Auto-slide effect
+  useEffect(() => {
+    if (categories.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === categories.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000); // Change slide every 3 seconds
+    
+    return () => clearInterval(interval);
+  }, [categories.length]);
 
   // Icon mapping for categories
   const getIconForCategory = (categoryName) => {
@@ -28,19 +43,19 @@ const CategorySection = () => {
     const IconComponent = getIconForCategory(category.name);
     
     return (
-      <div className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer min-w-[200px] text-center group">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden bg-gray-100">
+      <div className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 p-2 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer min-w-[200px] text-center group">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 flex items-center justify-center mx-auto mb-4 overflow-hidden">
           {category.image_url ? (
             <img 
               src={category.image_url.startsWith('http') ? category.image_url : `${API_BASE_URL}/${category.image_url}`}
               alt={category.name}
-              className="w-full h-full object-cover rounded-full"
+              className="w-full h-full object-cover rounded"
               onError={(e) => {
-                e.target.parentElement.innerHTML = `<div class="bg-blue-600 w-full h-full rounded-full flex items-center justify-center group-hover:bg-blue-700 transition-colors"><svg class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>`;
+                e.target.parentElement.innerHTML = `<div class="bg-primary w-full h-full rounded-full flex items-center justify-center group-hover:bg-primary/50 transition-colors"><svg class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>`;
               }}
             />
           ) : (
-            <div className="bg-blue-600 w-full h-full rounded-full flex items-center justify-center group-hover:bg-blue-700 transition-colors">
+            <div className="bg-primary w-full h-full rounded-full flex items-center justify-center group-hover:bg-primary/50 transition-colors">
               <IconComponent className="h-8 w-8 text-white" />
             </div>
           )}
@@ -65,7 +80,7 @@ const CategorySection = () => {
             CATEGORIES
           </h2>
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             <span className="ml-3 text-gray-600">Loading categories...</span>
           </div>
         </div>
@@ -75,7 +90,7 @@ const CategorySection = () => {
 
   if (error) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-16 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
             CATEGORIES
@@ -88,7 +103,7 @@ const CategorySection = () => {
             </div>
             <button 
               onClick={() => fetchCategories()}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-primary hover:bg-primary/50 text-white px-6 py-2 rounded-lg transition-colors"
             >
               Try Again
             </button>
@@ -99,7 +114,7 @@ const CategorySection = () => {
   }
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-10 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
           CATEGORIES
@@ -111,10 +126,33 @@ const CategorySection = () => {
             <p className="text-gray-600">No categories available</p>
           </div>
         ) : (
-          <div className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
-            {categories.map((category) => (
-              <CategoryCard key={category.id} category={category} />
-            ))}
+          <div className="relative overflow-hidden">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / Math.min(categories.length, 4))}%)`,
+                width: `${Math.max(categories.length, 4) * 25}%`
+              }}
+            >
+              {categories.concat(categories.slice(0, 8)).map((category, index) => (
+                <div key={`${category.id}-${index}`} className=" flex-shrink-0 px-2">
+                  <CategoryCard category={category} />
+                </div>
+              ))}
+            </div>
+            
+            {/* Dots indicator */}
+            <div className="flex justify-center mt-6 space-x-2">
+              {categories.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentIndex ? 'bg-primary' : 'bg-gray-300'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>

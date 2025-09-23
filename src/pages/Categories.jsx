@@ -9,7 +9,7 @@ const Categories = () => {
   const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || "http://localhost/api";
   return (
-    <div className="container mx-auto max-w-7xl w-full min-h-full">
+    <div className="container mx-auto max-w-7xl px-8 w-full min-h-full">
          {/* Breadcrumb */}
         <nav className="flex mb-8" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
@@ -18,6 +18,7 @@ const Categories = () => {
                 Home
               </Link>
             </li>
+            
             <li>
               <div className="flex items-center">
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
@@ -36,18 +37,18 @@ const Categories = () => {
       {category &&  (
         <div className="mb-12 container mx-auto max-w-7xl w-full place-self-center">
             
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl font-bold text-gray-700 mb-6">
             Browse by Category
           </h2>
           <div className=" ">
             {/* Videography Section */}
             {category.subcategories.filter((sub) => sub.type === "videography")
               .length > 0 && (
-              <div className="w-full px-2 sm:px-4 py-2 border-t border-gray-100">
-                <h4 className="text-sm font-semibold text-gray-800 mb-2 uppercase">
+              <div className="w-full  py-2 border-t border-gray-100">
+                <h4 className="text-lg font-semibold text-primary mb-2 uppercase">
                   Videography
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {category.subcategories
                     .filter((sub) => sub.type === "videography")
                     .map((subcategory) => (
@@ -55,10 +56,10 @@ const Categories = () => {
                         key={subcategory.slug}
                         to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
                         state={{ products:subcategory.products }}
-                        className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-blue-300"
+                        className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-primary/30"
                       >
                         <div className="mb-2 sm:mb-3">
-                          <div className="w-8 h-8 sm:w-12 sm:h-12 mx-auto bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                          <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/50 transition-colors">
                             <img
                               src={
                                 subcategory.image_url &&
@@ -69,11 +70,11 @@ const Categories = () => {
                                   : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
                               }
                               alt={subcategory.name}
-                              className="w-4 h-4 sm:w-6 sm:h-6"
+                              // className="size-8 sm:size-12 group-hover:bg-primary/50"
                             />
                           </div>
                         </div>
-                        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                           {subcategory.name}
                         </h3>
                         <p className="text-xs sm:text-sm text-gray-500 capitalize">
@@ -93,11 +94,11 @@ const Categories = () => {
              {/* Photography Section */}
             {category.subcategories.filter((sub) => sub.type === "photography")
               .length > 0 && (
-              <div className="w-full px-2 sm:px-4 py-2 border-t border-gray-100">
-                <h4 className="text-sm font-semibold text-gray-800 mb-2 uppercase">
+              <div className="w-full  py-2 border-t border-gray-100">
+                <h4 className="text-lg font-semibold text-primary mb-2 uppercase">
                   Photography
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {category.subcategories
                     .filter((sub) => sub.type === "photography")
                     .map((subcategory) => (
@@ -105,10 +106,10 @@ const Categories = () => {
                         key={subcategory.slug}
                         to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
                          state={{ products:subcategory.products }}
-                        className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-blue-300"
+                        className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-primary/30"
                       >
                         <div className="mb-2 sm:mb-3">
-                          <div className="w-8 h-8 sm:w-12 sm:h-12 mx-auto bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                          <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/50 transition-colors">
                             <img
                               src={
                                 subcategory.image_url &&
@@ -119,11 +120,11 @@ const Categories = () => {
                                   : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
                               }
                               alt={subcategory.name}
-                              className="w-4 h-4 sm:w-6 sm:h-6"
+                              // className="w-4 h-4 sm:w-6 sm:h-6"
                             />
                           </div>
                         </div>
-                        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                           {subcategory.name}
                         </h3>
                         <p className="text-xs sm:text-sm text-gray-500 capitalize">
@@ -142,11 +143,11 @@ const Categories = () => {
              {/* both Section */}
             {category.subcategories.filter((sub) => sub.type === "both")
               .length > 0 && (
-              <div className="w-full px-2 sm:px-4 py-2 border-t border-gray-100">
-                <h4 className="text-sm font-semibold text-gray-800 mb-2 uppercase">
+              <div className="w-full py-2 border-t border-gray-100">
+                <h4 className="text-lg font-semibold text-primary mb-2 uppercase">
                   Both
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {category.subcategories
                     .filter((sub) => sub.type === "both")
                     .map((subcategory) => (
@@ -154,10 +155,10 @@ const Categories = () => {
                         key={subcategory.slug}
                         to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
                          state={{ products:subcategory.products }}
-                        className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-blue-300"
+                        className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-primary/30"
                       >
                         <div className="mb-2 sm:mb-3">
-                          <div className="w-8 h-8 sm:w-12 sm:h-12 mx-auto bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                          <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/50 transition-colors">
                             <img
                               src={
                                 subcategory.image_url &&
@@ -168,11 +169,11 @@ const Categories = () => {
                                   : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
                               }
                               alt={subcategory.name}
-                              className="w-4 h-4 sm:w-6 sm:h-6"
+                              // className="w-4 h-4 sm:w-6 sm:h-6"
                             />
                           </div>
                         </div>
-                        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                           {subcategory.name}
                         </h3>
                         <p className="text-xs sm:text-sm text-gray-500 capitalize">

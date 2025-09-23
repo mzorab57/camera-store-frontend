@@ -18,7 +18,7 @@ function Products() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -49,7 +49,7 @@ function Products() {
               onClick={() => setFilter('all')}
               className={`px-6 py-2 rounded-full font-medium transition-colors ${
                 filter === 'all'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -59,7 +59,7 @@ function Products() {
               onClick={() => setFilter('photography')}
               className={`px-6 py-2 rounded-full font-medium transition-colors ${
                 filter === 'photography'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -69,7 +69,7 @@ function Products() {
               onClick={() => setFilter('videography')}
               className={`px-6 py-2 rounded-full font-medium transition-colors ${
                 filter === 'videography'
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -130,7 +130,7 @@ function Products() {
                   <span className="capitalize">{product.category}</span>
                 </div>
                 
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2">
+                <button className="w-full bg-primary text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2">
                   <ShoppingCart className="h-4 w-4" />
                   <span>Add to Cart</span>
                 </button>

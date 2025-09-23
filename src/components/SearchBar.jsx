@@ -4,11 +4,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useProductStore } from '../store/productStore';
 import { Link } from 'react-router-dom';
 
-const SearchBar = ({ Search, searchQuery, setSearchQuery, handleSearch }) => {
+const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSearch }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const dropdownRef = useRef(null);
   const { getAllProducts } = useProductStore();
+
+   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
 
   // Handle search input change
   const handleInputChange = (e) => {
@@ -58,6 +60,7 @@ const SearchBar = ({ Search, searchQuery, setSearchQuery, handleSearch }) => {
   return (
     <>
       <div className="flex flex-1 max-w-2xl mx-2 mb-1 md:mx-8" ref={dropdownRef}>
+        
         <form onSubmit={handleFormSubmit} className="w-full relative">
           <div className="relative">
             <input
@@ -85,13 +88,14 @@ const SearchBar = ({ Search, searchQuery, setSearchQuery, handleSearch }) => {
                 {searchResults.map((product) => (
                   <Link
                     key={product.id}
-                    to={`/product/${product.id}`}
+                    to={`/details/${product.slug}`}
+                    state={{ product }}
+                    onClick={() => {setShowDropdown(false)}}
                     className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors"
-                    onClick={() => setShowDropdown(false)}
                   >
                     <div className="flex-shrink-0 w-12 h-12 mr-3">
                       <img
-                        src={product.primary_image_url || 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400'}
+                       src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/${product.primary_image_url}`}
                         alt={product.name}
                         className="w-full h-full object-cover rounded-md"
                       />

@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ShoppingBag, Star, Calendar, DollarSign, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useProductStore } from '../store/productStore';
+import { useNavigate } from 'react-router-dom';
 
 const LatestProducts = () => {
   const { latestProducts, stats, fetchLatestProducts, loading, error } = useProductStore();
+  const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -44,8 +46,15 @@ const LatestProducts = () => {
   const ProductCard = ({ product }) => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
     
+    const handleProductClick = () => {
+      navigate('/details', { state: { product } });
+    };
+    
     return (
-      <div className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2  px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
+      <div 
+        onClick={handleProductClick}
+        className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2  px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group"
+      >
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden  mb-3 md:mb-4 flex items-center justify-center">
           {product.primary_image_url ? (
             <img 
@@ -95,7 +104,7 @@ const LatestProducts = () => {
 
   if (loading) {
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
             LATEST PRODUCTS
@@ -111,7 +120,7 @@ const LatestProducts = () => {
 
   if (error) {
     return (
-      <section className="py-16 bg-gray-50">
+      <section className="py-10 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
             LATEST PRODUCTS
@@ -135,13 +144,13 @@ const LatestProducts = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-wider">
             LATEST PRODUCTS
           </h2>
-          <div className="flex justify-center space-x-8 text-sm text-gray-600">
+          {/* <div className="flex justify-center space-x-8 text-sm text-gray-600">
             <div className="flex items-center space-x-1">
               <ShoppingBag className="h-4 w-4" />
               <span>{stats.products_total} Total Products</span>
@@ -150,7 +159,7 @@ const LatestProducts = () => {
               <Star className="h-4 w-4" />
               <span>{stats.products_active} Active</span>
             </div>
-          </div>
+          </div> */}
         </div>
         
         {latestProducts.length === 0 ? (
