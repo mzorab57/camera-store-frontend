@@ -48,11 +48,14 @@ const PhotoGraphySection = () => {
    
     
     const handleProductClick = () => {
-      navigate('/details', { state: { product } });
+      navigate(`/details/${product.slug}`, { state: { product } });
     };
     
     return (
-      <div onClick={handleProductClick} className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
+      <div onClick={() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          handleProductClick();
+        }} className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4 flex items-center justify-center relative">
            {product.discount_price && parseFloat(product.discount_price) > 0 && (
             <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
@@ -88,12 +91,11 @@ const PhotoGraphySection = () => {
             {product.name}
           </h3>
           
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1">
+           <div className="flex items-center space-x-1">
               {product.discount_price && parseFloat(product.discount_price) > 0 ? (
                 <div className="flex flex-col">
                   <span className="font-bold text-green-600 text-xs md:text-lg">
-                    ${(parseFloat(product.price) - parseFloat(product.discount_price)).toFixed(2)}
+${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.discount_price)) / 100)).toFixed(2)}
                   </span>
                   <span className="text-xs text-gray-500 line-through">
                     ${parseFloat(product.price).toFixed(2)}
@@ -105,11 +107,6 @@ const PhotoGraphySection = () => {
                 </span>
               )}
             </div>
-            <div className="flex items-center space-x-1">
-              <Star className="h-4 w-4 text-yellow-500 fill-current" />
-              <span className="text-xs text-gray-600">4.8</span>
-            </div>
-          </div>
           
         
           

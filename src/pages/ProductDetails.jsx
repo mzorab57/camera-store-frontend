@@ -23,6 +23,9 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('specifications');
   const [isWishlisted, setIsWishlisted] = useState(false);
+  console.log(product);
+  console.log("product");
+  
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
 
@@ -61,9 +64,12 @@ const ProductDetails = () => {
   };
 
   const groupedSpecs = product.specifications?.reduce((acc, spec) => {
-    const group = spec.group || 'General';
+    const group = spec.group || spec.spec_group;
     if (!acc[group]) acc[group] = [];
     acc[group].push(spec);
+    console.log("acc");
+    console.log(acc);
+    
     return acc;
   }, {}) || {};
 
@@ -176,14 +182,14 @@ const ProductDetails = () => {
               <div className="flex items-center space-x-4 mb-4">
                 {product.discount_price ? (
                   <>
-                    <span className="text-3xl font-bold text-green-600">
-                      ${parseFloat(product.discount_price).toFixed(2)}
-                    </span>
-                    <span className="text-xl text-gray-500 line-through">
+                   <span className="font-bold text-green-600 text-xs md:text-2xl">
+                    ${parseFloat(product.price) - ((parseFloat(product.price) * (parseFloat(product.discount_price) / 100)).toFixed(2))}
+                  </span>
+                    <span className="text-lg text-gray-500 line-through">
                       ${parseFloat(product.price).toFixed(2)}
                     </span>
-                    <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm font-medium">
-                      {discountPercentage}% OFF
+                    <span className="bg-red-100 text-red-800 px-1.5 py-0.5 rounded-full text-xs font-medium">
+                      {parseFloat(product.discount_price)}% OFF
                     </span>
                   </>
                 ) : (
@@ -295,8 +301,8 @@ const ProductDetails = () => {
                             .sort((a, b) => a.display_order - b.display_order)
                             .map((spec, index) => (
                             <div key={index} className="flex justify-between py-3 border-b border-gray-100 last:border-b-0">
-                              <span className="font-medium text-gray-700">{spec.name}</span>
-                              <span className="text-gray-600">{spec.value}</span>
+                              <span className="font-medium text-gray-700">{spec.name || spec.spec_name}</span>
+                              <span className="text-gray-600">{spec.value || spec.spec_value}</span>
                             </div>
                           ))}
                         </div>

@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
 import { useProductStore } from '../store/productStore';
 import { Filter, Grid, List, Search, Star, Heart, ShoppingCart, Camera, Video, Image } from 'lucide-react';
+import productApi from '../lib/productApi';
 
 
 const SubCategories = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { categoryName, subcategoryType, subcategoryName } = useParams();
-  const productList = location.state?.products || [];
- 
+  const productList = location.state.products || [];
+  console.log("productList");
+  console.log(productList);
+  
+
   const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || "http://localhost/api";
+    
+    const handleProductClick = (product ) => {
+      navigate(`/details/${product.slug}`, { state: { product } });
+    };
     
   
   const { 
@@ -172,26 +181,26 @@ const SubCategories = () => {
        
 
         {/* Filters and Controls */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
           {/* Type Filters */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Filter by Type</h3>
-            <div className="flex flex-wrap gap-3">
+          <div className="mb-4 sm:mb-6">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Filter by Type</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
               {typeFilters.map((filter) => {
                 const IconComponent = filter.icon;
                 return (
                   <button
                     key={filter.id}
                     onClick={() => setSelectedType(filter.id)}
-                    className={`flex items-center px-4 py-2 rounded-lg border transition-all duration-200 ${
+                    className={`flex items-center justify-center sm:justify-start w-full px-3 sm:px-4 py-2 rounded-lg border transition-all duration-200 text-sm ${
                       selectedType === filter.id
                         ? 'bg-primary text-white border-primary'
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                     }`}
                   >
-                    <IconComponent className="w-4 h-4 mr-2" />
-                    {filter.label}
-                    <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
+                    <IconComponent className="w-4 h-4 mr-2 flex-shrink-0" />
+                    <span className="truncate">{filter.label}</span>
+                    <span className={`ml-2 px-2 py-1 rounded-full text-xs flex-shrink-0 ${
                       selectedType === filter.id
                         ? 'border border-red-300 text-white'
                         : 'bg-gray-200 text-gray-600'
@@ -205,20 +214,22 @@ const SubCategories = () => {
           </div>
 
           {/* Search and Controls */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div className="text-sm text-gray-600">
+          <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
+            
+            <div className="text-xs sm:text-sm text-gray-600 order-2 lg:order-1">
               Showing {filteredProducts?.length || 0} of {productList?.length || 0} products
             </div>
-            <div className="flex items-center gap-2">
+            
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-2 order-1 lg:order-2">
               {/* Search */}
-              <div className="relative">
+              <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  className="pl-10 w-full pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
               
@@ -226,7 +237,7 @@ const SubCategories = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                className="px-3 w-full sm:w-48 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               >
                 <option value="name">Sort by Name</option>
                 <option value="price-low">Price: Low to High</option>
@@ -235,18 +246,20 @@ const SubCategories = () => {
               </select>
               
               {/* View Mode */}
-              <div className="flex border border-gray-300 rounded-lg overflow-hidden">
+              <div className="flex w-full sm:w-fit border border-gray-300 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 ${viewMode === 'grid' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`flex-1 sm:flex-none p-2 sm:px-4 flex items-center justify-center ${viewMode === 'grid' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
-                  <Grid className="w-4 h-4" />
+                  <Grid className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline text-sm">Grid</span>
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 ${viewMode === 'list' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                  className={`flex-1 sm:flex-none p-2 sm:px-4 flex items-center justify-center ${viewMode === 'list' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
                 >
-                  <List className="w-4 h-4" />
+                  <List className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline text-sm">List</span>
                 </button>
               </div>
             </div>
@@ -254,7 +267,7 @@ const SubCategories = () => {
         </div>
 
         {/* Products Display */}
-        <div className=" rounded-lg shadow-sm p-6 ">
+        <div className=" rounded-lg shadow-sm p-6  ">
           {/* Products Grid/List */}
           {(filteredProducts?.length || 0) === 0 ? (
             <div className="bg-white rounded-lg shadow-sm p-12 text-center">
@@ -276,17 +289,22 @@ const SubCategories = () => {
             </div>
           ) : (
             <div className={viewMode === 'grid' 
-              ? 'grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6'
+              ? 'grid grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6'
               : 'space-y-4'
             }>
               {filteredProducts.map((product) => (
-                <div key={product.id} className={viewMode === 'grid' 
+                <Link 
+                  to={`/details/${product.slug}`}
+                  state={{ product }}
+                  onClick={()=> window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  
+                 key={product.id} className={viewMode === 'grid' 
                   ? 'bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200'
-                  : 'bg-white border border-gray-200 rounded-lg p-4 flex items-center space-x-4 hover:shadow-md transition-shadow duration-200'
+                  : 'bg-white border border-gray-200 rounded-lg p-4 flex flex-col lg:flex-row items-center space-x-4 hover:shadow-md transition-shadow duration-200'
                 }>
                   {viewMode === 'grid' ? (
                     <>
-                      <div className="relative">
+                      <div className="relative" >
                         <img
                           src={
                                 product.primary_image_url &&
@@ -297,7 +315,8 @@ const SubCategories = () => {
                                   : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
                               }
                           alt={product.name}
-                          className="w-full h-48 object-cover"
+                                        className="size-44 place-self-center p-2 object-contain group-hover:scale-110 transition-transform duration-300"
+
                         />
                        
                         {product.discount_price && parseFloat(product.discount_price) > 0 && (
@@ -316,25 +335,29 @@ const SubCategories = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="p-4">
+                      <div className="p-4 ">
+                        <div className='flex justify-between items-center'>
                         <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
                         <p className="text-sm text-gray-600 mb-2">{product.brand}</p>
-                        <div className="flex items-center mb-3">
-                          <div className="flex items-center">
+                        </div>
+                        <div className="flex justify-between items-center mb-3">
+                          <div className="flex  items-center">
                             {[...Array(5)].map((_, i) => (
                               <Star key={i} className={`w-4 h-4 ${
                                 i < (product.rating || 4) ? 'text-yellow-400 fill-current' : 'text-gray-300'
                               }`} />
                             ))}
+                            <span className="text-sm text-gray-600 ml-2">({product.rating || 4.0})</span>
                           </div>
-                          <span className="text-sm text-gray-600 ml-2">({product.rating || 4.0})</span>
+                           <span className="text-lg font-bold text-gray-900">${product.price}  </span>
+                           
                         </div>
                         <div className="flex items-center justify-between mb-4">
                           <div>
-                            <span className="text-lg font-bold text-gray-900">${product.price}</span>
-                            {product.discount_p && parseFloat(product.discount_p) > 0 && (
+                           
+                            {product.discount_price && parseFloat(product.discount_price) > 0 && (
                               <span className="text-sm text-gray-500 line-through ml-2">
-                                ${(parseFloat(product.price) + parseFloat(product.discount_p)).toFixed(2)}
+                                ${(parseFloat(product.price) + parseFloat(product.discount_price)).toFixed(2)}
                               </span>
                             )}
                           </div>
@@ -344,7 +367,7 @@ const SubCategories = () => {
                     </>
                   ) : (
                     <>
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0 ">
                         <img
                           src={
                                 product.primary_image_url &&
@@ -355,10 +378,10 @@ const SubCategories = () => {
                                   : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
                               }
                           alt={product.name}
-                          className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                          className="size-28 object-contain group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-0 ">
                         <div className="flex items-start justify-between">
                           <div>
                             <h3 className="font-semibold text-gray-900 mb-1">{product.name}</h3>
@@ -384,9 +407,9 @@ const SubCategories = () => {
                           </div>
                           <div className="text-right">
                             <div className="text-lg font-bold text-gray-900">${product.price}</div>
-                            {product.discount_p && parseFloat(product.discount_p) > 0 && (
+                            {product.discount_price && parseFloat(product.discount_price) > 0 && (
                               <div className="text-sm text-gray-500 line-through">
-                                ${(parseFloat(product.price) + parseFloat(product.discount_p)).toFixed(2)}
+                                ${(parseFloat(product.price) + parseFloat(product.discount_price)).toFixed(2)}
                               </div>
                             )}
                           </div>
@@ -395,7 +418,7 @@ const SubCategories = () => {
                       </div>
                     </>
                   )}
-                </div>
+                </Link>
               ))}
             </div>
           )}

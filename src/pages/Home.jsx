@@ -4,6 +4,7 @@ import CategorySection from '../components/CategorySection';
 import LatestProducts from '../components/LatestProducts';
 import VideoGraphySection from '../components/VideoGraphySection';
 import PhotoGraphySection from '../components/PhotoGraphySection';
+import Brands from '../components/Brands';
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
       <LatestProducts />
       <VideoGraphySection />
       <PhotoGraphySection />
+      <Brands />
     </div>
   );
 }

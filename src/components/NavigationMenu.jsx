@@ -1,3 +1,6 @@
+
+
+
 const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategory, handleCategoryHover, handleCategoryLeave, handleDropdownEnter, handleDropdownLeave }) => {
   return (
         <div className=" bg-primary mx-auto  rounded-tl-xl relative rounded-tr-xl">
@@ -44,7 +47,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                     <Link
                                       key={`photo-${subcategory.id}`}
                                       to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
-                         state={{ products:subcategory.products }}
+                                      state={{ products:subcategory.products }}
                                       className="flex items-center px-2 py-1 text-sm text-gray-600 hover:text-primary hover:bg-blue-50 rounded transition-colors"
                                     >
                                       {subcategory.image_url && (

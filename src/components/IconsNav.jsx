@@ -8,7 +8,7 @@ const IconsNav = ({ Link, device }) => {
       device === 'mobile' ? 'flex md:hidden' : 'hidden md:flex'
     }`}>
       <Link 
-        to="https://instagram.com" 
+        to="https://www.instagram.com/adnan_.shop?igsh=OTZwN2xkYjg1ZWU3" 
         target="_blank" 
         rel="noopener noreferrer"
         className="text-gray-600 hover:text-pink-600 transition-colors duration-200"
@@ -18,7 +18,7 @@ const IconsNav = ({ Link, device }) => {
       </Link>
       
       <Link 
-        to="https://facebook.com" 
+        to="https://www.facebook.com/share/1CDgbwViau/" 
         target="_blank" 
         rel="noopener noreferrer"
         className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
@@ -28,7 +28,7 @@ const IconsNav = ({ Link, device }) => {
       </Link>
       
       <Link 
-        to="https://tiktok.com" 
+        to="https://www.tiktok.com/@adnan.shopp?_t=ZS-901W20m0Q4d&_r=1" 
         target="_blank" 
         rel="noopener noreferrer"
         className="text-gray-600 hover:text-black transition-colors duration-200"

@@ -11,6 +11,29 @@
   display: none;  /* Safari and Chrome */
 }
 
+* {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.enable-animation-x {
+  animation: scrollx 20s linear infinite;
+}
+
+@keyframes scrollx {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+/* Pause on hover */
+.stopScroll:hover .enable-animation-x {
+  animation-play-state: paused;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

@@ -47,12 +47,15 @@ const LatestProducts = () => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
     
     const handleProductClick = () => {
-      navigate('/details', { state: { product } });
+      navigate(`/details/${product.slug}`, { state: { product } });
     };
     
     return (
       <div 
-        onClick={handleProductClick}
+        onClick={() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          handleProductClick();
+        }}
         className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2  px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group"
       >
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden  mb-3 md:mb-4 flex items-center justify-center">

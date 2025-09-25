@@ -6,6 +6,9 @@ const Categories = () => {
   const location = useLocation();
   const { category, categoryName } = location.state || {};
 
+  console.log("category");
+  console.log(category);
+  
   const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || "http://localhost/api";
   return (
@@ -54,8 +57,11 @@ const Categories = () => {
                     .map((subcategory) => (
                       <Link
                         key={subcategory.slug}
+                        onClick={() => {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
-                        state={{ products:subcategory.products }}
+                        state={{ products: subcategory.products }}
                         className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-primary/30"
                       >
                         <div className="mb-2 sm:mb-3">
@@ -104,6 +110,9 @@ const Categories = () => {
                     .map((subcategory) => (
                       <Link
                         key={subcategory.slug}
+                        onClick={() => {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
                          state={{ products:subcategory.products }}
                         className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-primary/30"
@@ -153,6 +162,9 @@ const Categories = () => {
                     .map((subcategory) => (
                       <Link
                         key={subcategory.slug}
+                        onClick={() => {
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
                         to={`/${category.slug}/${subcategory.type}/${subcategory.slug}`}
                          state={{ products:subcategory.products }}
                         className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 p-4 sm:p-6 text-center border border-gray-200 hover:border-primary/30"

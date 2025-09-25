@@ -13,14 +13,14 @@ const Footer = () => {
               We provide high-quality cameras, lenses, and accessories from top brands.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.facebook.com/share/1CDgbwViau/" className="text-gray-400 hover:text-white transition-colors">
                 Facebook
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/adnan_.shop?igsh=OTZwN2xkYjg1ZWU3" className="text-gray-400 hover:text-white transition-colors">
                 Instagram
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                YouTube
+              <a href="https://www.tiktok.com/@adnan.shopp?_t=ZS-901W20m0Q4d&_r=1" className="text-gray-400 hover:text-white transition-colors">
+                TikTok
               </a>
             </div>
           </div>
@@ -28,26 +28,37 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
-              <li><a href="#" className="hover:text-white transition-colors">Support</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
+              <li><Link onClick={() => window.scrollTo(0, 0)} to="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link onClick={() => window.scrollTo(0, 0)} to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><Link onClick={() => window.scrollTo(0, 0)} href="/about" className="hover:text-white transition-colors">Support</Link></li>
+             
             </ul>
           </div>
           
           <div>
             <h4 className="font-semibold mb-4">Categories</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><Link to="/products" className="hover:text-white transition-colors">All Products</Link></li>
-              <li><Link to="/category/cameras" className="hover:text-white transition-colors">Cameras</Link></li>
-              <li><Link to="/category/lenses" className="hover:text-white transition-colors">Lenses</Link></li>
-              <li><Link to="/category/accessories" className="hover:text-white transition-colors">Accessories</Link></li>
+              <li>Professinal Audio</li>
+              <li>Cameras</li>
+              <li>Lenses</li>
+              <li>Accessories</li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Camera Store. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-12 pt-8 text-center">
+          <p className="text-gray-400">
+            &copy; {new Date().getFullYear()} Service Energy All rights reserved. | Developed by{' '}
+            <a 
+              href="https://wa.me/9647701411893" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primaryLighter transition-colors"
+
+            >
+              Al-Code
+            </a>
+          </p>
         </div>
       </div>
     </footer>

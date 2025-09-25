@@ -6,6 +6,7 @@ import { useCategoryStore } from '../store/categoryStore';
 import TopBar from './TopBar';
 import NavigationMenu from './NavigationMenu';
 import IconsNav from './IconsNav';
+import Categories from '../pages/Categories';
 
 
 const Navbar = () => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
-  const { categories, fetchCategories, searchCategories, loading , co } = useCategoryStore();
+  const { categories, fetchCategories, searchCategories, loading  } = useCategoryStore();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
 
@@ -97,7 +98,7 @@ const Navbar = () => {
                   <div key={category.id} className="border-b border-gray-100 last:border-b-0">
                     <Link
                       to={`/${category.slug.toLowerCase()}`}
-                      state={{ category: category }}
+                      state={{ category: categories }}
                       onClick={() => {
                         setIsMenuOpen(false);
                         toggleMenu();

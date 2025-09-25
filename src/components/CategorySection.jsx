@@ -41,18 +41,22 @@ const CategorySection = () => {
 
   const CategoryCard = ({ category }) => {
     const IconComponent = getIconForCategory(category.name);
+    const [imageError, setImageError] = useState(false);
+    
+    // Check if image URL is problematic
+    const isValidImageUrl = category.image_url && 
+      !category.image_url.includes('cdn.example.com') && 
+      !imageError;
     
     return (
       <div className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 p-2 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer min-w-[200px] text-center group">
         <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 flex items-center justify-center mx-auto mb-4 overflow-hidden">
-          {category.image_url ? (
+          {isValidImageUrl ? (
             <img 
               src={category.image_url.startsWith('http') ? category.image_url : `${API_BASE_URL}/${category.image_url}`}
-              alt={category.name}
+              alt={category.slug}
               className="w-full h-full object-cover rounded"
-              onError={(e) => {
-                e.target.parentElement.innerHTML = `<div class="bg-primary w-full h-full rounded-full flex items-center justify-center group-hover:bg-primary/50 transition-colors"><svg class="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>`;
-              }}
+              onError={() => setImageError(true)}
             />
           ) : (
             <div className="bg-primary w-full h-full rounded-full flex items-center justify-center group-hover:bg-primary/50 transition-colors">
@@ -115,7 +119,7 @@ const CategorySection = () => {
 
   return (
     <section className="py-10 ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
           CATEGORIES
         </h2>
@@ -126,9 +130,9 @@ const CategorySection = () => {
             <p className="text-gray-600">No categories available</p>
           </div>
         ) : (
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden stopScroll" >
             <div 
-              className="flex transition-transform duration-500 ease-in-out"
+              className="flex transition-transform duration-500 ease-in-out enable-animation-x"
               style={{
                 transform: `translateX(-${currentIndex * (100 / Math.min(categories.length, 4))}%)`,
                 width: `${Math.max(categories.length, 4) * 25}%`
@@ -140,19 +144,7 @@ const CategorySection = () => {
                 </div>
               ))}
             </div>
-            
-            {/* Dots indicator */}
-            <div className="flex justify-center mt-6 space-x-2">
-              {categories.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
-                    index === currentIndex ? 'bg-primary' : 'bg-gray-300'
-                  }`}
-                />
-              ))}
-            </div>
+           
           </div>
         )}
       </div>

@@ -45,15 +45,14 @@ function Contact() {
               
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-blue-600 p-3 rounded-full">
+                  <div className="bg-primary p-3 rounded-full">
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">Address</h3>
                     <p className="text-gray-600">
-                      123 Photography Street<br />
-                      Camera District, CD 12345<br />
-                      United States
+                      Sulaymaniyah, Chwarchra <br />
+                      
                     </p>
                   </div>
                 </div>
@@ -65,8 +64,8 @@ function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">Phone</h3>
                     <p className="text-gray-600">
-                      Sales: +1 (555) 123-4567<br />
-                      Support: +1 (555) 123-4568
+                      Sales: (+964) 07702260440<br />
+                      Support:  (+964) 07700588989
                     </p>
                   </div>
                 </div>
@@ -78,8 +77,7 @@ function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">Email</h3>
                     <p className="text-gray-600">
-                      info@camerastore.com<br />
-                      support@camerastore.com
+                      info@adnanshops.com<br />
                     </p>
                   </div>
                 </div>
@@ -91,9 +89,9 @@ function Contact() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">Business Hours</h3>
                     <p className="text-gray-600">
-                      Monday - Friday: 9:00 AM - 6:00 PM<br />
-                      Saturday: 10:00 AM - 4:00 PM<br />
-                      Sunday: Closed
+                      
+                      Saturday - Thursday: 9:00 AM - 6:00 PM<br />
+                      Friday: Closed
                     </p>
                   </div>
                 </div>
@@ -101,8 +99,17 @@ function Contact() {
               
               {/* Map placeholder */}
               <div className="mt-8">
-                <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-                  <p className="text-gray-500">Interactive Map Coming Soon</p>
+                <div className="bg-gray-200 h-64 rounded-lg overflow-hidden">
+                  <iframe 
+                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Adnan%20Camera+(Adnan%20Camera)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen="" 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Adnan Camera Location"
+                  ></iframe>
                 </div>
               </div>
             </div>
@@ -123,7 +130,7 @@ function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="Your full name"
                   />
                 </div>
@@ -139,7 +146,7 @@ function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -155,7 +162,7 @@ function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="What can we help you with?"
                   />
                 </div>
@@ -171,14 +178,14 @@ function Contact() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="Tell us more about your inquiry..."
                   />
                 </div>
                 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                  className="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
                 >
                   Send Message
                 </button>

@@ -5,11 +5,11 @@ function About() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-gray-900 text-white py-20">
+      <div className="bg-black text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">About CameraStore</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">Adnan Shop</h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-            Your trusted partner for professional photography and videography equipment since 2010
+            Your trusted partner for professional photography and videography equipment since 2000
           </p>
         </div>
       </div>
@@ -21,7 +21,7 @@ function About() {
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 mb-6">
-                Founded in 2010 by a team of passionate photographers and videographers, CameraStore began as a small shop with a big vision: to provide creators with the best equipment and support to bring their artistic visions to life.
+                Founded in 2000 by a team of passionate photographers and videographers, CameraStore began as a small shop with a big vision: to provide creators with the best equipment and support to bring their artistic visions to life.
               </p>
               <p className="text-lg text-gray-600 mb-6">
                 Over the years, we've grown from a local camera shop to a trusted online destination for professionals and enthusiasts worldwide. Our commitment to quality, expertise, and customer service has remained unchanged.
@@ -32,9 +32,9 @@ function About() {
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop"
+                src="./logoJpg.jpg"
                 alt="Camera store interior"
-                className="rounded-lg shadow-lg"
+                className=""
               />
             </div>
           </div>
@@ -93,56 +93,7 @@ function About() {
         </div>
       </div>
 
-      {/* Team Section */}
-      <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-            <p className="text-xl text-gray-600">Passionate professionals dedicated to your success</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <img
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
-                alt="John Smith"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">John Smith</h3>
-              <p className="text-blue-600 font-medium mb-2">Founder & CEO</p>
-              <p className="text-gray-600">
-                Professional photographer with 15+ years of experience in commercial and wedding photography.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <img
-                src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=300&h=300&fit=crop&crop=face"
-                alt="Sarah Johnson"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Sarah Johnson</h3>
-              <p className="text-blue-600 font-medium mb-2">Head of Customer Success</p>
-              <p className="text-gray-600">
-                Expert in camera technology and customer service, helping customers find the perfect equipment.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
-                alt="Mike Chen"
-                className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Mike Chen</h3>
-              <p className="text-blue-600 font-medium mb-2">Technical Specialist</p>
-              <p className="text-gray-600">
-                Videography expert and technical guru, specializing in cinema cameras and professional video equipment.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </div>
   );
 }
