@@ -60,7 +60,7 @@ const VideoGraphySection = () => {
          {product.discount_price && parseFloat(product.discount_price) > 0 && (
   <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
     <span className="text-xs text-red-600 bg-red-100 rounded-full px-1 font-light">
-      {parseFloat(product.discount_price)}% OFF
+     {product.discount_price && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price)}% OFF
     </span>
   </div>
 )}

@@ -78,48 +78,11 @@ const Hero = () => {
   return (
     <section className="relative bg-gray-50   overflow-hidden">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-6 ">
-        <div className="relative bg-white overflow-hidden ">
+        <div className="relative  overflow-hidden ">
           <div className="relative  ">
             {/* Background Image */}
           
              <img src={currentSlideData.image} alt={currentSlideData.brand} className='lg:rounded-bl-2xl lg:rounded-br-2xl rounded-2xl lg:rounded-t-none size-full bg-cover bg-center bg-no-repeat object-cover px-2 w-full h-[10rem] sm:h-[15] md:h-[15rem] lg:h-[20rem] overflow-hidden cursor-pointer"' />
-            
-            
-            {/* Content Overlay */}
-            <div className="absolute inset-0 flex items-center justify-end pr-8 md:pr-16">
-              <div className="text-right text-white max-w-md">
-                {/* Brand Logo */}
-                {/* <div className="mb-4">
-                  <div className="inline-flex items-center space-x-2 bg-white bg-opacity-20 px-4 py-2 rounded-lg backdrop-blur-sm">
-                    <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">{currentSlideData.brandLogo}</span>
-                    </div>
-                    <span className="text-white font-bold text-lg">{currentSlideData.brand}</span>
-                  </div>
-                </div> */}
-                
-                {/* Main Content */}
-                {/* <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
-                  {currentSlideData.title.split(',').map((part, index) => (
-                    <span key={index}>
-                      {part.trim()}
-                      {index < currentSlideData.title.split(',').length - 1 && <br />}
-                    </span>
-                  ))}
-                </h1> */}
-                {/* <p className="text-lg md:text-xl mb-6 text-blue-100">
-                  {currentSlideData.subtitle.split(' and').map((part, index) => (
-                    <span key={index}>
-                      {part.trim()}
-                      {index < currentSlideData.subtitle.split(' and').length - 1 && <br />}
-                    </span>
-                  ))}
-                </p> */}
-                {/* <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-lg">
-                  {currentSlideData.cta}
-                </button> */}
-              </div>
-            </div>
             
             {/* Navigation Arrows */}
             <button 

@@ -184,13 +184,13 @@ const ProductDetails = () => {
                 {product.discount_price ? (
                   <>
                    <span className="font-bold text-green-600 text-xl md:text-2xl">
-                    ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.discount_price)) / 100)).toFixed(2)}
+                    ${product.price && (parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.discount_price)) / 100)).toFixed(2)}
                   </span>
                     <span className="text-base text-gray-500 line-through">
-                      ${parseFloat(product.price).toFixed(2)}
+                      ${product.price && parseFloat(product.price).toFixed(2)}
                     </span>
                     <span className="bg-red-100 text-red-800 px-1.5 py-0.5 rounded-full text-xs font-medium">
-                      {parseFloat(product.discount_price)}% OFF
+                      {product.discount_price && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price)}% OFF
                     </span>
                   </>
                 ) : (

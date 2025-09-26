@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Camera, Mic, Video, Headphones, Lightbulb, Monitor, Smartphone, Plane, CreditCard } from 'lucide-react';
 import { useCategoryStore } from '../store/categoryStore';
+import { Link } from 'react-router-dom';
 
 const CategorySection = () => {
   const { categories, fetchCategories, loading, error } = useCategoryStore();
@@ -49,7 +50,10 @@ const CategorySection = () => {
       !imageError;
     
     return (
-      <div className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 p-2 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer min-w-[200px] text-center group">
+      <div  className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 p-2 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer min-w-[200px] text-center group">
+        <Link to={`/${category.slug.toLowerCase()}`}
+              state={{ category: category, categoryName: category.name}}
+        >
         <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 flex items-center justify-center mx-auto mb-4 overflow-hidden">
           {isValidImageUrl ? (
             <img 
@@ -72,6 +76,7 @@ const CategorySection = () => {
             {category.description}
           </p>
         )}
+        </Link>
       </div>
     );
   };

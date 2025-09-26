@@ -59,9 +59,8 @@ const PhotoGraphySection = () => {
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4 flex items-center justify-center relative">
            {product.discount_price && parseFloat(product.discount_price) > 0 && (
             <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
-              
               <span className="text-xs text-red-600 bg-red-100 rounded-full px-1 font-light">
-                {Math.round((parseFloat(product.discount_price) / parseFloat(product.price)) * 100)}% OFF
+                {product.discount_price && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price)}% OFF
               </span>
             </div>
           )}
@@ -164,7 +163,7 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
   }
 
   return (
-    <section className="pb-16 bg-gray-50">
+    <section className=" bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-wider">
