@@ -2,6 +2,9 @@
 
 
 const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategory, handleCategoryHover, handleCategoryLeave, handleDropdownEnter, handleDropdownLeave }) => {
+  console.log("categories");
+  console.log(categories);
+  
   return (
         <div className=" bg-primary mx-auto  rounded-tl-xl relative rounded-tr-xl">
           <div className="hidden md:flex  items-center py-1">

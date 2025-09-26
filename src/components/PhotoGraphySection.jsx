@@ -72,7 +72,7 @@ const PhotoGraphySection = () => {
                 alt={product.name}
                 className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
                 onError={(e) => {
-                  e.target.parentElement.innerHTML = `<div class="w-full h-full bg-blue-600 rounded-xl flex items-center justify-center"><svg class="h-16 w-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>`;
+                  e.target.parentElement.innerHTML = `<div class="w-full h-full bg-primary rounded-xl flex items-center justify-center"><svg class="h-16 w-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>`;
                 }}
               />
               <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -80,14 +80,14 @@ const PhotoGraphySection = () => {
               </div>
             </>
           ) : (
-            <div className="w-full h-full bg-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-700 transition-colors">
+            <div className="w-full h-full bg-primary rounded-xl flex items-center justify-center group-hover:bg-blue-700 transition-colors">
               <Camera className="h-16 w-16 text-white" />
             </div>
           )}
         </div>
         
         <div className="space-y-3 w-full">
-          <h3 className="font-semibold text-gray-900 text-sm md:text-base leading-tight line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className="font-semibold text-gray-900 text-sm md:text-base leading-tight line-clamp-2 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
           
@@ -130,7 +130,7 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
             PHOTOGRAPHY EQUIPMENT
           </h2>
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             <span className="ml-3 text-gray-600">Loading photography equipment...</span>
           </div>
         </div>
@@ -146,14 +146,14 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
             PHOTOGRAPHY EQUIPMENT
           </h2>
           <div className="text-center py-12">
-            <div className="text-blue-600 mb-4">
+            <div className="text-primary mb-4">
               <Camera className="h-12 w-12 mx-auto mb-2 opacity-50" />
               <p className="text-lg font-medium">Failed to load photography equipment</p>
               <p className="text-sm text-gray-500 mt-1">{photoError}</p>
             </div>
             <button 
               onClick={() => fetchPhotoProducts()}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-primary hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
             >
               Try Again
             </button>
@@ -202,7 +202,7 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
             {canScrollLeft && (
               <button 
                 onClick={scrollLeft}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-blue-600 p-2 rounded-full transition-all z-10"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-primary p-2 rounded-full transition-all z-10"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
@@ -211,7 +211,7 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
             {canScrollRight && (
               <button 
                 onClick={scrollRight}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-blue-600 p-2 rounded-full transition-all z-10"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-primary p-2 rounded-full transition-all z-10"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>

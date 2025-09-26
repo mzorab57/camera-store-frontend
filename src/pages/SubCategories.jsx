@@ -125,9 +125,9 @@ const SubCategories = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex mb-8" aria-label="Breadcrumb">
-          <ol className="inline-flex items-center space-x-1 md:space-x-3">
+          <ol className="inline-flex items-center  md:space-x-3">
             <li className="inline-flex items-center">
-              <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary">
+              <Link to="/" className="inline-flex items-center scale-75 md:scale-100 text-xs md:text-sm font-medium text-gray-700 hover:text-primary">
                 Home
               </Link>
             </li>
@@ -136,9 +136,9 @@ const SubCategories = () => {
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-                <Link to={`/${categoryName}`} className="ml-1 text-sm font-medium text-gray-700 hover:text-primary md:ml-2">
+                <span onClick={() => navigate(-1)} className="ml-1 cursor-pointer scale-75 md:scale-100 text-xs md:text-sm font-medium text-gray-700 hover:text-primary md:ml-2">
                   {categoryName}
-                </Link>
+                </span>
               </div>
             </li>
 
@@ -147,7 +147,7 @@ const SubCategories = () => {
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-                <Link  className="ml-1 text-sm font-medium text-gray-500 pointer-events-none  md:ml-2">
+                <Link  className="ml-1 text-xs scale-75 md:scale-100  md:text-smace-nowrap font-medium text-gray-500 pointer-events-none  md:ml-2">
                   {subcategoryType}
                 </Link>
               </div>
@@ -158,7 +158,7 @@ const SubCategories = () => {
                   <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                   </svg>
-                  <span className="ml-1 text-sm font-medium text-gray-500 md:ml-2 capitalize">
+                  <span className="ml-1 text-xs scale-75 md:scale-100  md:text-smace-nowrap font-medium text-gray-500 md:ml-2 capitalize">
                     {subcategoryName}
                   </span>
                 </div>
@@ -192,7 +192,7 @@ const SubCategories = () => {
                   <button
                     key={filter.id}
                     onClick={() => setSelectedType(filter.id)}
-                    className={`flex items-center justify-center sm:justify-start w-full px-3 sm:px-4 py-2 rounded-lg border transition-all duration-200 text-sm ${
+                    className={`flex items-center justify-center sm:justify-between w-full px-3 sm:px-4 py-2 rounded-lg border transition-all duration-200 text-sm ${
                       selectedType === filter.id
                         ? 'bg-primary text-white border-primary'
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
@@ -267,7 +267,7 @@ const SubCategories = () => {
         </div>
 
         {/* Products Display */}
-        <div className=" rounded-lg shadow-sm p-6  ">
+        <div className=" rounded-lg shadow-sm   ">
           {/* Products Grid/List */}
           {(filteredProducts?.length || 0) === 0 ? (
             <div className="bg-white rounded-lg shadow-sm p-12 text-center">
@@ -320,9 +320,11 @@ const SubCategories = () => {
                         />
                        
                         {product.discount_price && parseFloat(product.discount_price) > 0 && (
-                          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
-                            -{product.discount_price}$
-                          </div>
+                           <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
+    <span className="text-xs text-red-600 bg-red-100 rounded-full px-1 font-light">
+      {parseFloat(product.discount_price)}% OFF
+    </span>
+  </div>
                         )}
                         <div className="absolute bottom-2 left-2">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -335,19 +337,19 @@ const SubCategories = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="p-4 ">
+                      <div className="p-4 pb-0 ">
                         <div className='flex justify-between items-center'>
                         <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
-                        <p className="text-sm text-gray-600 mb-2">{product.brand}</p>
+                        {/* <p className="text-sm text-gray-600 mb-2">{product.brand}</p> */}
                         </div>
-                        <div className="flex justify-between items-center mb-3">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-1">
                           <div className="flex  items-center">
-                            {[...Array(5)].map((_, i) => (
+                            {/* {[...Array(5)].map((_, i) => (
                               <Star key={i} className={`w-4 h-4 ${
                                 i < (product.rating || 4) ? 'text-yellow-400 fill-current' : 'text-gray-300'
                               }`} />
-                            ))}
-                            <span className="text-sm text-gray-600 ml-2">({product.rating || 4.0})</span>
+                            ))} 
+                            <span className="text-sm text-gray-600 ml-2">({product.rating || 4.0})</span>*/}
                           </div>
                            <span className="text-lg font-bold text-gray-900">${product.price}  </span>
                            
@@ -356,7 +358,7 @@ const SubCategories = () => {
                           <div>
                            
                             {product.discount_price && parseFloat(product.discount_price) > 0 && (
-                              <span className="text-sm text-gray-500 line-through ml-2">
+                              <span className="text-sm text-gray-500 line-through ">
                                 ${(parseFloat(product.price) + parseFloat(product.discount_price)).toFixed(2)}
                               </span>
                             )}

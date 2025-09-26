@@ -5,7 +5,7 @@ const LogoNav = ({ Link }) => {
      <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
               <div className="">
-               <img src="/logo.png" alt="logo" className='md:w-20 w-16 scale-125 pr-1 ' />
+               <img src="/logo.png" alt="logo" className='md:w-20 w-16 sm:scale-110 md:scale-125  ' />
               </div>
             </Link>
           </div>

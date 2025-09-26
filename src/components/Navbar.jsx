@@ -6,7 +6,7 @@ import { useCategoryStore } from '../store/categoryStore';
 import TopBar from './TopBar';
 import NavigationMenu from './NavigationMenu';
 import IconsNav from './IconsNav';
-import Categories from '../pages/Categories';
+
 
 
 const Navbar = () => {
@@ -75,7 +75,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" container mx-auto px-8  max-w-7xl bg-gray-50  sticky top-0 z-50">
+    <nav className=" container mx-auto lg:px-8 px-1  max-w-7xl bg-gray-50  sticky top-0 z-50">
       {/* Top Bar */}
      <TopBar categories={categories}  Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
 
@@ -98,7 +98,7 @@ const Navbar = () => {
                   <div key={category.id} className="border-b border-gray-100 last:border-b-0">
                     <Link
                       to={`/${category.slug.toLowerCase()}`}
-                      state={{ category: categories }}
+                      state={{ category: category, categoryName: category.name}}
                       onClick={() => {
                         setIsMenuOpen(false);
                         toggleMenu();

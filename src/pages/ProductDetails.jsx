@@ -39,7 +39,7 @@ const ProductDetails = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
           <p className="text-gray-600">Loading product details...</p>
         </div>
       </div>
@@ -73,17 +73,17 @@ const ProductDetails = () => {
     return acc;
   }, {}) || {};
 
-  const discountPercentage = product.discount_price ? 
-    Math.round(((parseFloat(product.price) - parseFloat(product.discount_price)) / parseFloat(product.price)) * 100) : 0;
+  // const discountPercentage = product.discount_price ? 
+  //   Math.round(((parseFloat(product.price) - parseFloat(product.discount_price)) / parseFloat(product.price)) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="  ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <button 
             onClick={() => navigate(-1)}
-            className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+            className="flex items-center text-gray-600 hover:text-primary transition-colors"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             Back to Products
@@ -142,7 +142,7 @@ const ProductDetails = () => {
                     onClick={() => setSelectedImageIndex(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                       selectedImageIndex === index 
-                        ? 'border-blue-500 ring-2 ring-blue-200' 
+                        ? 'border-primary ring-2 ring-blue-200' 
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
@@ -178,14 +178,15 @@ const ProductDetails = () => {
             </div>
 
             {/* Price */}
-            <div className="bg-white p-6 rounded-xl shadow-sm">
+            <div className="bg-white p-6 pb-20 rounded-xl shadow-sm">
               <div className="flex items-center space-x-4 mb-4">
+
                 {product.discount_price ? (
                   <>
-                   <span className="font-bold text-green-600 text-xs md:text-2xl">
-                    ${parseFloat(product.price) - ((parseFloat(product.price) * (parseFloat(product.discount_price) / 100)).toFixed(2))}
+                   <span className="font-bold text-green-600 text-xl md:text-2xl">
+                    ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.discount_price)) / 100)).toFixed(2)}
                   </span>
-                    <span className="text-lg text-gray-500 line-through">
+                    <span className="text-base text-gray-500 line-through">
                       ${parseFloat(product.price).toFixed(2)}
                     </span>
                     <span className="bg-red-100 text-red-800 px-1.5 py-0.5 rounded-full text-xs font-medium">
@@ -200,7 +201,7 @@ const ProductDetails = () => {
               </div>
               
               {/* Quantity & Add to Cart */}
-              <div className="flex items-center space-x-4 mb-6">
+              {/* <div className="flex items-center space-x-4 mb-6">
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <button 
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -216,10 +217,10 @@ const ProductDetails = () => {
                     +
                   </button>
                 </div>
-                {/* <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
+                 <button className="flex-1 bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center justify-center space-x-2">
                   <ShoppingCart className="h-5 w-5" />
                   <span>Add to Cart</span>
-                </button> */}
+                </button> 
                 <button 
                   onClick={() => setIsWishlisted(!isWishlisted)}
                   className={`p-3 rounded-lg border transition-colors ${
@@ -230,7 +231,7 @@ const ProductDetails = () => {
                 >
                   <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-current' : ''}`} />
                 </button>
-              </div>
+              </div> */}
 
               {/* Product Info */}
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -251,13 +252,16 @@ const ProductDetails = () => {
                   <span className="text-gray-600">2 Year Warranty</span>
                 </div>
               </div>
+              
             </div>
+            
+
 
             {/* Share */}
-            <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+            {/* <button className="flex items-center space-x-2 text-gray-600 hover:text-primary transition-colors">
               <Share2 className="h-5 w-5" />
               <span>Share this product</span>
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -271,7 +275,7 @@ const ProductDetails = () => {
                   onClick={() => setActiveTab(tab)}
                   className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                     activeTab === tab
-                      ? 'border-blue-500 text-blue-600'
+                      ? 'border-primary text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >

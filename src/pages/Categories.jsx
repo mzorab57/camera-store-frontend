@@ -6,7 +6,7 @@ const Categories = () => {
   const location = useLocation();
   const { category, categoryName } = location.state || {};
 
-  console.log("category");
+  console.log("gww");
   console.log(category);
   
   const API_BASE_URL =
@@ -17,7 +17,7 @@ const Categories = () => {
         <nav className="flex mb-8" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
             <li className="inline-flex items-center">
-              <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+              <Link to="/" className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary">
                 Home
               </Link>
             </li>
@@ -27,7 +27,7 @@ const Categories = () => {
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
                 </svg>
-                <Link to={`/${categoryName}`} className="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2">
+                <Link onClick={() => navigate(-1)} className="ml-1 text-sm font-medium text-gray-700 hover:text-primary md:ml-2">
                   {categoryName}
                 </Link>
               </div>
@@ -48,7 +48,7 @@ const Categories = () => {
             {category.subcategories.filter((sub) => sub.type === "videography")
               .length > 0 && (
               <div className="w-full  py-2 border-t border-gray-100">
-                <h4 className="text-lg font-semibold text-primary mb-2 uppercase">
+                <h4 className="text-xl border-b border-primary/70 w-fit font-semibold text-primary mb-2 uppercase">
                   Videography
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -101,7 +101,7 @@ const Categories = () => {
             {category.subcategories.filter((sub) => sub.type === "photography")
               .length > 0 && (
               <div className="w-full  py-2 border-t border-gray-100">
-                <h4 className="text-lg font-semibold text-primary mb-2 uppercase">
+                <h4 className="text-xl border-b border-primary/70 w-fit font-semibold text-primary mb-2 uppercase">
                   Photography
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -153,7 +153,7 @@ const Categories = () => {
             {category.subcategories.filter((sub) => sub.type === "both")
               .length > 0 && (
               <div className="w-full py-2 border-t border-gray-100">
-                <h4 className="text-lg font-semibold text-primary mb-2 uppercase">
+                <h4 className="text-xl border-b border-primary/70 w-fit  font-semibold text-primary mb-2 uppercase">
                   Both
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
