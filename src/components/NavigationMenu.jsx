@@ -28,6 +28,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                   onMouseLeave={handleCategoryLeave}
                 >
                   <Link
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     to={`/${category.slug.toLowerCase()}`}
                     state={{ category: category, categoryName: category.name}}
                     className="text-white  hover:text-blue-200  w-fit  text-xs transition-colors px-1 py-1 rounded uppercase flex items-center "

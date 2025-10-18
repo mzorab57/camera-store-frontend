@@ -102,6 +102,7 @@ const Navbar = () => {
                       onClick={() => {
                         setIsMenuOpen(false);
                         toggleMenu();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
                       className=" py-3 text-gray-700 hover:text-primary font-medium transition-colors text-sm uppercase flex items-center justify-between"
                     >
