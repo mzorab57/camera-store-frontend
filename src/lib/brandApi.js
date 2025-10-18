@@ -15,6 +15,7 @@ const api = axios.create({
 export const getBrands = async (params = {}) => {
   try {
     const response = await api.get('/brands/get.php', { params });
+    console.log('Brand API Response:', response);
     return response.data;
   } catch (error) {
     console.error('Error fetching brands:', error);

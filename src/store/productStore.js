@@ -109,12 +109,10 @@ export const useProductStore = create((set, get) => ({
     } catch (error) {
       console.error('Error fetching video products:', error);
       
-     
-      
       set({
-        videoProducts: mockVideoProducts,
+        videoProducts: [],
         videoLoading: false,
-        videoError: null
+        videoError: error.message || 'Failed to fetch video products'
       });
     }
   },
@@ -150,12 +148,10 @@ export const useProductStore = create((set, get) => ({
     } catch (error) {
       console.error('Error fetching photo products:', error);
       
-     
-      
       set({
-        photoProducts: mockPhotoProducts,
+        photoProducts: [],
         photoLoading: false,
-        photoError: null
+        photoError: error.message || 'Failed to fetch photo products'
       });
     }
   },
