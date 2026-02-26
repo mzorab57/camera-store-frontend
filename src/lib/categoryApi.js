@@ -118,11 +118,18 @@ export const subcategoryApi = {
   },
 
   // Get subcategories with products
-  getSubcategoriesWithProducts: async (categoryId = null) => {
+  getSubcategoriesWithProducts: async (options = null) => {
     try {
       const params = {};
-      if (categoryId) params.category_id = categoryId;
-      
+      if (options) {
+        if (typeof options === 'number') {
+          params.category_id = options;
+        } else {
+          if (options.categoryId) params.category_id = options.categoryId;
+          if (options.categorySlug) params.category_slug = options.categorySlug;
+          if (options.perSubcatLimit) params.per_subcat_limit = options.perSubcatLimit;
+        }
+      }
       const response = await api.get('/subcategories/with_products.php', { params });
       return response.data;
     } catch (error) {

@@ -16,7 +16,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
           <div className="hidden md:flex  items-center py-1">
           
             {/* Categories */}
-            <div className={` grid grid-cols-8 py-2 max-w-7xl mx-auto items-center space-x-1 `} >
+            <div className={` grid grid-cols-9 py-2 max-w-7xl mx-auto items-center space-x-1 `} >
              {loading ? (
                <div className="text-white text-sm">Loading categories...</div>
             ) : (
@@ -31,7 +31,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     to={`/${category.slug.toLowerCase()}`}
                     state={{ category: category, categoryName: category.name}}
-                    className="text-white  hover:text-blue-200  w-fit  text-xs transition-colors px-1 py-1 rounded uppercase flex items-center "
+                    className="text-white  hover:text-blue-200  w-fit  text-xs scale-90 lg:scale-100 transition-colors px-1 py-1 rounded uppercase flex items-center "
                   >
                     {category.name}
                   </Link>

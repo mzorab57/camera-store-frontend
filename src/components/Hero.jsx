@@ -15,6 +15,15 @@ const Hero = () => {
 
   const slides = [
     {
+      id: 6,
+      brand: 'Sony',
+      title: 'Innovation in Every Shot.',
+      subtitle: 'Experience the future of photography with cutting-edge technology.',
+      cta: 'LEARN MORE',
+      brandLogo: 'S',
+      image: './bg6.jpg'
+    },
+    {
       id: 1,
       brand: 'Manfrotto',
       title: 'One Tripod, Endless Possibilities.',

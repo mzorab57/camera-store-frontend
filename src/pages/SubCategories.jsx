@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
 import { useProductStore } from '../store/productStore';
 import { Filter, Grid, List, Search, Star, Heart, ShoppingCart, Camera, Video, Image } from 'lucide-react';
-import productApi from '../lib/productApi';
+import { subcategoryApi } from '../lib/categoryApi';
+import { productApi } from '../lib/productApi';
 
 
 const SubCategories = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { categoryName, subcategoryType, subcategoryName } = useParams();
-  const productList = location.state.products || [];
+  const initialProducts = (location.state && location.state.products) ? location.state.products : [];
+  const [productList, setProductList] = useState(initialProducts);
+  const [pageLoading, setPageLoading] = useState(false);
+  const [pageError, setPageError] = useState(null);
   console.log("productList");
   console.log(productList);
   
@@ -37,8 +41,60 @@ const SubCategories = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('name');
 
-  const isLoading = loading || videoLoading || photoLoading;
-  const hasError = error || videoError || photoError;
+  const isLoading = pageLoading || loading || videoLoading || photoLoading;
+  const hasError = pageError || error || videoError || photoError;
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchFullSubcategoryProducts = async () => {
+      setPageLoading(true);
+      setPageError(null);
+      try {
+        const res = await subcategoryApi.getSubcategoriesWithProducts({
+          categorySlug: categoryName,
+          perSubcatLimit: 2000,
+        });
+        const subcategories = res.subcategories || res.data?.subcategories || [];
+        const current = subcategories.find(
+          (s) => s.slug === subcategoryName
+        );
+        if (isMounted && current) {
+          try {
+            const productsRes = await productApi.getProducts({
+              subcategory_id: current.id,
+              limit: 1000,
+              is_active: 1,
+            });
+            const arr = productsRes?.data || [];
+            setProductList(arr);
+          } catch {
+            setProductList(current.products || []);
+          }
+        } else if (isMounted && initialProducts.length > 0) {
+          setProductList(initialProducts);
+        } else if (isMounted) {
+          setProductList([]);
+        }
+      } catch (e) {
+        if (isMounted) {
+          setPageError(e.message || 'Failed to load products');
+        }
+      } finally {
+        if (isMounted) setPageLoading(false);
+      }
+    };
+    fetchFullSubcategoryProducts();
+    return () => {
+      isMounted = false;
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categoryName, subcategoryName]);
+
+  useEffect(() => {
+    setSelectedType('all');
+    setSearchQuery('');
+    setSortBy('name');
+  }, [subcategoryName]);
 
   useEffect(() => {
     
@@ -85,7 +141,7 @@ const SubCategories = () => {
     });
 
     setFilteredProducts(filtered);
-  }, [ subcategoryName, selectedType, searchQuery, sortBy]);
+  }, [ productList, subcategoryName, selectedType, searchQuery, sortBy]);
 
 
   const typeFilters = [

@@ -172,7 +172,7 @@ const ProductDetails = () => {
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
                   ))}
-                  <span className="text-gray-600 ml-2">(4.5) • 127 reviews</span>
+                  <span className="text-gray-600 ml-2">(4.5) • 427 reviews</span>
                 </div>
               </div>
             </div>
@@ -234,23 +234,23 @@ const ProductDetails = () => {
               </div> */}
 
               {/* Product Info */}
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div className="flex items-center space-x-2">
+              <div className="grid  gap-4 text-sm">
+                {/* <div className="flex items-center space-x-2">
                   <Package className="h-4 w-4 text-gray-400" />
                   <span className="text-gray-600">SKU: {product.sku}</span>
-                </div>
+                </div> */}
                 <div className="flex items-center space-x-2">
                   <Award className="h-4 w-4 text-gray-400" />
                   <span className="text-gray-600">Brand: {product.brand}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Truck className="h-4 w-4 text-gray-400" />
-                  <span className="text-gray-600">Free Shipping</span>
+                  {/* <Truck className="h-4 w-4 text-gray-400" /> */}
+                  <span className="text-gray-600 font-bold"><p className='font-light pt-2'>{product.description}</p></span>
                 </div>
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <Shield className="h-4 w-4 text-gray-400" />
                   <span className="text-gray-600">2 Year Warranty</span>
-                </div>
+                </div> */}
               </div>
               
             </div>

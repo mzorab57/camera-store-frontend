@@ -75,7 +75,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" container mx-auto lg:px-8 px-2 px-1  max-w-7xl bg-gray-50  sticky top-0 z-50">
+    <nav className=" container mx-auto lg:px-8 px-2   max-w-7xl bg-gray-50  sticky top-0 z-50">
       {/* Top Bar */}
      <TopBar categories={categories}  Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
 

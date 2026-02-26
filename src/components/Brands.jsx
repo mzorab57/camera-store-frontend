@@ -1,174 +1,143 @@
-import React, { useEffect, useState } from 'react';
-import { useBrandStore } from '../store/brandStore';
-import { Star, Award, TrendingUp } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react'
+import { useBrandStore } from '../store/brandStore'
 
 const Brands = () => {
-  const { brands, loading, error, fetchBrands } = useBrandStore();
-  const [duplicatedBrands, setDuplicatedBrands] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { brands, loading, error, fetchBrands } = useBrandStore()
+  const scrollRef = useRef(null)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
-    fetchBrands({ is_active: 1, limit: 50 });
-  }, [fetchBrands]);
+    fetchBrands({ is_active: 1, limit: 50 })
+  }, [fetchBrands])
 
-  useEffect(() => {
-    if (brands.length > 0) {
-      // Duplicate brands for seamless infinite scroll
-      setDuplicatedBrands([...brands, ...brands, ...brands]);
-    }
-  }, [brands]);
+  /* ─── Infinite smooth scroll with CSS ─── */
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api'
 
-  // Auto-scroll functionality
-  useEffect(() => {
-    if (duplicatedBrands.length === 0) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex(prev => {
-        const maxIndex = Math.max(duplicatedBrands.length - 4, 0);
-        return prev >= maxIndex ? 0 : prev + 1;
-      });
-    }, 3000); // Change slide every 3 seconds
+  const getLogoUrl = (brand) => {
+    if (!brand.logo_url) return null
+    return brand.logo_url.startsWith('http')
+      ? brand.logo_url
+      : `${API_BASE_URL}/${brand.logo_url}`
+  }
 
-    return () => clearInterval(interval);
-  }, [duplicatedBrands.length]);
-
-  const BrandCard = ({ brand, index }) => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
-    
-    return (
-      <div 
-        className="flex-shrink-0 w-32 h-20 md:w-40 md:h-24 bg-white rounded-xl border border-gray-200 hover:border-red-300 transition-all duration-300 hover:shadow-lg hover:scale-105 group cursor-pointer mx-2"
-        style={{ animationDelay: `${index * 0.1}s` }}
-      >
-        <div className="w-full h-full p-3 md:p-4 flex items-center justify-center relative overflow-hidden">
-          {brand.logo_url ? (
-            <img 
-              src={brand.logo_url.startsWith('http') ? brand.logo_url : `${API_BASE_URL}/${brand.logo_url}`}
-              alt={brand.name}
-              className="max-w-full max-h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-110"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextElementSibling.style.display = 'flex';
-              }}
-            />
-          ) : null}
-          
-          {/* Fallback when no logo or logo fails to load */}
-          <div className="hidden w-full h-full items-center justify-center bg-gradient-to-br from-red-50 to-red-100 rounded-lg">
-            <div className="text-center">
-              <Award className="h-6 w-6 md:h-8 md:w-8 text-red-500 mx-auto mb-1" />
-              <span className="text-xs md:text-sm font-semibold text-red-700 leading-tight">
-                {brand.name}
-              </span>
-            </div>
-          </div>
-          
-          {/* Hover overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
-          
-          {/* Brand name tooltip on hover */}
-          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap z-10">
-            {brand.name}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
+  /* ─── Loading ─── */
   if (loading) {
     return (
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              TRUSTED BRANDS
-            </h2>
-            <div className="flex justify-center items-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
-              <span className="ml-3 text-gray-600">Loading brands...</span>
-            </div>
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-center gap-3 py-12">
+            <div className="h-5 w-5 rounded-full border-2 border-stone-300 border-t-stone-800 animate-spin" />
+            <span className="text-sm text-stone-400">Loading...</span>
           </div>
         </div>
       </section>
-    );
+    )
   }
 
-  if (error) {
-    return (
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              TRUSTED BRANDS
-            </h2>
-            <p className="text-red-600">{error}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!brands.length) {
-    return (
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-              TRUSTED BRANDS
-            </h2>
-            <p className="text-gray-600">No brands available</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (error || !brands.length) return null
 
   return (
-    <section className="py-12 bg-gray-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-4">
-           
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-wider">
-              TRUSTED BRANDS
-            </h2>
-           
-          </div>
-          
-          <div className="flex items-center justify-center mt-4 space-x-4 text-sm text-gray-500">
-            <div className="flex items-center">
-              <TrendingUp className="h-4 w-4 mr-1" />
-              <span>Premium Quality</span>
-            </div>
-            <div className="flex items-center">
-              <Award className="h-4 w-4 mr-1" />
-              <span>Authorized Dealers</span>
+    <section className="relative py-20 bg-white overflow-hidden">
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 opacity-[0.02]"
+        style={{
+          backgroundImage: `radial-gradient(circle at 1px 1px, #000 1px, transparent 0)`,
+          backgroundSize: '32px 32px',
+        }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* ─── Header ─── */}
+        <div className="text-center mb-16">
+          <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-stone-400 mb-3">
+            Our Partners
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">
+            Trusted by Leading Brands
+          </h2>
+          <div className="mt-4 mx-auto h-1 w-12 rounded-full bg-gradient-to-r from-red-500 to-red-400" />
+        </div>
+
+        {/* ─── Marquee Container ─── */}
+        <div
+          className="relative"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+
+          {/* Scrolling track */}
+          <div className="overflow-hidden" ref={scrollRef}>
+            <div
+              className={`flex items-center gap-8 md:gap-12 ${isPaused ? '[animation-play-state:paused]' : ''}`}
+              style={{
+                animation: `marquee ${brands.length * 3}s linear infinite`,
+                width: 'max-content',
+              }}
+            >
+              {/* Render brands 3x for seamless loop */}
+              {[...brands, ...brands, ...brands].map((brand, idx) => (
+                <div
+                  key={`${brand.id}-${idx}`}
+                  className="group flex-shrink-0 relative"
+                >
+                  <div className="w-36 h-24 md:w-44 md:h-28 flex items-center justify-center rounded-2xl border border-stone-100 bg-white px-5 py-4 transition-all duration-500 hover:border-stone-200 hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.08)] hover:scale-105">
+                    {getLogoUrl(brand) ? (
+                      <img
+                        src={getLogoUrl(brand)}
+                        alt={brand.name}
+                        className="max-w-full max-h-full object-contain opacity-40 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none'
+                          e.currentTarget.nextElementSibling.style.display = 'flex'
+                        }}
+                      />
+                    ) : null}
+
+                    {/* Fallback */}
+                    <div
+                      className="hidden items-center justify-center w-full h-full"
+                      style={{ display: getLogoUrl(brand) ? undefined : 'flex' }}
+                    >
+                      <span className="text-sm font-bold text-stone-300 group-hover:text-stone-600 transition-colors duration-500 text-center leading-tight">
+                        {brand.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tooltip */}
+                  <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-bottom-8 pointer-events-none z-20">
+                    <div className="bg-stone-900 text-white text-[11px] font-medium px-3 py-1.5 rounded-lg whitespace-nowrap shadow-xl">
+                      {brand.name}
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 h-2 w-2 rotate-45 bg-stone-900" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Animated Brand Carousel */}
-        <div className="relative overflow-hidden stopScroll">
-          <div 
-            className="flex transition-transform duration-500 py-3 ease-in-out enable-animation-x" 
-            style={{ 
-              transform: `translateX(-${currentIndex * (100 / Math.min(duplicatedBrands.length, 4))}%)`, 
-              width: `${Math.max(duplicatedBrands.length, 4) * 25}%` 
-            }} 
-          > 
-            {duplicatedBrands.concat(duplicatedBrands.slice(0, 8)).map((brand, index) => ( 
-              <div key={`${brand.id}-${index}`} className="flex-shrink-0 px-2"> 
-                <BrandCard brand={brand} index={index} /> 
-              </div> 
-            ))} 
-          </div> 
+        {/* ─── Brand Count ─── */}
+        <div className="mt-14 text-center">
+          <p className="text-sm text-stone-400">
+            <span className="font-bold text-stone-600">{brands.length}+</span>{' '}
+            brands trust us for quality & service
+          </p>
         </div>
-
-     
       </div>
-    </section>
-  );
-};
 
-export default Brands;
+      {/* ─── Keyframes ─── */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+      `}</style>
+    </section>
+  )
+}
+
+export default Brands

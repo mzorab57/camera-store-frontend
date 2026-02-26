@@ -68,7 +68,7 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
               value={searchQuery}
               onChange={handleInputChange}
               placeholder="Search for cameras, lenses, accessories..."
-              className="w-full ml-1 pl-4 pr-12 md:py-3 py-1 border border-gray-300  rounded-full  focus:border-transparent text-sm"
+              className="w-full ml-1 pl-4 pr-12 md:py-3 py-1    rounded-full outline-none border-primary focus:border-primary text-sm"
             />
             <button
               type="submit"
@@ -93,11 +93,11 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
                     onClick={() => {setShowDropdown(false)}}
                     className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition-colors"
                   >
-                    <div className="flex-shrink-0 w-12 h-12 mr-3">
+                    <div className="flex-shrink-0 size-12 md:size-20 mr-3">
                       <img
                        src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/${product.primary_image_url}`}
                         alt={product.name}
-                        className="w-full h-full object-cover rounded-md"
+                        className=" rounded-md"
                       />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -120,7 +120,7 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
                     </div>
                   </Link>
                 ))}
-                {searchResults.length === 8 && (
+                {/* {searchResults.length === 8 && (
                   <div className="p-3 text-center border-t">
                     <button
                       type="submit"
@@ -130,7 +130,7 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
                       View all results →
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           )}

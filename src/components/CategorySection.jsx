@@ -54,12 +54,12 @@ const CategorySection = () => {
         <Link to={`/${category.slug.toLowerCase()}`}
               state={{ category: category, categoryName: category.name}}
         >
-        <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 flex items-center justify-center mx-auto mb-4 overflow-hidden">
+        <div className="size-24 lg:size-36 flex items-center justify-center mx-auto mb-4 overflow-hidden">
           {isValidImageUrl ? (
             <img 
               src={category.image_url.startsWith('http') ? category.image_url : `${API_BASE_URL}/${category.image_url}`}
               alt={category.slug}
-              className="w-full h-full object-cover rounded"
+              className="  rounded"
               onError={() => setImageError(true)}
             />
           ) : (
