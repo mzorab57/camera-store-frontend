@@ -11,6 +11,22 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use((config) => {
+  const hasLocalStorage = typeof localStorage !== 'undefined';
+  const token = hasLocalStorage
+    ? (localStorage.getItem('admin_token') ||
+      localStorage.getItem('auth_token') ||
+      localStorage.getItem('token'))
+    : null;
+  if (token) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }
+  return config;
+});
+
 // Products API
 export const productApi = {
   // Get latest products

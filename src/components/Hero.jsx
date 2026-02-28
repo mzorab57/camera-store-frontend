@@ -30,7 +30,7 @@ const Hero = () => {
       subtitle: 'Capture stunning photos and video with one unique tripod.',
       cta: 'FIND OUT MORE',
       brandLogo: 'M',
-      image: './bg1.jpg'
+      image: './bg7.jpg'
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ const Hero = () => {
       subtitle: 'Discover our latest range of professional cameras and lenses.',
       cta: 'EXPLORE NOW',
       brandLogo: 'C',
-      image: './bg2.jpg'
+      image: './bg8.jpg'
     },
     {
       id: 3,
@@ -48,26 +48,9 @@ const Hero = () => {
       subtitle: 'Experience the future of photography with cutting-edge technology.',
       cta: 'LEARN MORE',
       brandLogo: 'S',
-      image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80'
+      image: './bg9.jpg'
     },
-    {
-      id: 4,
-      brand: 'Sony',
-      title: 'Innovation in Every Shot.',
-      subtitle: 'Experience the future of photography with cutting-edge technology.',
-      cta: 'LEARN MORE',
-      brandLogo: 'S',
-      image: './bg3.jpg'
-    },
-     {
-      id: 2,
-      brand: 'Canon',
-      title: 'Professional Photography Made Simple.',
-      subtitle: 'Discover our latest range of professional cameras and lenses.',
-      cta: 'EXPLORE NOW',
-      brandLogo: 'C',
-      image: './bg4.jpg'
-    },
+ 
   ];
 
   const nextSlide = () => {
