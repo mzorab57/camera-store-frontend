@@ -8,7 +8,7 @@ import Brands from '../components/Brands';
 
 function Home() {
   return (
-    <div>
+    <div >
       <Hero />
       <CategorySection />
       <LatestProducts />

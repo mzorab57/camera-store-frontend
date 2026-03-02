@@ -75,7 +75,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" container mx-auto lg:px-8 px-2   max-w-7xl bg-gray-50  sticky top-0 z-50">
+    <div className='w-full bg-primary'>
+       <nav className=" container mx-auto lg:px-8    max-w-7xl   sticky top-0 z-50">
       {/* Top Bar */}
      <TopBar categories={categories}  Menu={Menu} X={X} toggleMenu={toggleMenu} isMenuOpen={isMenuOpen} Link={Link} Search={Search} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch}  />
 
@@ -104,7 +105,7 @@ const Navbar = () => {
                         toggleMenu();
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className=" py-3 text-gray-700 hover:text-primary font-medium transition-colors text-sm uppercase flex items-center justify-between"
+                      className=" py-3 text-gray-200 hover:text-black font-medium transition-colors text-sm uppercase flex items-center justify-between"
                     >
                       {category.name}
                       <ChevronsRight className="h-4 w-4" />
@@ -236,6 +237,8 @@ const Navbar = () => {
         </div>
       )}
     </nav>
+    </div>
+   
   );
 };
 

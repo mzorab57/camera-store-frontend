@@ -88,7 +88,7 @@ const Brands = () => {
                       <img
                         src={getLogoUrl(brand)}
                         alt={brand.name}
-                        className="max-w-full max-h-full object-contain opacity-40 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
+                        className="max-w-full max-h-full object-contain opacity-100  transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none'
                           e.currentTarget.nextElementSibling.style.display = 'flex'

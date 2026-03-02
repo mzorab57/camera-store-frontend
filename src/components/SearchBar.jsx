@@ -68,7 +68,7 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
               value={searchQuery}
               onChange={handleInputChange}
               placeholder="Search for cameras, lenses, accessories..."
-              className="w-full ml-1 pl-4 pr-12 md:py-3 py-1    rounded-full outline-none border-primary focus:border-primary text-sm"
+              className="w-full ml-1 pl-4 pr-12 md:py-3 py-1  bg-gray-200 rounded-full outline-none border-primary/70 focus:border-primary text-sm"
             />
             <button
               type="submit"

@@ -32,7 +32,7 @@ function About() {
             </div>
             <div className="relative">
               <img
-                src="./logoJpg.jpg"
+                src="/logoJpg.jpg"
                 alt="Camera store interior"
                 className=""
               />

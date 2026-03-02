@@ -11,30 +11,30 @@ const IconsNav = ({ Link, device }) => {
         to="https://www.instagram.com/adnan_.shop?igsh=OTZwN2xkYjg1ZWU3" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-600 hover:text-pink-600 transition-colors duration-200"
+        className="text-gray-300 hover:text-pink-600 transition-colors duration-200"
         aria-label="Instagram"
       >
-        <Instagram className="size-5" />
+        <Instagram className="size-6" />
       </Link>
       
       <Link 
         to="https://www.facebook.com/share/1CDgbwViau/" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+        className="text-gray-300 hover:text-blue-600 transition-colors duration-200"
         aria-label="Facebook"
       >
-        <Facebook className="size-5" />
+        <Facebook className="size-6" />
       </Link>
       
       <Link 
         to="https://www.tiktok.com/@adnan.shopp?_t=ZS-901W20m0Q4d&_r=1" 
         target="_blank" 
         rel="noopener noreferrer"
-        className="text-gray-600 hover:text-black transition-colors duration-200"
+        className="text-gray-300 hover:text-black transition-colors duration-200"
         aria-label="TikTok"
       >
-        <PiTiktokLogo className="size-5" />
+        <PiTiktokLogo className="size-6 mt-1" />
       </Link>
     </div>
   )
