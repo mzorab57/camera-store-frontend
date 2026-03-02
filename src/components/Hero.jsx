@@ -22,6 +22,7 @@ const Hero = () => {
       cta: 'LEARN MORE',
       brandLogo: 'S',
       image: '/bg6.jpg'
+    //   image: 'https://www.amt.tv/media/mageplaza/bannerslider/banner/image/d/j/dji-rs-5-web-banner.jpg'
     },
     {
       id: 1,
@@ -83,7 +84,7 @@ const Hero = () => {
           <div className="relative  ">
             {/* Background Image */}
           
-             <img src={currentSlideData.image} alt={currentSlideData.brand} className='lg:rounded-bl-2xl lg:rounded-br-2xl rounded-2xl lg:rounded-t-none size-full  px-2 w-full h-[10rem] sm:h-[15] md:h-[15rem] lg:h-[20rem] overflow-hidden cursor-pointer"' />
+             <img src={currentSlideData.image} alt={currentSlideData.brand} className='lg:rounded-bl-2xl lg:rounded-br-2xl rounded-2xl lg:rounded-t-none  object-cover size-full  px-2  h-[10rem] sm:h-[15] md:h-[15rem] lg:h-[20rem] overflow-hidden cursor-pointer"' />
             
             {/* Navigation Arrows */}
             <button 
@@ -100,12 +101,12 @@ const Hero = () => {
             </button>
             
             {/* Slider Dots */}
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
               {slides.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all ${
+                  className={`md:size-3 size-1.5 rounded-full transition-all ${
                     index === currentSlide ? 'bg-white' : 'bg-white bg-opacity-50'
                   }`}
                 />

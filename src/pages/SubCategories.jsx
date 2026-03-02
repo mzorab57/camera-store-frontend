@@ -40,6 +40,8 @@ const SubCategories = () => {
   const [viewMode, setViewMode] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('name');
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 24;
 
   const isLoading = pageLoading || loading || videoLoading || photoLoading;
   const hasError = pageError || error || videoError || photoError;
@@ -94,6 +96,7 @@ const SubCategories = () => {
     setSelectedType('all');
     setSearchQuery('');
     setSortBy('name');
+    setCurrentPage(1);
   }, [subcategoryName]);
 
   useEffect(() => {
@@ -143,6 +146,18 @@ const SubCategories = () => {
     setFilteredProducts(filtered);
   }, [ productList, subcategoryName, selectedType, searchQuery, sortBy]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedType, searchQuery, sortBy]);
+
+  const totalFiltered = filteredProducts.length || 0;
+  const totalPages = Math.ceil(totalFiltered / ITEMS_PER_PAGE) || 1;
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+  const startIndex = (safeCurrentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const pageItems = filteredProducts.slice(startIndex, endIndex);
+  const displayStart = totalFiltered === 0 ? 0 : startIndex + 1;
+  const displayEnd = Math.min(endIndex, totalFiltered);
 
   const typeFilters = [
     { id: 'all', label: 'All Products', count: productList?.length || 0, icon: Image },
@@ -348,7 +363,7 @@ const SubCategories = () => {
               ? 'grid grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6'
               : 'space-y-4'
             }>
-              {filteredProducts.map((product) => (
+              {pageItems.map((product) => (
                 <Link 
                   to={`/details/${product.slug}`}
                   state={{ product }}
@@ -478,6 +493,33 @@ const SubCategories = () => {
                   )}
                 </Link>
               ))}
+            </div>
+          )}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-6">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={safeCurrentPage === 1}
+                className={`px-3 py-1 rounded border ${safeCurrentPage === 1 ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}`}
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                <button
+                  key={n}
+                  onClick={() => setCurrentPage(n)}
+                  className={`px-3 py-1 rounded border ${safeCurrentPage === n ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}`}
+                >
+                  {n}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={safeCurrentPage === totalPages}
+                className={`px-3 py-1 rounded border ${safeCurrentPage === totalPages ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}`}
+              >
+                Next
+              </button>
             </div>
           )}
         </div>
