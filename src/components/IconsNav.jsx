@@ -1,5 +1,5 @@
 import React from 'react'
-import { Instagram, Facebook, Tablet } from 'lucide-react'
+import { Instagram, Facebook } from 'lucide-react'
 import { PiTiktokLogo } from "react-icons/pi";
 
 const IconsNav = ({ Link, device }) => {

@@ -94,68 +94,81 @@ const ProductDetails = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Image Gallery */}
-          <div className="space-y-4">
-            {/* Main Image */}
-            <div className="relative bg-white rounded-2xl p-8 shadow-lg">
-              <div className="aspect-square flex items-center justify-center">
-                {product.images && product.images.length > 0 ? (
-                  <img 
-                    src={getImageSrc(product.images[selectedImageIndex]?.image_url)}
-                    alt={product.name}
-                  className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD1cIjQwMFwiIGhlaWdodD1cIjQwMFwiIHZpZXdCb3g9XCIwIDAgNDAwIDQwMFwiIGZpbGw9XCJub25lXCIgeG1sbnM9XCJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Z1wiPjxyZWN0IHdpZHRoPVwiNDAwXCIgaGVpZ2h0PVwiNDAwXCIgZmlsbD1cIiNGM0Y0RjZcIi8+PHBhdGggZD1cIk0yMDAgMTAwQzE2MS4zNDMgMTAwIDEzMCAxMzEuMzQzIDEzMCAxNzBTMTYxLjM0MyAyNDAgMjAwIDI0MFMyNzAgMjA4LjY1NyAyNzAgMTcwUzIzOC42NTcgMTAwIDIwMCAxMDBaTTIwMCAyMTBDMTc3Ljk0MyAyMTAgMTYwIDE5Mi4wNTcgMTYwIDE3MFMxNzcuOTQzIDEzMCAyMDAgMTMwUzI0MCAxNDcuOTQzIDI0MCAxNzBTMjIyLjA1NyAyMTAgMjAwIDIxMFpcIiBmaWxsPVwiIzlDQTNBRlwiLz48L3N2Zz4=';
-                    }}
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
-                    <Package className="h-24 w-24 text-gray-400" />
-                  </div>
-                )}
-              </div>
-              
-              {/* Navigation Arrows */}
-              {product.images && product.images.length > 1 && (
-                <>
-                  <button 
-                    onClick={() => handleImageNavigation('prev')}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 p-2 rounded-full shadow-lg transition-all"
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </button>
-                  <button 
-                    onClick={() => handleImageNavigation('next')}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 p-2 rounded-full shadow-lg transition-all"
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </button>
-                </>
-              )}
-            </div>
+         {/* Image Gallery */}
+<div className="space-y-4">
+  {/* Main Image */}
+  <div className="relative bg-white rounded-2xl p-8 shadow-lg">
+    <div className="aspect-square flex items-center justify-center relative">
+      
+      {product.images && product.images.length > 0 ? (
+        <img 
+          src={getImageSrc(product.images[selectedImageIndex]?.image_url)}
+          alt={product.name}
+          className="max-w-full max-h-full object-contain transition-transform duration-300"
+          onError={(e) => {
+            e.target.src =
+              'data:image/svg+xml;base64,PHN2ZyB3aWR0aD1cIjQwMFwiIGhlaWdodD1cIjQwMFwiIHZpZXdCb3g9XCIwIDAgNDAwIDQwMFwiIGZpbGw9XCJub25lXCIgeG1sbnM9XCJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Z1wiPjxyZWN0IHdpZHRoPVwiNDAwXCIgaGVpZ2h0PVwiNDAwXCIgZmlsbD1cIiNGM0Y0RjZcIi8+PHBhdGggZD1cIk0yMDAgMTAwQzE2MS4zNDMgMTAwIDEzMCAxMzEuMzQzIDEzMCAxNzBTMTYxLjM0MyAyNDAgMjAwIDI0MFMyNzAgMjA4LjY1NyAyNzAgMTcwUzIzOC42NTcgMTAwIDIwMCAxMDBaTTIwMCAyMTBDMTc3Ljk0MyAyMTAgMTYwIDE5Mi4wNTcgMTYwIDE3MFMxNzcuOTQzIDEzMCAyMDAgMTMwUzI0MCAxNDcuOTQzIDI0MCAxNzBTMjIyLjA1NyAyMTAgMjAwIDIxMFpcIiBmaWxsPVwiIzlDQTNBRlwiLz48L3N2Zz4=';
+          }}
+        />
+      ) : (
+        <div className="w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
+          <Package className="h-24 w-24 text-gray-400" />
+        </div>
+      )}
 
-            {/* Thumbnail Images */}
-            {product.images && product.images.length > 1 && (
-              <div className="flex space-x-3 overflow-x-auto pb-2">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImageIndex(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                      selectedImageIndex === index 
-                        ? 'border-primary ring-2 ring-blue-200' 
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    <img 
-                      src={getImageSrc(image.image_url)}
-                      alt={`${product.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+      {/* 🔥 Logo Watermark */}
+      <div className="absolute  inset-0 flex items-center justify-center pointer-events-none">
+        <img 
+          src="/logo.png"
+          alt="logo"
+          className=" object-contain opacity-15"
+        />
+      </div>
+    </div>
+
+    {/* Navigation Arrows */}
+    {product.images && product.images.length > 1 && (
+      <>
+        <button 
+          onClick={() => handleImageNavigation('prev')}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 p-2 rounded-full shadow-lg transition-all"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+
+        <button 
+          onClick={() => handleImageNavigation('next')}
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 p-2 rounded-full shadow-lg transition-all"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </>
+    )}
+  </div>
+
+  {/* Thumbnail Images */}
+  {product.images && product.images.length > 1 && (
+    <div className="flex space-x-3 overflow-x-auto pb-2">
+      {product.images.map((image, index) => (
+        <button
+          key={index}
+          onClick={() => setSelectedImageIndex(index)}
+          className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+            selectedImageIndex === index
+              ? 'border-primary ring-2 ring-blue-200'
+              : 'border-gray-200 hover:border-gray-300'
+          }`}
+        >
+          <img 
+            src={getImageSrc(image.image_url)}
+            alt={`${product.name} ${index + 1}`}
+            className="w-full h-full object-cover"
+          />
+        </button>
+      ))}
+    </div>
+  )}
+</div>
 
           {/* Product Info */}
           <div className="space-y-6">

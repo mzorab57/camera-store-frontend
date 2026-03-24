@@ -1,16 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useBrandStore } from '../store/brandStore'
 
 const Brands = () => {
   const { brands, loading, error, fetchBrands } = useBrandStore()
   const scrollRef = useRef(null)
+  const trackRef = useRef(null)
+
+  // Animation state
   const [isPaused, setIsPaused] = useState(false)
+
+  // Touch/Drag state
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+  const [hasDragged, setHasDragged] = useState(false)
+  const pauseTimeout = useRef(null)
 
   useEffect(() => {
     fetchBrands({ is_active: 1, limit: 50 })
   }, [fetchBrands])
 
-  /* ─── Infinite smooth scroll with CSS ─── */
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api'
 
   const getLogoUrl = (brand) => {
@@ -19,6 +28,75 @@ const Brands = () => {
       ? brand.logo_url
       : `${API_BASE_URL}/${brand.logo_url}`
   }
+
+  // ─── Touch Start ───
+  const handleDragStart = useCallback((e) => {
+    const container = scrollRef.current
+    if (!container) return
+
+    setIsDragging(true)
+    setHasDragged(false)
+    setIsPaused(true)
+
+    const pageX = e.touches ? e.touches[0].pageX : e.pageX
+    setStartX(pageX)
+    setScrollLeft(container.scrollLeft)
+
+    if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
+  }, [])
+
+  // ─── Touch Move ───
+  const handleDragMove = useCallback((e) => {
+    if (!isDragging) return
+    const container = scrollRef.current
+    if (!container) return
+
+    const pageX = e.touches ? e.touches[0].pageX : e.pageX
+    const diff = pageX - startX
+
+    // Mark as dragged if moved more than 5px
+    if (Math.abs(diff) > 5) {
+      setHasDragged(true)
+    }
+
+    const walk = diff * 1.8
+    container.scrollLeft = scrollLeft - walk
+  }, [isDragging, startX, scrollLeft])
+
+  // ─── Touch End ───
+  const handleDragEnd = useCallback(() => {
+    setIsDragging(false)
+
+    // Resume animation after 3 seconds
+    pauseTimeout.current = setTimeout(() => {
+      setIsPaused(false)
+      setHasDragged(false)
+    }, 3000)
+  }, [])
+
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      if (pauseTimeout.current) clearTimeout(pauseTimeout.current)
+    }
+  }, [])
+
+  // Prevent default on touch move to avoid page scroll while swiping
+  useEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+
+    const preventScroll = (e) => {
+      if (isDragging) {
+        e.preventDefault()
+      }
+    }
+
+    container.addEventListener('touchmove', preventScroll, { passive: false })
+    return () => {
+      container.removeEventListener('touchmove', preventScroll)
+    }
+  }, [isDragging])
 
   /* ─── Loading ─── */
   if (loading) {
@@ -39,7 +117,8 @@ const Brands = () => {
   return (
     <section className="relative py-20 bg-white overflow-hidden">
       {/* Subtle background texture */}
-      <div className="absolute inset-0 opacity-[0.02]"
+      <div
+        className="absolute inset-0 opacity-[0.02]"
         style={{
           backgroundImage: `radial-gradient(circle at 1px 1px, #000 1px, transparent 0)`,
           backgroundSize: '32px 32px',
@@ -55,43 +134,68 @@ const Brands = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight">
             Trusted by Leading Brands
           </h2>
-          <div className="mt-4 mx-auto h-1 w-12 rounded-full bg-gradient-to-r from-red-500 to-red-400" />
         </div>
 
-        {/* ─── Marquee Container ─── */}
-        <div
-          className="relative"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
+        {/* ─── Marquee + Touch Scroll Container ─── */}
+        <div className="relative">
           {/* Fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-24 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-24 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
 
-          {/* Scrolling track */}
-          <div className="overflow-hidden" ref={scrollRef}>
+          {/* Scrollable container */}
+          <div
+            ref={scrollRef}
+            className={`overflow-x-auto scrollbar-hide ${
+              isDragging ? 'cursor-grabbing' : 'cursor-grab'
+            }`}
+            style={{
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+            // Touch events
+            onTouchStart={handleDragStart}
+            onTouchMove={handleDragMove}
+            onTouchEnd={handleDragEnd}
+            // Mouse events
+            onMouseDown={handleDragStart}
+            onMouseMove={handleDragMove}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={() => {
+              if (isDragging) handleDragEnd()
+            }}
+            // Hover pause (only when not dragging)
+            onMouseEnter={() => {
+              if (!isDragging) setIsPaused(true)
+            }}
+          >
+            {/* Animated track */}
             <div
-              className={`flex items-center gap-8 md:gap-12 ${isPaused ? '[animation-play-state:paused]' : ''}`}
+              ref={trackRef}
+              className="flex items-center gap-8 md:gap-12"
               style={{
-                animation: `marquee ${brands.length * 3}s linear infinite`,
                 width: 'max-content',
+                animation: `marquee ${brands.length * 3}s linear infinite`,
+                animationPlayState: isPaused ? 'paused' : 'running',
               }}
             >
-              {/* Render brands 3x for seamless loop */}
               {[...brands, ...brands, ...brands].map((brand, idx) => (
                 <div
                   key={`${brand.id}-${idx}`}
-                  className="group flex-shrink-0 relative"
+                  className="group flex-shrink-0 relative select-none"
                 >
-                  <div className="w-36 h-24 md:w-44 md:h-28 flex items-center justify-center rounded-2xl border border-stone-100 bg-white px-5 py-4 transition-all duration-500 hover:border-stone-200 hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.08)] hover:scale-105">
+                  <div className="w-24 h-20 md:w-44 md:h-28 flex items-center justify-center rounded-2xl border border-stone-100 bg-white p-1 transition-all duration-500 hover:border-stone-200 hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.08)] hover:scale-105">
                     {getLogoUrl(brand) ? (
                       <img
                         src={getLogoUrl(brand)}
                         alt={brand.name}
-                        className="max-w-full max-h-full object-contain opacity-100  transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
+                        className="max-w-full max-h-full object-contain opacity-100 transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0 pointer-events-none"
+                        draggable={false}
                         onError={(e) => {
                           e.currentTarget.style.display = 'none'
-                          e.currentTarget.nextElementSibling.style.display = 'flex'
+                          if (e.currentTarget.nextElementSibling) {
+                            e.currentTarget.nextElementSibling.style.display = 'flex'
+                          }
                         }}
                       />
                     ) : null}
@@ -118,6 +222,39 @@ const Brands = () => {
               ))}
             </div>
           </div>
+
+          {/* Swipe hint - mobile only */}
+          <div className="flex justify-center mt-5 md:hidden">
+            <span className="text-[10px] text-stone-300 flex items-center gap-1.5 select-none">
+              <svg
+                className="w-3 h-3 animate-bounce-left"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 16l-4-4m0 0l4-4m-4 4h18"
+                />
+              </svg>
+              swipe to explore
+              <svg
+                className="w-3 h-3 animate-bounce-right"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
+              </svg>
+            </span>
+          </div>
         </div>
 
         {/* ─── Brand Count ─── */}
@@ -129,11 +266,36 @@ const Brands = () => {
         </div>
       </div>
 
-      {/* ─── Keyframes ─── */}
+      {/* ─── Styles ─── */}
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-33.333%); }
+        }
+
+        /* Hide scrollbar everywhere */
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        /* Swipe hint arrows */
+        @keyframes bounce-left {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-4px); }
+        }
+        @keyframes bounce-right {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(4px); }
+        }
+        .animate-bounce-left {
+          animation: bounce-left 1.5s ease-in-out infinite;
+        }
+        .animate-bounce-right {
+          animation: bounce-right 1.5s ease-in-out infinite;
         }
       `}</style>
     </section>
