@@ -62,7 +62,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                     >
                                       {subcategory.image_url && (
                                         <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
+                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(subcategory.image_url.includes('/uploads/') ? subcategory.image_url.slice(subcategory.image_url.indexOf('/uploads/')) : (subcategory.image_url.startsWith('/') ? subcategory.image_url : '/' + subcategory.image_url))}`} 
                                           alt={subcategory.name} 
                                           className="w-8 h-8 rounded-full mr-2 flex-shrink-0" 
                                           onError={(e) => {
@@ -95,7 +95,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                     >
                                       {subcategory.image_url && (
                                         <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
+                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(subcategory.image_url.includes('/uploads/') ? subcategory.image_url.slice(subcategory.image_url.indexOf('/uploads/')) : (subcategory.image_url.startsWith('/') ? subcategory.image_url : '/' + subcategory.image_url))}`} 
                                           alt={subcategory.name} 
                                           className="w-8 h-8 rounded-full mr-2 flex-shrink-0" 
                                           onError={(e) => {
@@ -128,7 +128,7 @@ const NavigationMenu = ({API_BASE_URL, Link, categories, loading, hoveredCategor
                                     >
                                       {subcategory.image_url && (
                                         <img 
-                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/${subcategory.image_url}`} 
+                                          src={subcategory.image_url.startsWith('http') ? subcategory.image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(subcategory.image_url.includes('/uploads/') ? subcategory.image_url.slice(subcategory.image_url.indexOf('/uploads/')) : (subcategory.image_url.startsWith('/') ? subcategory.image_url : '/' + subcategory.image_url))}`} 
                                           alt={subcategory.name}
                                           className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
                                           onError={(e) => {

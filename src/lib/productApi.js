@@ -55,6 +55,8 @@ export const productApi = {
       // Add is_active filter by default unless explicitly set to false
       const finalParams = { is_active: 1, ...params };
       const response = await api.get('/products/get.php', { params: finalParams });
+      console.log(response.data);
+      
       return response.data;
     } catch (error) {
       console.error('Error fetching products:', error);

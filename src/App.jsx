@@ -11,6 +11,8 @@ import Contact from './pages/Contact';
 import SubCategories from './pages/SubCategories';
 import Categories from './pages/Categories';
 import ProductDetails from './pages/ProductDetails';
+import BrandsPage from './pages/BrandsPage';
+import BrandProducts from './pages/BrandProducts';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/brands" element={<BrandsPage />} />
+          <Route path="/brands/:slug" element={<BrandProducts />} />
           <Route path="/:categoryName" element={<Categories />} />
           <Route path="/details" element={<ProductDetails />} />
           <Route path="/details/:productName" element={<ProductDetails />} />

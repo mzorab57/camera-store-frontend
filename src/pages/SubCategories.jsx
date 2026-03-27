@@ -378,13 +378,14 @@ const SubCategories = () => {
                       <div className="relative" >
                         <img
                           src={
-                                product.primary_image_url &&
-                                product.primary_image_url.startsWith("http")
-                                  ? product.primary_image_url
-                                  : product.primary_image_url
-                                  ? `${API_BASE_URL}/${product.primary_image_url}`
-                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
-                              }
+                            product.primary_image_url
+                              ? (
+                                  product.primary_image_url.startsWith("http")
+                                    ? product.primary_image_url
+                                    : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`
+                                )
+                              : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                          }
                           alt={product.name}
                                         className="size-44 place-self-center p-2 object-contain group-hover:scale-110 transition-transform duration-300"
 
@@ -443,13 +444,14 @@ const SubCategories = () => {
                       <div className="flex-shrink-0 ">
                         <img
                           src={
-                                product.primary_image_url &&
-                                product.primary_image_url.startsWith("http")
-                                  ? product.primary_image_url
-                                  : product.primary_image_url
-                                  ? `${API_BASE_URL}/${product.primary_image_url}`
-                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
-                              }
+                            product.primary_image_url
+                              ? (
+                                  product.primary_image_url.startsWith("http")
+                                    ? product.primary_image_url
+                                    : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`
+                                )
+                              : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                          }
                           alt={product.name}
                           className="size-28 object-contain group-hover:scale-110 transition-transform duration-300"
                         />

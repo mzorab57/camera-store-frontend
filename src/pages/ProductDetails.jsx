@@ -48,7 +48,9 @@ const ProductDetails = () => {
 
   const getImageSrc = (imageUrl) => {
     if (!imageUrl) return null;
-    return imageUrl.startsWith('http') ? imageUrl : `${API_BASE_URL}/${imageUrl}`;
+    return imageUrl.startsWith('http')
+      ? imageUrl
+      : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(imageUrl.includes('/uploads/') ? imageUrl.slice(imageUrl.indexOf('/uploads/')) : (imageUrl.startsWith('/') ? imageUrl : '/' + imageUrl))}`;
   };
 
   const handleImageNavigation = (direction) => {

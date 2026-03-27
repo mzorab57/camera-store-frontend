@@ -68,12 +68,9 @@ const Categories = () => {
                           <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/50 transition-colors">
                             <img
                               src={
-                                subcategory.image_url &&
-                                subcategory.image_url.startsWith("http")
-                                  ? subcategory.image_url
-                                  : subcategory.image_url
-                                  ? `${API_BASE_URL}/${subcategory.image_url}`
-                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                                subcategory.image_url && !subcategory.image_url.startsWith("http")
+                                  ? `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(subcategory.image_url.includes('/uploads/') ? subcategory.image_url.slice(subcategory.image_url.indexOf('/uploads/')) : (subcategory.image_url.startsWith('/') ? subcategory.image_url : '/' + subcategory.image_url))}`
+                                  : (subcategory.image_url || "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400")
                               }
                               alt={subcategory.name}
                               // className="size-8 sm:size-12 group-hover:bg-primary/50"
@@ -121,12 +118,9 @@ const Categories = () => {
                           <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/50 transition-colors">
                             <img
                               src={
-                                subcategory.image_url &&
-                                subcategory.image_url.startsWith("http")
-                                  ? subcategory.image_url
-                                  : subcategory.image_url
-                                  ? `${API_BASE_URL}/${subcategory.image_url}`
-                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                                subcategory.image_url && !subcategory.image_url.startsWith("http")
+                                  ? `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(subcategory.image_url.includes('/uploads/') ? subcategory.image_url.slice(subcategory.image_url.indexOf('/uploads/')) : (subcategory.image_url.startsWith('/') ? subcategory.image_url : '/' + subcategory.image_url))}`
+                                  : (subcategory.image_url || "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400")
                               }
                               alt={subcategory.name}
                               // className="w-4 h-4 sm:w-6 sm:h-6"
@@ -173,12 +167,9 @@ const Categories = () => {
                           <div className="w-14 h-14 sm:w-20 sm:h-20 mx-auto bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/50 transition-colors">
                             <img
                               src={
-                                subcategory.image_url &&
-                                subcategory.image_url.startsWith("http")
-                                  ? subcategory.image_url
-                                  : subcategory.image_url
-                                  ? `${API_BASE_URL}/${subcategory.image_url}`
-                                  : "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400"
+                                subcategory.image_url && !subcategory.image_url.startsWith("http")
+                                  ? `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(subcategory.image_url.includes('/uploads/') ? subcategory.image_url.slice(subcategory.image_url.indexOf('/uploads/')) : (subcategory.image_url.startsWith('/') ? subcategory.image_url : '/' + subcategory.image_url))}`
+                                  : (subcategory.image_url || "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400")
                               }
                               alt={subcategory.name}
                               // className="w-4 h-4 sm:w-6 sm:h-6"

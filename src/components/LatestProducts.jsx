@@ -61,7 +61,7 @@ const LatestProducts = () => {
         <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden  mb-3 md:mb-4 flex items-center justify-center">
           {product.primary_image_url ? (
             <img 
-              src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/${product.primary_image_url}`}
+              src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`}
               alt={product.name}
               className="max-w-full max-h-full  object-contain group-hover:scale-110 transition-transform duration-300"
               onError={(e) => {
@@ -125,7 +125,7 @@ const LatestProducts = () => {
     return (
       <section className="py-10 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12 tracking-wider">
+          <h2 className="text-2xl text-center text-gray-900 mb-12 tracking-wider">
             LATEST PRODUCTS
           </h2>
           <div className="text-center py-12">
@@ -150,7 +150,7 @@ const LatestProducts = () => {
     <section className="bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-wider">
+          <h2 className="text-2xl font-semibold md:text-4xl  text-gray-900 mb-4 tracking-wider">
             LATEST PRODUCTS
           </h2>
           {/* <div className="flex justify-center space-x-8 text-sm text-gray-600">

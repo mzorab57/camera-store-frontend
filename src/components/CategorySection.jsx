@@ -139,7 +139,7 @@ const CategorySection = () => {
                   src={
                     category.image_url.startsWith('http')
                       ? category.image_url
-                      : `${API_BASE_URL}/${category.image_url}`
+                      : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(category.image_url.includes('/uploads/') ? category.image_url.slice(category.image_url.indexOf('/uploads/')) : (category.image_url.startsWith('/') ? category.image_url : '/' + category.image_url))}`
                   }
                   alt={category.slug}
                   className="max-h-full max-w-full object-contain pointer-events-none"
@@ -219,7 +219,7 @@ const CategorySection = () => {
     <section className="py-8 bg-gradient-to-b from-primary/30 via-primary-10 to-transparent overflow-hidden">
       <div className="max-w-[1250px] mx-auto px-4">
         {/* Title */}
-        <h2 className="text-3xl md:text-4xl font-semibold text-center text-[#1a1a1a] mb-8 tracking-tighter uppercase">
+        <h2 className="text-2xl font-semibold md:text-4xl  text-center text-[#1a1a1a] mb-8 tracking-tighter uppercase">
           CATEGORIES
         </h2>
 

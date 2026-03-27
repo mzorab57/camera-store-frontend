@@ -26,7 +26,7 @@ const Brands = () => {
     if (!brand.logo_url) return null
     return brand.logo_url.startsWith('http')
       ? brand.logo_url
-      : `${API_BASE_URL}/${brand.logo_url}`
+      : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(brand.logo_url.includes('/uploads/') ? brand.logo_url.slice(brand.logo_url.indexOf('/uploads/')) : (brand.logo_url.startsWith('/') ? brand.logo_url : '/' + brand.logo_url))}`
   }
 
   // ─── Touch Start ───
@@ -185,9 +185,9 @@ const Brands = () => {
                   className="group flex-shrink-0 relative select-none"
                 >
                   <div className="w-24 h-20 md:w-44 md:h-28 flex items-center justify-center rounded-2xl border border-stone-100 bg-white p-1 transition-all duration-500 hover:border-stone-200 hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.08)] hover:scale-105">
-                    {getLogoUrl(brand) ? (
+                    {brand.logo_url? (
                       <img
-                        src={getLogoUrl(brand)}
+                        src={getLogoUrl(brand)} 
                         alt={brand.name}
                         className="max-w-full max-h-full object-contain opacity-100 transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0 pointer-events-none"
                         draggable={false}

@@ -95,7 +95,7 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
                   >
                     <div className="flex-shrink-0 size-12 md:size-20 mr-3">
                       <img
-                       src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/${product.primary_image_url}`}
+                       src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`}
                         alt={product.name}
                         className=" rounded-md"
                       />
