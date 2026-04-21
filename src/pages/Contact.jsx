@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight } from 'lucide-react';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -10,227 +10,212 @@ function Contact() {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
     console.log('Form submitted:', formData);
-    alert('Thank you for your message! We\'ll get back to you soon.');
+    alert('Thank you for your message! We will get back to you shortly.');
     setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <div className="bg-gray-900 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">Contact Us</h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-            Get in touch with our team of experts. We're here to help with all your photography and videography needs.
-          </p>
+      
+      {/* Hero Section with Image */}
+      <div className="relative h-[50vh] min-h-[550px] flex items-center">
+        <img
+          src="/contactt.jpg"
+          alt="Contact Adnan Shop"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/60 to-black/40" />
+        
+        <div className="relative z-10 max-w-7xl  px-6 lg:px-8 text-white">
+          <div className="max-w-2xl">
+            <div className="uppercase tracking-[3px] text-sm font-medium text-primary mb-3">
+              WE ARE HERE FOR YOU
+            </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tighter mb-6">
+              Let's Start a <span className="text-primary">Conversation</span>
+            </h1>
+            <p className="text-xl text-gray-200 max-w-lg">
+              Whether you need expert advice, technical support, or have a special request — our team is ready to help.
+            </p>
+          </div>
         </div>
+
+       
       </div>
 
-      <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
             {/* Contact Information */}
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary p-3 rounded-full">
-                    <MapPin className="h-6 w-6 text-white" />
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+              <p className="text-gray-600 text-lg mb-10">
+                Our team is ready to assist you with any questions about our products or services.
+              </p>
+
+              <div className="space-y-8">
+                <div className="flex gap-5">
+                  <div className="bg-primary text-white p-4 rounded-2xl">
+                    <MapPin className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Address</h3>
-                    <p className="text-gray-600">
-                      Sulaymaniyah, Chwarchra <br />
-                      
+                    <h4 className="font-semibold text-gray-900 text-lg">Our Location</h4>
+                    <p className="text-gray-600 mt-1 leading-relaxed">
+                      Sulaymaniyah, Chwarchra<br />
+                      Near City Center, Kurdistan Region
                     </p>
                   </div>
                 </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="bg-green-600 p-3 rounded-full">
-                    <Phone className="h-6 w-6 text-white" />
+
+                <div className="flex gap-5">
+                  <div className="bg-secondary text-white p-4 rounded-2xl">
+                    <Phone className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Phone</h3>
-                    <p className="text-gray-600">
-                      Sales: (+964) 07702260440<br />
-                      Support:  (+964) 07700588989
+                    <h4 className="font-semibold text-gray-900 text-lg">Call Us</h4>
+                    <p className="text-gray-600 mt-1">
+                      Sales: <span className="font-medium">+964 770 226 0440</span><br />
+                      Support: <span className="font-medium">+964 770 058 8989</span>
                     </p>
                   </div>
                 </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="bg-purple-600 p-3 rounded-full">
-                    <Mail className="h-6 w-6 text-white" />
+
+                <div className="flex gap-5">
+                  <div className="bg-purple-600 text-white p-4 rounded-2xl">
+                    <Mail className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Email</h3>
-                    <p className="text-gray-600">
-                      info@adnanshops.com<br />
-                    </p>
+                    <h4 className="font-semibold text-gray-900 text-lg">Email Us</h4>
+                    <p className="text-gray-600 mt-1">info@adnanshops.com</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="bg-orange-600 p-3 rounded-full">
-                    <Clock className="h-6 w-6 text-white" />
+
+                <div className="flex gap-5">
+                  <div className="bg-amber-600 text-white p-4 rounded-2xl">
+                    <Clock className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Business Hours</h3>
-                    <p className="text-gray-600">
-                      
+                    <h4 className="font-semibold text-gray-900 text-lg">Working Hours</h4>
+                    <p className="text-gray-600 mt-1">
                       Saturday - Thursday: 9:00 AM - 6:00 PM<br />
                       Friday: Closed
                     </p>
                   </div>
                 </div>
               </div>
-              
-              {/* Map placeholder */}
-              <div className="mt-8">
-                <div className="bg-gray-200 h-64 rounded-lg overflow-hidden">
-                  <iframe 
-                    src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Adnan%20Camera+(Adnan%20Camera)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    allowFullScreen="" 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Adnan Camera Location"
-                  ></iframe>
-                </div>
+
+              {/* Map */}
+              <div className="mt-12 rounded-3xl overflow-hidden shadow-xl border border-gray-100">
+                <iframe
+                  src="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=Chwarchra,%20Sulaymaniyah&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                  width="100%"
+                  height="380"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
               </div>
             </div>
-            
+
             {/* Contact Form */}
-            <div>
+            <div className="bg-white shadow-xl rounded-3xl p-8 lg:p-10 border border-gray-100">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">Send us a Message</h2>
               
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                      placeholder="Ahmed Mohammed"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-5 py-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Your full name"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="What can we help you with?"
+                    className="w-full px-5 py-4 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                    placeholder="Product Inquiry / Technical Support / Other"
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Your Message *</label>
                   <textarea
-                    id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Tell us more about your inquiry..."
+                    className="w-full px-5 py-4 border border-gray-200 rounded-3xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-y"
+                    placeholder="Please tell us how we can help you..."
                   />
                 </div>
-                
+
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-3 px-6 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                  className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 group"
                 >
                   Send Message
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </form>
             </div>
           </div>
         </div>
       </div>
-      
+
       {/* FAQ Section */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-xl text-gray-600">Quick answers to common questions</p>
+      <div className="bg-gray-50 py-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <p className="text-gray-600 text-lg">Find quick answers to common questions</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Do you offer international shipping?</h3>
-              <p className="text-gray-600">
-                Yes, we ship worldwide! Shipping costs and delivery times vary by location. Free shipping is available for orders over $100 within the US.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">What's your return policy?</h3>
-              <p className="text-gray-600">
-                We offer a 30-day return policy for unused items in original packaging. Professional equipment may have different terms - contact us for details.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Do you provide technical support?</h3>
-              <p className="text-gray-600">
-                Absolutely! Our team includes experienced photographers and videographers who can help with product selection and technical questions.
-              </p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Can I try equipment before buying?</h3>
-              <p className="text-gray-600">
-                We offer equipment rental services for many products. Contact us to discuss rental options and trial periods for major purchases.
-              </p>
-            </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              ["Do you offer warranty on products?", "Yes, all products come with official manufacturer warranty. We also provide additional support after purchase."],
+              ["Can I visit your store in person?", "Absolutely! We welcome customers to visit our showroom in Sulaymaniyah - Chwarchra."],
+              ["Do you provide technical support?", "Yes, our experienced team offers technical support for all products we sell."],
+              ["What is your return policy?", "We offer returns within 7 days for unused products in original condition."],
+            ].map(([question, answer], i) => (
+              <div key={i} className="bg-white p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                <h3 className="font-semibold text-lg text-gray-900 mb-4">{question}</h3>
+                <p className="text-gray-600 leading-relaxed">{answer}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

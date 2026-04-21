@@ -7,7 +7,7 @@ const MobileMenu = ({ Menu, X, toggleMenu, isMenuOpen }) => {
               onClick={toggleMenu}
               className="p-2 text-gray-200 hover:text-primary transition-colors"
             >
-              {isMenuOpen ? <X className="h-6 w-8 text-white" /> : <Menu  className="h-6 w-8  mb-2" />}
+              {isMenuOpen ? <X className="h-6 w-8 text-white" /> : <Menu  className="size-8  mb-2" />}
             </button>
           </div>
   )

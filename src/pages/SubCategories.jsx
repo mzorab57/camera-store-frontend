@@ -195,7 +195,7 @@ const SubCategories = () => {
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
-        <nav className="flex mb-8" aria-label="Breadcrumb">
+        <nav className="flex mb-5" aria-label="Breadcrumb">
           <ol className="inline-flex items-center  md:space-x-3">
             <li className="inline-flex items-center">
               <Link to="/" className="inline-flex items-center scale-75 md:scale-100 text-xs md:text-sm font-medium text-gray-700 hover:text-primary">
@@ -214,6 +214,7 @@ const SubCategories = () => {
             </li>
 
              <li>
+
               <div className="flex items-center">
                 <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
@@ -222,6 +223,7 @@ const SubCategories = () => {
                   {subcategoryType}
                 </Link>
               </div>
+
             </li>
             {subcategoryName && (
               <li>
@@ -239,13 +241,11 @@ const SubCategories = () => {
         </nav>
 
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-5">
           <h1 className="text-3xl font-bold text-gred-900 mb-2 capitalize">
             {subcategoryName || categoryName} Products
           </h1>
-          <p className="text-gray-600">
-            Discover our collection of professional {subcategoryName || categoryName} equipment
-          </p>
+         
         </div>
 
         
@@ -255,8 +255,8 @@ const SubCategories = () => {
         <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 sm:mb-8">
           {/* Type Filters */}
           <div className="mb-4 sm:mb-6">
-            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Filter by Type</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
+            
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 sm:gap-3">
               {typeFilters.map((filter) => {
                 const IconComponent = filter.icon;
                 return (
@@ -273,7 +273,7 @@ const SubCategories = () => {
                     <span className="truncate">{filter.label}</span>
                     <span className={`ml-2 px-2 py-1 rounded-full text-xs flex-shrink-0 ${
                       selectedType === filter.id
-                        ? 'border border-red-300 text-white'
+                        ? 'border text-white'
                         : 'bg-gray-200 text-gray-600'
                     }`}>
                       {filter.count}
@@ -360,7 +360,7 @@ const SubCategories = () => {
             </div>
           ) : (
             <div className={viewMode === 'grid' 
-              ? 'grid grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-6'
+              ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2'
               : 'space-y-4'
             }>
               {pageItems.map((product) => (
@@ -409,21 +409,14 @@ const SubCategories = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="p-4 pb-0 ">
+                      <div className="p-2  pb-0 ">
                         <div className='flex justify-between items-center'>
                         <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{product.name}</h3>
                         {/* <p className="text-sm text-gray-600 mb-2">{product.brand}</p> */}
                         </div>
                         <div className="flex flex-col md:flex-row justify-between md:items-center mb-1">
-                          <div className="flex  items-center">
-                            {/* {[...Array(5)].map((_, i) => (
-                              <Star key={i} className={`w-4 h-4 ${
-                                i < (product.rating || 4) ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                              }`} />
-                            ))} 
-                            <span className="text-sm text-gray-600 ml-2">({product.rating || 4.0})</span>*/}
-                          </div>
-                           <span className="text-lg font-bold text-gray-900">${product.price}  </span>
+                          
+                           <span className=" font-bold text-green-700">${product.price}  </span>
                            
                         </div>
                         <div className="flex items-center justify-between mb-4">
@@ -480,8 +473,8 @@ const SubCategories = () => {
                               </span>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-lg font-bold text-gray-900">${product.price}</div>
+                          <div className="text-left">
+                            <div className="text-lg font-bold text-gray-700">${product.price}</div>
                             {product.discount_price && parseFloat(product.discount_price) > 0 && (
                               <div className="text-sm text-gray-500 line-through">
                                 ${(parseFloat(product.price) + parseFloat(product.discount_price)).toFixed(2)}

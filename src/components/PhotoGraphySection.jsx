@@ -55,8 +55,8 @@ const PhotoGraphySection = () => {
       <div onClick={() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           handleProductClick();
-        }} className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
-        <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4 flex items-center justify-center relative">
+        }} className="flex-shrink-0 w-40 md:w-56 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 lg:py-3 px-3  hover:shadow-lg transition-all duration-300  cursor-pointer group">
+        <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden flex items-center justify-center relative">
            {product.discount_price && parseFloat(product.discount_price) > 0 && (
             <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
               <span className="text-xs text-red-600 bg-red-100 rounded-full px-1 font-light">
@@ -86,11 +86,11 @@ const PhotoGraphySection = () => {
         </div>
         
         <div className="space-y-3 w-full">
-          <h3 className="font-semibold text-gray-900 text-sm md:text-base leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className=" text-gray-600 text-sm  leading-tight line-clamp-2 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
           
-           <div className="flex items-center space-x-1">
+           <div className="flex items-center justify-between space-x-1">
               {product.discount_price && parseFloat(product.discount_price) > 0 ? (
                 <div className="flex flex-col">
                   <span className="font-bold text-green-600 text-xs md:text-lg">
@@ -101,10 +101,15 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
                   </span>
                 </div>
               ) : (
-                <span className="font-bold text-green-600 text-xs md:text-lg">
+                <span className="font-bold text-green-700 text-xs ">
                   ${parseFloat(product.price).toFixed(2)}
                 </span>
+                
               )}
+              <div className="flex items-center space-x-1">
+                            <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                            <span className="text-xs text-gray-600">4.3</span>
+                          </div>
             </div>
           
         
@@ -117,6 +122,7 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
             </div>
           </div> */}
         </div>
+        
       </div>
     );
   };
@@ -164,12 +170,12 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
 
   return (
     <section className=" bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl font-semibold md:text-4xl text-gray-900 mb-4 tracking-wider">
+      <div className="max-w-7xl mx-auto pl-3 lg:pl-0">
+        <div className="text-center mb-1">
+          <h2 className="text-xl  font-bold  md:text-3xl  text-center text-[#1a1a1a] py-4 lg:py-5 tracking-tighter uppercase">
             PHOTOGRAPHY EQUIPMENT
           </h2>
-          <div className="flex justify-center space-x-8 text-sm text-gray-600">
+          {/* <div className="flex justify-center space-x-8 text-sm text-gray-600">
             <div className="flex items-center space-x-1">
               <Camera className="h-4 w-4" />
               <span>{photoProducts.length} Photo Products</span>
@@ -178,7 +184,7 @@ ${(parseFloat(product.price) - ((parseFloat(product.price) * parseFloat(product.
               <Star className="h-4 w-4" />
               <span>Professional Grade</span>
             </div>
-          </div>
+          </div> */}
         </div>
         
         {photoProducts.length === 0 ? (

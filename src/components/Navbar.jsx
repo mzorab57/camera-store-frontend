@@ -94,8 +94,8 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="w-full bg-primary">
-      <nav className="container mx-auto lg:px-8 max-w-7xl sticky top-0 z-50">
+    <div className="w-full bg-gradient-to-b from-secondary  to-primary   ">
+      <nav className="container mx-auto  max-w-7xl sticky top-0 z-50">
         {/* Top Bar */}
         <TopBar
           categories={categories}

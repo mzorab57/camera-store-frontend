@@ -5,7 +5,7 @@ import MobileMenu from './MobileMenu';
 
 const TopBar = ({ categories,  Menu, X, toggleMenu, isMenuOpen, Link, Search, searchQuery, setSearchQuery, handleSearch }) => {
   return (
-     <div className="  mx-auto  px-4 sm:px-6 lg:px-8">
+     <div className="  mx-auto    ">
         <div className="flex md:justify-between items-center h-16">
           {/* Logo */}
          <LogoNav Link={Link} device="topbar" />

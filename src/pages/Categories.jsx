@@ -1,16 +1,55 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { categoryApi } from "../lib/categoryApi";
 
 
 const Categories = () => {
   const location = useLocation();
-  const { category, categoryName } = location.state || {};
-
-  console.log("gww");
-  console.log(category);
+  const navigate = useNavigate();
+  const { categoryName: categorySlug } = useParams();
+  const stateCategory = location.state?.category || null;
+  const stateCategoryName = location.state?.categoryName || null;
+  const [fetchedCategory, setFetchedCategory] = useState(null);
+  const [loading, setLoading] = useState(!stateCategory);
+  const [error, setError] = useState(null);
   
   const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || "http://localhost/api";
+
+  useEffect(() => {
+    if (stateCategory) {
+      setFetchedCategory(stateCategory);
+      setLoading(false);
+      return;
+    }
+    const run = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await categoryApi.getCategoriesWithSubcategoriesAndProducts();
+        const arr = res?.data || [];
+        const found = arr.find((item) => (item.slug || '').toLowerCase() === (categorySlug || '').toLowerCase());
+        setFetchedCategory(found || null);
+        if (!found) setError("Category not found");
+      } catch (e) {
+        setError("Failed to load category");
+      } finally {
+        setLoading(false);
+      }
+    };
+    run();
+  }, [stateCategory, categorySlug]);
+
+  const category = useMemo(() => fetchedCategory, [fetchedCategory]);
+  const categoryName = stateCategoryName || category?.name || categorySlug;
+
+  if (loading) {
+    return <div className="container mx-auto max-w-7xl px-8 py-10">Loading...</div>;
+  }
+
+  if (error || !category) {
+    return <div className="container mx-auto max-w-7xl px-8 py-10 text-red-600">{error || "Category not found"}</div>;
+  }
   return (
     <div className="container mx-auto max-w-7xl px-8 w-full min-h-full">
          {/* Breadcrumb */}
@@ -43,9 +82,10 @@ const Categories = () => {
           <h2 className="text-2xl font-bold text-gray-700 mb-6">
             Browse by Category
           </h2>
+          
           <div className=" ">
             {/* Videography Section */}
-            {category.subcategories.filter((sub) => sub.type === "videography")
+            {category.subcategories.filter((sub) => sub.type === "videography" && Number(sub.product_count || 0) > 0)
               .length > 0 && (
               <div className="w-full  py-2 border-t border-gray-100">
                 <h4 className="text-xl border-b border-primary/70 w-fit font-semibold text-primary mb-2 uppercase">
@@ -53,7 +93,7 @@ const Categories = () => {
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {category.subcategories
-                    .filter((sub) => sub.type === "videography")
+                    .filter((sub) => sub.type === "videography" && Number(sub.product_count || 0) > 0)
                     .map((subcategory) => (
                       <Link
                         key={subcategory.slug}
@@ -80,9 +120,9 @@ const Categories = () => {
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                           {subcategory.name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-500 capitalize">
+                        {/* <p className="text-xs sm:text-sm text-gray-500 capitalize">
                           {subcategory.type}
-                        </p>
+                        </p> */}
                         {subcategory.product_count && (
                           <p className="text-xs text-gray-400 mt-1">
                             {subcategory.product_count} products
@@ -95,7 +135,7 @@ const Categories = () => {
             )}
 
              {/* Photography Section */}
-            {category.subcategories.filter((sub) => sub.type === "photography")
+            {category.subcategories.filter((sub) => sub.type === "photography" && Number(sub.product_count || 0) > 0)
               .length > 0 && (
               <div className="w-full  py-2 border-t border-gray-100">
                 <h4 className="text-xl border-b border-primary/70 w-fit font-semibold text-primary mb-2 uppercase">
@@ -103,7 +143,7 @@ const Categories = () => {
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {category.subcategories
-                    .filter((sub) => sub.type === "photography")
+                    .filter((sub) => sub.type === "photography" && Number(sub.product_count || 0) > 0)
                     .map((subcategory) => (
                       <Link
                         key={subcategory.slug}
@@ -130,9 +170,9 @@ const Categories = () => {
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                           {subcategory.name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-500 capitalize">
+                        {/* <p className="text-xs sm:text-sm text-gray-500 capitalize">
                           {subcategory.type}
-                        </p>
+                        </p> */}
                         {subcategory.product_count && (
                           <p className="text-xs text-gray-400 mt-1">
                             {subcategory.product_count} products
@@ -144,7 +184,7 @@ const Categories = () => {
               </div>
             )}
              {/* both Section */}
-            {category.subcategories.filter((sub) => sub.type === "both")
+            {category.subcategories.filter((sub) => sub.type === "both" && Number(sub.product_count || 0) > 0)
               .length > 0 && (
               <div className="w-full py-2 border-t border-gray-100">
                 <h4 className="text-xl border-b border-primary/70 w-fit  font-semibold text-primary mb-2 uppercase">
@@ -152,8 +192,9 @@ const Categories = () => {
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {category.subcategories
-                    .filter((sub) => sub.type === "both")
+                    .filter((sub) => sub.type === "both" && Number(sub.product_count || 0) > 0)
                     .map((subcategory) => (
+                      
                       <Link
                         key={subcategory.slug}
                         onClick={() => {
@@ -176,17 +217,18 @@ const Categories = () => {
                             />
                           </div>
                         </div>
+
                         <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-1 group-hover:text-primary transition-colors">
                           {subcategory.name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-500 capitalize">
+                        {/* <p className="text-xs sm:text-sm text-gray-500 capitalize">
                           {subcategory.type}
-                        </p>
-                        {subcategory.product_count && (
+                        </p> */}
+                        {subcategory.product_count ? (
                           <p className="text-xs text-gray-400 mt-1">
                             {subcategory.product_count} products
                           </p>
-                        )}
+                        ) : null}
                       </Link>
                     ))}
                 </div>

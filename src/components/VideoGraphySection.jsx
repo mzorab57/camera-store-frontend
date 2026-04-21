@@ -55,11 +55,11 @@ const VideoGraphySection = () => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           handleProductClick();
         }}
-      className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group">
-        <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden mb-3 md:mb-4 flex items-center justify-center relative">
+      className="flex-shrink-0 w-40 md:w-56 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2 lg:py-3 px-3  hover:shadow-lg transition-all duration-300  cursor-pointer group">
+        <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden  flex items-center justify-center relative">
          {product.discount_price && parseFloat(product.discount_price) > 0 && (
   <div className="flex items-center justify-between absolute top-0.5 z-10 left-0.5">
-    <span className="text-xs text-red-600 bg-red-100 rounded-full px-1 font-light">
+    <span className="text-xs text-primary bg-primary rounded-full px-1 font-light">
      {product.discount_price && parseFloat(product.discount_price) > 0 && parseFloat(product.discount_price)}% OFF
     </span>
   </div>
@@ -69,9 +69,9 @@ const VideoGraphySection = () => {
               <img 
                 src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`}
                 alt={product.name}
-                className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                className="max-w-full max-h-full object-contain group-hover:scale-105  transition-transform duration-300"
                 onError={(e) => {
-                  e.target.parentElement.innerHTML = `<div class="w-full h-full bg-red-600 rounded-xl flex items-center justify-center"><svg class="h-16 w-16 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`;
+                  e.target.parentElement.innerHTML = `<div class="w-full h-full bg-primary rounded-xl flex items-center justify-center"><svg class="h-16 w-16 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>`;
                 }}
               />
               <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -79,14 +79,14 @@ const VideoGraphySection = () => {
               </div>
             </>
           ) : (
-            <div className="w-full h-full bg-red-600 rounded-xl flex items-center justify-center group-hover:bg-red-700 transition-colors">
+            <div className="w-full h-full bg-primary rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
               <Video className="h-16 w-16 text-white" />
             </div>
           )}
         </div>
         
         <div className="space-y-3 w-full">
-          <h3 className="font-semibold text-gray-900 text-sm md:text-base leading-tight line-clamp-2 group-hover:text-red-600 transition-colors">
+          <h3 className=" text-gray-600 text-sm  leading-tight line-clamp-2 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
           
@@ -104,7 +104,7 @@ const VideoGraphySection = () => {
                   </span>
                 </div>
               ) : (
-                <span className="font-bold text-green-600 text-xs md:text-lg">
+                <span className="font-bold text-green-700 text-xs ">
                   ${parseFloat(product.price).toFixed(2)}
                 </span>
               )}
@@ -117,7 +117,7 @@ const VideoGraphySection = () => {
           
           {/* {product.discount_price && parseFloat(product.discount_price) > 0 && (
             <div className="flex items-center justify-between">
-              <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full font-medium">
+              <span className="text-xs bg-primary text-primary px-2 py-1 rounded-full font-medium">
                 Save ${parseFloat(product.discount_price).toFixed(2)}
               </span>
               <span className="text-xs text-green-600 font-medium">
@@ -147,7 +147,7 @@ const VideoGraphySection = () => {
             VIDEO EQUIPMENT
           </h2>
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             <span className="ml-3 text-gray-600">Loading video equipment...</span>
           </div>
         </div>
@@ -163,14 +163,14 @@ const VideoGraphySection = () => {
             VIDEO EQUIPMENT
           </h2>
           <div className="text-center py-12">
-            <div className="text-red-600 mb-4">
+            <div className="text-primary mb-4">
               <Video className="h-12 w-12 mx-auto mb-2 opacity-50" />
               <p className="text-lg font-medium">Failed to load video equipment</p>
               <p className="text-sm text-gray-500 mt-1">{videoError}</p>
             </div>
             <button 
               onClick={() => fetchVideoProducts()}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-primary hover:bg-primary text-white px-6 py-2 rounded-lg transition-colors"
             >
               Try Again
             </button>
@@ -181,13 +181,13 @@ const VideoGraphySection = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl font-semibold md:text-4xl text-gray-900 mb-4 tracking-wider">
+    <section className=" bg-white pb-3">
+      <div className="max-w-7xl mx-auto pl-3 lg:pl-0">
+        <div className="text-center mb-1">
+          <h2 className="text-xl  font-bold  md:text-3xl  text-center text-[#1a1a1a] py-4 lg:py-5 tracking-tighter uppercase">
             VIDEO EQUIPMENT
           </h2>
-          <div className="flex justify-center space-x-4 text-sm text-gray-600">
+          {/* <div className="flex justify-center space-x-4 text-sm text-gray-600">
             <div className="flex items-center space-x-1">
               <Video className="h-4 w-4" />
               <span>{videoProducts.length} Video Products</span>
@@ -196,19 +196,19 @@ const VideoGraphySection = () => {
               <Star className="h-4 w-4" />
               <span>Professional Grade</span>
             </div>
-          </div>
+          </div> */}
         </div>
         
         {videoProducts.length === 0 ? (
           <div className="text-center py-12">
-            <Video className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+            <Video className="h-12 w-12 mx-auto  text-gray-400" />
             <p className="text-gray-600">No video equipment available</p>
           </div>
         ) : (
           <div className="relative">
             <div 
               ref={sliderRef}
-              className="flex overflow-x-auto space-x-4 pb-4 scrollbar-hide scroll-smooth"
+              className="flex overflow-x-auto space-x-4  scrollbar-hide scroll-smooth"
             >
               {videoProducts.map((product) => (
                 <VideoProductCard key={product.id} product={product} />
@@ -219,7 +219,7 @@ const VideoGraphySection = () => {
             {canScrollLeft && (
               <button 
                 onClick={scrollLeft}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-red-600 p-2 rounded-full transition-all z-10"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-primary p-2 rounded-full transition-all z-10"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
@@ -228,7 +228,7 @@ const VideoGraphySection = () => {
             {canScrollRight && (
               <button 
                 onClick={scrollRight}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-red-600 p-2 rounded-full transition-all z-10"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-primary p-2 rounded-full transition-all z-10"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>

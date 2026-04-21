@@ -56,50 +56,50 @@ const LatestProducts = () => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           handleProductClick();
         }}
-        className="flex-shrink-0 w-40 md:w-64 bg-white rounded-lg md:rounded-2xl border border-gray-200 py-2  px-3 md:px-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer group"
+        className="flex-shrink-0  w-40  md:w-56 bg-white rounded-lg md:rounded-2xl border border-gray-200 px-3 py-2 lg:py-3  hover:shadow-lg transition-all duration-300 cursor-pointer group"
       >
-        <div className="w-full h-32 md:h-48 rounded-lg md:rounded-xl overflow-hidden  mb-3 md:mb-4 flex items-center justify-center">
+        <div className="w-full h-32 md:h-40 rounded-lg md:rounded-xl overflow-hidden  mb-1  flex items-center justify-center">
           {product.primary_image_url ? (
             <img 
               src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`}
               alt={product.name}
-              className="max-w-full max-h-full  object-contain group-hover:scale-110 transition-transform duration-300"
+              className="max-w-full max-h-full  object-contain  transition-transform duration-300"
               onError={(e) => {
-                e.target.parentElement.innerHTML = `<div class="w-full h-full bg-blue-600 rounded-xl flex items-center justify-center"><svg class="h-16 w-16 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>`;
+                e.target.parentElement.innerHTML = `<div class="w-full h-full bg-primary rounded-xl flex items-center justify-center"><svg class="h-16 w-16 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>`;
               }}
             />
           ) : (
-            <div className="w-full h-full bg-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-700 transition-colors">
+            <div className="w-full h-full bg-primary rounded-xl flex items-center justify-center group-hover:bg-primary transition-colors">
               <ShoppingBag className="h-16 w-16 text-white" />
             </div>
           )}
         </div>
         
         <div className="space-y-3  w-full">
-          <h3 className="font-semibold text-gray-900 text-sm md:text-base  leading-tight line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className=" text-gray-600 text-sm   leading-tight line-clamp-2 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
           
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between ">
             <div className="flex items-center space-x-1">
               {/* <DollarSign className="h-4 w-4 text-green-600" /> */}
-              <span className="font-bold text-green-600 text-xs md:text-lg">
+              <span className="font-bold text-green-700 text-xs ">
                 ${parseFloat(product.price).toFixed(2)}
               </span>
             </div>
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1 s">
               <Star className="h-4 w-4 text-yellow-500 fill-current" />
               <span className="text-xs text-gray-600">4.5</span>
             </div>
           </div>
           
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          {/* <div className="flex items-center justify-between text-xs text-gray-500">
             <span className="font-medium">{product.brand}</span>
             <div className="flex items-center space-x-1">
               <Calendar className="h-3 w-3" />
               <span>{new Date(product.created_at).toLocaleDateString()}</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -113,7 +113,7 @@ const LatestProducts = () => {
             LATEST PRODUCTS
           </h2>
           <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
             <span className="ml-3 text-gray-600">Loading latest products...</span>
           </div>
         </div>
@@ -136,7 +136,7 @@ const LatestProducts = () => {
             </div>
             <button 
               onClick={() => fetchLatestProducts()}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+              className="bg-primary hover:bg-primary text-white px-6 py-2 rounded-lg transition-colors"
             >
               Try Again
             </button>
@@ -147,10 +147,10 @@ const LatestProducts = () => {
   }
 
   return (
-    <section className="bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl font-semibold md:text-4xl  text-gray-900 mb-4 tracking-wider">
+    <section className="bg-gray-50 pb-3">
+      <div className="max-w-7xl mx-auto pl-3 lg:pl-0">
+        <div className="text-center mb-1">
+          <h2 className="text-xl  font-bold  md:text-3xl  text-center text-[#1a1a1a] py-4 lg:py-5  tracking-tighter uppercase">
             LATEST PRODUCTS
           </h2>
           {/* <div className="flex justify-center space-x-8 text-sm text-gray-600">
@@ -174,7 +174,7 @@ const LatestProducts = () => {
           <div className="relative">
             <div 
               ref={sliderRef}
-              className="flex overflow-x-auto space-x-4 pb-4 scrollbar-hide scroll-smooth"
+              className="flex overflow-x-auto space-x-4  scrollbar-hide scroll-smooth"
             >
               {latestProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />
@@ -185,7 +185,7 @@ const LatestProducts = () => {
             {canScrollLeft && (
               <button 
                 onClick={scrollLeft}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-blue-600 p-2 rounded-full transition-all z-10"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-primary p-2 rounded-full transition-all z-10"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
@@ -194,7 +194,7 @@ const LatestProducts = () => {
             {canScrollRight && (
               <button 
                 onClick={scrollRight}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-blue-600 p-2 rounded-full transition-all z-10"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-lg hover:shadow-xl text-gray-700 hover:text-primary p-2 rounded-full transition-all z-10"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>

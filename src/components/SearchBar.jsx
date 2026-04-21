@@ -1,37 +1,107 @@
 
 
-import React, { useState, useEffect, useRef } from 'react';
-import { useProductStore } from '../store/productStore';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { productApi } from '../lib/productApi';
 
-const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSearch }) => {
+const normalizeProductsResponse = (response) => {
+  if (response?.success) {
+    if (Array.isArray(response.data)) return response.data;
+    if (Array.isArray(response.products)) return response.products;
+    if (Array.isArray(response.latest_products)) return response.latest_products;
+  }
+
+  if (Array.isArray(response)) return response;
+  if (Array.isArray(response?.data)) return response.data;
+
+  return [];
+};
+
+const isActiveProduct = (product) =>
+  product?.status === 'active' || product?.is_active === 1 || product?.is_active === '1';
+
+const getProductImageSrc = (product, apiBaseUrl) => {
+  const imagePath = product?.primary_image_url;
+
+  if (!imagePath) return '';
+  if (imagePath.startsWith('http')) return imagePath;
+
+  const normalizedPath = imagePath.includes('/uploads/')
+    ? imagePath.slice(imagePath.indexOf('/uploads/'))
+    : imagePath.startsWith('/')
+      ? imagePath
+      : `/${imagePath}`;
+
+  return `${apiBaseUrl}/products/file.php?path=${encodeURIComponent(normalizedPath)}`;
+};
+
+const SearchBar = ({ Search, searchQuery, setSearchQuery, handleSearch }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
   const dropdownRef = useRef(null);
-  const { getAllProducts } = useProductStore();
 
-   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api';
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchAllProducts = async () => {
+      setIsLoadingProducts(true);
+
+      try {
+        const response = await productApi.getProducts({ limit: 5000 });
+        const products = normalizeProductsResponse(response).filter(isActiveProduct);
+
+        if (isMounted) {
+          setAllProducts(products);
+        }
+      } catch (error) {
+        console.error('Error fetching products for search:', error);
+        if (isMounted) {
+          setAllProducts([]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoadingProducts(false);
+        }
+      }
+    };
+
+    fetchAllProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) {
+      setSearchResults([]);
+      setShowDropdown(false);
+      return;
+    }
+
+    const filtered = allProducts
+      .filter((product) =>
+        product?.name?.toLowerCase().includes(query) ||
+        product?.brand?.toLowerCase().includes(query) ||
+        product?.category?.toLowerCase().includes(query) ||
+        product?.subcategory?.toLowerCase().includes(query)
+      )
+      .slice(0, 8);
+
+    setSearchResults(filtered);
+    setShowDropdown(true);
+  }, [searchQuery, allProducts]);
 
   // Handle search input change
   const handleInputChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    
-    if (query.trim().length > 0) {
-      const products = getAllProducts();
-      const filtered = products.filter(product => 
-        product.name.toLowerCase().includes(query.toLowerCase()) ||
-        product.brand?.toLowerCase().includes(query.toLowerCase()) ||
-        product.category?.toLowerCase().includes(query.toLowerCase()) ||
-        product.subcategory?.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 8); // Limit to 8 results
-      
-      setSearchResults(filtered);
-      setShowDropdown(true);
-    } else {
-      setSearchResults([]);
-      setShowDropdown(false);
-    }
   };
 
   // Handle click outside to close dropdown
@@ -68,11 +138,11 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
               value={searchQuery}
               onChange={handleInputChange}
               placeholder="Search for cameras, lenses, accessories..."
-              className="w-full ml-1 pl-4 pr-12 md:py-3 py-1  bg-gray-200 rounded-full outline-none border-primary/70 focus:border-primary text-sm"
+              className="w-full ml-1 pl-4 pr-12 md:py-3 py-1.5 focus:outline-none   bg-gray-٢00 rounded-full outline-none border-primary/70 focus:border-primary text-sm"
             />
             <button
               type="submit"
-              className="absolute right-3 top-1/2 transform -translate-y-1/2  text-primary p-2 rounded-full "
+              className="absolute right-3 top-1/2 transform -translate-y-1/2   p-2 rounded-full "
             >
               <Search className="size-4" />
             </button>
@@ -95,7 +165,7 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
                   >
                     <div className="flex-shrink-0 size-12 md:size-20 mr-3">
                       <img
-                       src={product.primary_image_url.startsWith('http') ? product.primary_image_url : `${API_BASE_URL}/products/file.php?path=${encodeURIComponent(product.primary_image_url.includes('/uploads/') ? product.primary_image_url.slice(product.primary_image_url.indexOf('/uploads/')) : (product.primary_image_url.startsWith('/') ? product.primary_image_url : '/' + product.primary_image_url))}`}
+                        src={getProductImageSrc(product, API_BASE_URL)}
                         alt={product.name}
                         className=" rounded-md"
                       />
@@ -136,7 +206,15 @@ const SearchBar = ({ categories, Search, searchQuery, setSearchQuery, handleSear
           )}
           
           {/* No Results */}
-          {showDropdown && searchQuery.trim().length > 0 && searchResults.length === 0 && (
+          {showDropdown && searchQuery.trim().length > 0 && isLoadingProducts && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+              <div className="p-4 text-center text-gray-500">
+                <div className="text-sm">Loading products...</div>
+              </div>
+            </div>
+          )}
+
+          {showDropdown && searchQuery.trim().length > 0 && !isLoadingProducts && searchResults.length === 0 && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
               <div className="p-4 text-center text-gray-500">
                 <Search className="w-8 h-8 mx-auto mb-2 text-gray-400" />

@@ -13,6 +13,8 @@ import Categories from './pages/Categories';
 import ProductDetails from './pages/ProductDetails';
 import BrandsPage from './pages/BrandsPage';
 import BrandProducts from './pages/BrandProducts';
+import Assistant from './pages/Assistant';
+import ChatWidget from './components/ChatWidget';
 
 function App() {
   return (
@@ -26,11 +28,13 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/brands" element={<BrandsPage />} />
           <Route path="/brands/:slug" element={<BrandProducts />} />
+          <Route path="/assistant" element={<Assistant />} />
           <Route path="/:categoryName" element={<Categories />} />
           <Route path="/details" element={<ProductDetails />} />
           <Route path="/details/:productName" element={<ProductDetails />} />
           <Route path="/:categoryName/:subcategoryType/:subcategoryName" element={<SubCategories />} />
         </Routes>
+        <ChatWidget />
         <Footer />
       </div>
     </Router>

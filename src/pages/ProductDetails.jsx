@@ -121,7 +121,7 @@ const ProductDetails = () => {
       {/* 🔥 Logo Watermark */}
       <div className="absolute  inset-0 flex items-center justify-center pointer-events-none">
         <img 
-          src="/logo.png"
+          src="/logour.png"
           alt="logo"
           className=" object-contain opacity-15"
         />
