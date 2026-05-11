@@ -1,6 +1,48 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getBrands } from '../lib/brandApi'
+
+const normalizeBrandName = (value) =>
+  (value || '').toLowerCase().replace(/[^a-z0-9]/g, '')
+
+const preferredBrandGroups = [
+  ['sony'],
+  ['canon'],
+  ['nikon'],
+  ['sandisk'],
+  ['lexar'],
+  ['dji'],
+  ['gopro'],
+  ['sennheiser', 'sennhiser'],
+  ['feelworld', 'fellworld', 'fellworldn'],
+  ['hollyland'],
+  ['rode'],
+  ['boya'],
+  ['aputure'],
+  ['amaran'],
+  ['godox'],
+  ['nanlite'],
+  ['smallrig'],
+  ['tilta'],
+  ['kfconcept', 'kf'],
+  ['zsyb'],
+  ['yongnuo'],
+  ['nicefoto'],
+  ['triopo'],
+  ['benro'],
+  ['caisi'],
+  ['instax'],
+  ['desview'],
+]
+
+const getBrandOrderIndex = (brandName) => {
+  const normalizedName = normalizeBrandName(brandName)
+  const index = preferredBrandGroups.findIndex((group) =>
+    group.includes(normalizedName)
+  )
+
+  return index === -1 ? Number.MAX_SAFE_INTEGER : index
+}
 
 const BrandsPage = () => {
   const [brands, setBrands] = useState([])
@@ -38,7 +80,11 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost/api'
       (b.name || '').toLowerCase().includes(search.toLowerCase()) ||
       (b.slug || '').toLowerCase().includes(search.toLowerCase())
     )
-    .sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+    .sort((a, b) => {
+      const orderDiff = getBrandOrderIndex(a.name) - getBrandOrderIndex(b.name)
+      if (orderDiff !== 0) return orderDiff
+      return (a.name || '').localeCompare(b.name || '')
+    })
 
   return (
     <div className="min-h-screen bg-gray-50 py-10">
