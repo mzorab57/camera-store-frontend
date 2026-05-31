@@ -140,7 +140,7 @@ const Navbar = () => {
           {/* Menu Header */}
           <div className="flex items-center justify-between p-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
             <div className="flex items-center gap-3">
-             <img src="/logo.png" alt="logo" className='w-32' />
+             <img src="/logour.png" alt="logo" className='w-20' />
               
             </div>
             <button

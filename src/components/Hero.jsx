@@ -60,6 +60,24 @@ const Hero = () => {
       brandLogo: 'S',
       image: '/bg10.jpg'
     },
+    {
+      id: 6,
+      brand: 'Sony',
+      title: 'Innovation in Every Shot.',
+      subtitle: 'Experience the future of photography with cutting-edge technology.',
+      cta: 'LEARN MORE',
+      brandLogo: 'S',
+      image: '/bg11.jpg'
+    },
+    {
+      id: 6,
+      brand: 'Sony',
+      title: 'Innovation in Every Shot.',
+      subtitle: 'Experience the future of photography with cutting-edge technology.',
+      cta: 'LEARN MORE',
+      brandLogo: 'S',
+      image: '/bg12.jpg'
+    },
  
   ];
 

@@ -141,7 +141,7 @@ const CategorySection = () => {
                 <IconComponent className="h-10 w-10 text-gray-400 group-hover:scale-110 transition-transform" />
               )}
             </div>
-            <div className="bg-black text-center flex items-center justify-center lg:py-2 py-0.5 px-1">
+            <div className="bg-black h-6 text-center flex items-center justify-center lg:py-2 py-0.5 px-1">
               <h3 className="lg:font-bold text-white text-[8px] md:text-xs">
                 {category.name}
               </h3>
@@ -175,7 +175,7 @@ const CategorySection = () => {
         >
           <div
             ref={row1Ref}
-            className="flex gap-4 overflow-x-auto scrollbar-hide cursor-grab select-none"
+            className="flex gap-2 overflow-x-auto scrollbar-hide cursor-grab select-none"
             style={{ scrollBehavior: 'auto' }}
             onMouseDown={(e) => handleMouseDown(e, row1Ref)}
             onMouseMove={(e) => handleMouseMove(e, row1Ref)}
@@ -199,7 +199,7 @@ const CategorySection = () => {
         >
           <div
             ref={row2Ref}
-            className="flex gap-4 overflow-x-auto scrollbar-hide cursor-grab select-none"
+            className="flex gap-2 overflow-x-auto scrollbar-hide cursor-grab select-none"
             style={{ scrollBehavior: 'auto' }}
             onMouseDown={(e) => handleMouseDown(e, row2Ref)}
             onMouseMove={(e) => handleMouseMove(e, row2Ref)}
